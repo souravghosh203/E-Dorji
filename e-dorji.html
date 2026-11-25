@@ -20,8 +20,11 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}a{color:inh
 .lg{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto}
 .brand-picture{display:block;width:86px}
 .brand-logo{display:block;width:100%;height:auto}
-.lk{display:flex;gap:28px;margin:0 auto}.lk a{text-decoration:none;font-size:16px}.lk a:hover{color:var(--acc)}
-.pill{padding:10px 20px;border-radius:99px;border:1px solid color-mix(in srgb,var(--acc) 35%,transparent);background:color-mix(in srgb,var(--acc) 12%,var(--card));color:var(--acc);text-decoration:none;font-weight:600;font-size:15px}
+.nav-search{display:flex;align-items:center;gap:4px;border:1px solid transparent;border-radius:99px;padding:3px 5px 3px 14px;transition:background .2s,border-color .2s}
+.nav-search:focus-within{background:var(--card);border-color:var(--line)}.nav-search input{width:clamp(130px,16vw,210px);min-width:0;border:0;outline:0;background:transparent;font-size:14px}.nav-search input::placeholder{color:var(--mute)}
+.nav-search button{width:34px;height:34px;display:grid;place-items:center;border:0;border-radius:50%;background:var(--sage);color:var(--t1)}
+.nav-about{color:var(--ink);font-size:15px;text-decoration:none;white-space:nowrap}.nav-about:hover{color:var(--acc)}
+.start-link{display:inline-flex;align-items:center;gap:9px;padding:11px 17px;border-radius:99px;background:var(--ink);color:var(--bg);text-decoration:none;font-size:14px;font-weight:600;white-space:nowrap;box-shadow:0 8px 18px -14px #000;transition:transform .2s,box-shadow .2s}.start-link:hover{transform:translateY(-2px);box-shadow:0 12px 20px -13px #000}.start-link svg{width:16px;height:16px}
 .ib{width:40px;height:40px;border-radius:50%;border:0;background:none;display:grid;place-items:center}.ib:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .hero{width:min(1240px,calc(100% - 48px));margin:auto;display:grid;grid-template-columns:1.05fr .95fr;gap:20px;min-height:calc(100vh - 90px);align-items:center;padding:30px 0 50px}
 .mono{color:var(--t1)}.bn{display:none}
@@ -77,16 +80,13 @@ svg text{fill:var(--mute);font:11px "JetBrains Mono"}.bar{fill:var(--t2);transfo
 .msg{padding:9px 14px;border-radius:16px;margin:8px 0;max-width:86%;background:var(--card);font-size:15.5px}.msg.u{margin-left:auto;background:var(--btn);color:var(--btnt)}
 footer{width:min(1240px,calc(100% - 48px));margin:auto;padding:30px 0 50px;border-top:1px solid var(--line);color:var(--mute);font-size:14px}
 #toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,90px);background:var(--btn);color:var(--btnt);padding:11px 22px;border-radius:99px;transition:.35s;z-index:30}#toast.on{transform:translate(-50%,0)}
-@media(max-width:960px){.hero{grid-template-columns:1.05fr .95fr;gap:12px}.hero-title{font-size:clamp(48px,5.8vw,64px)}.pg,.pl{grid-template-columns:1fr}.lk{display:none}.eg{grid-template-columns:repeat(2,1fr)}.side{position:static}.nav .pill{display:none}.nav{padding-left:18px}#pn{padding:22px}}
+@media(max-width:960px){.hero{grid-template-columns:1.05fr .95fr;gap:12px}.hero-title{font-size:clamp(48px,5.8vw,64px)}.pg,.pl{grid-template-columns:1fr}.eg{grid-template-columns:repeat(2,1fr)}.side{position:static}.nav{gap:12px;padding-left:14px;padding-right:8px}#pn{padding:22px}}
+@media(max-width:700px){.nav-search input{display:none}.nav-search.open{position:absolute;left:8px;right:8px;top:calc(100% + 8px);background:var(--card);border-color:var(--line);box-shadow:0 12px 28px -18px #000;padding:5px 8px}.nav-search.open input{display:block;flex:1;width:auto;padding:7px}}
 @media(max-width:700px){.hero{grid-template-columns:1fr;min-height:auto;padding:18px 0 42px;gap:8px}.hero>div:first-child{grid-row:2}.hero>div:nth-child(2){grid-row:1}.hero .scene{max-width:400px;margin:0 auto}.hero-title{font-size:clamp(44px,12vw,62px);margin:18px 0 14px}.hero-copy{font-size:16px}.how{padding:48px 24px}.how-grid{grid-template-columns:1fr}.how-step{padding:28px 0}}
-@media(max-width:520px){.brand-picture{width:32px}.eg{grid-template-columns:1fr}}
+@media(max-width:520px){.nav{width:calc(100% - 12px);gap:3px;padding:6px 5px}.brand-picture{width:32px}.nav-search{padding:2px}.nav-search button{width:32px;height:32px}.nav-about{font-size:12px}.start-link{gap:3px;padding:8px 7px;font-size:11px}.ib{width:32px;height:32px}.eg{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body>
-<header class="nav"><a class="lg" href="#top"><picture class="brand-picture"><source media="(max-width:520px)" srcset="assets/e-dorji-icon.svg"><img class="brand-logo" src="assets/e-dorji-logo.svg" alt="E-দর্জি"></picture></a>
-<nav class="lk"><a href="#all" data-i="navall">Everything</a><a href="#product" data-p="0" data-i="n1">Find tailors</a><a href="#product" data-p="1" data-i="n2">Design studio</a><a href="#product" data-p="2" data-i="n3">Orders</a><a href="#product" data-p="3" data-i="n4">Tailor desk</a></nav>
-<a class="pill" href="#product" data-p="2" data-i="n5">Customer dashboard</a>
-<button class="ib" id="lgb" aria-label="Switch language"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 5h9M8.5 3v2M6 5c1 4 3 6 6 8M12 5c-1 4-3 7-7 9M13 21l4-10 4 10M14.5 17.5h5"/></svg></button>
-<button class="ib" id="th" aria-label="Toggle dark mode"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg></button></header>
+<div id="site-nav-root" data-page="home"></div>
 
 <main id="top"><section class="hero"><div>
 <p class="hero-kicker">The art of personal tailoring</p>
@@ -135,16 +135,15 @@ footer{width:min(1240px,calc(100% - 48px));margin:auto;padding:30px 0 50px;borde
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
-const nav=$('.nav'),syncNav=()=>nav.classList.toggle('scrolled',window.scrollY>12);window.addEventListener('scroll',syncNav,{passive:true});syncNav();
 const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),2400)};
 const ic=d=>`<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
 const I={s:'<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>',b:'<path d="M21 8 12 3 3 8v8l9 5 9-5Z"/><path d="m3 8 9 5 9-5M12 13v8"/>',r:'<path d="M6 3h12v18l-3-2-3 2-3-2-3 2Z"/><path d="M9 8h6M9 12h6"/>',c:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',m:'<path d="M21 12a8 8 0 0 1-12 7l-5 1 1-4a8 8 0 1 1 16-4Z"/>',x:'<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12"/>',l:'<path d="M4 5h9M8.5 3v2M6 5c1 4 3 6 6 8M12 5c-1 4-3 7-7 9M13 21l4-10 4 10M14.5 17.5h5"/>'};
 /* theme + language */
 const T={bn:{n1:'দর্জি খুঁজুন',n2:'ডিজাইন স্টুডিও',n3:'অর্ডার',n4:'দর্জির ডেস্ক',n5:'কাস্টমার ড্যাশবোর্ড',eb:'ওয়ার্কিং ডেমো · বাংলাদেশের দর্জি · পাঞ্জাবি ও শাড়ি',sub:'প্রতিটি গ্রাহকের ফোনে একজন দর্জি, একটি ডিজাইন স্টুডিও ও অর্ডার ট্র্যাকার, নিজের ভাষায়।',c1:'ডিজাইন স্টুডিও দেখুন →',c2:'সবকিছু দেখুন',ht:'কাপড়গুলো ছুঁয়ে দেখুন',e1:'সবকিছু যা আপনি করতে পারেন'}};
-$$('[data-i]').forEach(e=>(T.en=T.en||{})[e.dataset.i]=e.textContent);
-function setL(l){document.documentElement.lang=l;$$('[data-i]').forEach(e=>e.textContent=T[l][e.dataset.i]||T.en[e.dataset.i]);$$('#pills [data-l]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.l==l));L=l}let L='en';
-$('#lgb').onclick=()=>setL(L=='en'?'bn':'en');$$('#pills [data-l]').forEach(b=>b.onclick=()=>setL(b.dataset.l));$$('#pills [data-x]').forEach(b=>b.onclick=()=>toast('This language is a preview and not available yet'));
-$('#th').onclick=()=>{const r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark'};
+T.bn.navabout='আমাদের সম্পর্কে';T.bn.getstarted='শুরু করুন';T.bn.search='দর্জি খুঁজুন';
+$$('[data-i]').forEach(e=>(T.en=T.en||{})[e.dataset.i]=e.textContent);T.en.search='Search tailors';
+function setL(l){document.documentElement.lang=l;$$('[data-i]').forEach(e=>e.textContent=T[l][e.dataset.i]||T.en[e.dataset.i]);$$('[data-ph]').forEach(e=>e.placeholder=T[l][e.dataset.ph]||T.en[e.dataset.ph]);$$('#pills [data-l]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.l==l));L=l}window.setL=setL;let L='en';
+$$('#pills [data-l]').forEach(b=>b.onclick=()=>setL(b.dataset.l));$$('#pills [data-x]').forEach(b=>b.onclick=()=>toast('This language is a preview and not available yet'));
 /* hanging clothes: spring physics, reacts to the cursor */
 class Sp{constructor(k,d){this.k=k;this.d=d;this.a=0;this.w=0}step(t,dt){this.w+=(-this.k*(this.a-t)-this.d*this.w)*dt;this.a+=this.w*dt}}
 const SC=$('#scene'),gs=$$('#scene [data-g]').map(el=>({el,px:+el.dataset.x,m:new Sp(20,1.5),p:[...el.querySelectorAll('[data-s]')].map(q=>({q,sp:new Sp(30,2),ox:+q.dataset.ox,oy:+q.dataset.oy,g:+q.dataset.gain}))}));
@@ -177,7 +176,6 @@ if(i==0){tl();$('#q').oninput=tl;$('#so').onchange=tl}if(i==1)studio();if(i==3){
 if(i==4){$('#cs').onclick=ask;$('#ci').onkeydown=e=>{if(e.key=='Enter')ask()}}}
 $('#tabs').onclick=e=>{const b=e.target.closest('[data-k]');if(b)go(+b.dataset.k)};$$('[data-p]').forEach(a=>a.onclick=e=>{e.preventDefault();document.body.classList.add('customer-view');go(+a.dataset.p);$('#product').scrollIntoView({behavior:'smooth'})});
 $$('a[href="#all"]').forEach(a=>a.onclick=e=>{e.preventDefault();document.body.classList.add('customer-view');$('#all').scrollIntoView({behavior:'smooth'})});
-$('.lg').onclick=e=>{if(!document.body.classList.contains('customer-view'))return;e.preventDefault();document.body.classList.remove('customer-view');history.replaceState(null,'','#top');window.scrollTo({top:0,behavior:'smooth'})};
 function tl(){const q=$('#q').value.toLowerCase(),s=$('#so').value;const d=TL.filter(t=>(t.join(' ')).toLowerCase().includes(q)).sort((a,b)=>s=='d'?a[6]-b[6]:s=='p'?a[7]-b[7]:b[4]-a[4]);$('#tl').innerHTML=d.length?d.map(t=>`<div class="tm"><div class="av">${t[0][0]}</div><div><b>${t[0]}</b> <span class="mono" style="font-size:10px;color:var(--t1)">Demo verified</span><small>${t[2]} · ${t[3]}</small><small>★ ${t[4]} (${t[5]} demo reviews) · ~${t[6]} days · from ৳${t[7]}</small></div><button class="sm" onclick="toast('Hire request started with ${t[0]}')">Hire</button></div>`).join(''):'<p style="padding:14px">No demo tailors match.</p>'}
 function ask(){const v=$('#ci').value.trim();if(!v)return;const l=$('#log');l.insertAdjacentHTML('beforeend','<div class="msg u"></div>');l.lastChild.textContent=v;$('#ci').value='';const g=/panjabi/i.test(v)?'Panjabi':/saree|blouse/i.test(v)?'Saree blouse':'Salwar Kameez';setTimeout(()=>l.insertAdjacentHTML('beforeend',`<div class="msg">A ${g} suits that. Browse tailors for it, then ask for a written proposal. Prices and dates come only from the tailor.</div>`),500)}
 /* 3D studio */
@@ -194,4 +192,6 @@ const sz=()=>{const w=el.clientWidth,h=el.clientHeight;R.setSize(w,h);C.aspect=w
 (function lp(t){if(!el.isConnected){R.dispose();return}raf3=requestAnimationFrame(lp);if(!dg&&!rm)G.rotation.y+=.006;G.position.y=rm?0:Math.sin(t/900)*.05;sz();R.render(S,C)})(0)}catch(e){el.innerHTML='<p style="padding:30px">3D preview is unavailable on this device. Your choices are still sent as written details.</p>'}}
 $('#pn').addEventListener('click',e=>{const b=e.target.closest('[data-c],[data-o]');if(!b)return;if(b.dataset.c)S3.c=b.dataset.c;else{const[k,v]=b.dataset.o.split(':');S3[k]=v}[...b.parentNode.querySelectorAll('button')].forEach(x=>x.setAttribute('aria-pressed',x===b));rb&&rb()});
 go(0);
-</script></body></html>
+window.openTailorSearch=query=>{document.body.classList.add('customer-view');go(0);$('#q').value=query||'';tl();$('#product').scrollIntoView({behavior:'smooth'})};
+const initialSearch=new URLSearchParams(location.search).get('search');if(initialSearch!==null)window.openTailorSearch(initialSearch);
+</script><script type="module" src="/src/main.jsx"></script></body></html>

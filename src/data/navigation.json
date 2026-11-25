@@ -1,0 +1,20 @@
+{
+  "en": {
+    "search": "Search tailors",
+    "searchLabel": "Search tailors",
+    "translator": "Switch between English and Bangla",
+    "dark": "Toggle dark theme",
+    "about": "About us",
+    "start": "Get started",
+    "startLabel": "Get started and open login"
+  },
+  "bn": {
+    "search": "দর্জি খুঁজুন",
+    "searchLabel": "দর্জি খুঁজুন",
+    "translator": "বাংলা ও ইংরেজির মধ্যে পরিবর্তন করুন",
+    "dark": "ডার্ক থিম পরিবর্তন করুন",
+    "about": "আমাদের সম্পর্কে",
+    "start": "শুরু করুন",
+    "startLabel": "শুরু করুন এবং লগইন খুলুন"
+  }
+}
