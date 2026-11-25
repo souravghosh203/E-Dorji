@@ -7,9 +7,9 @@
 
 | Use | HEX |
 | --- | --- |
-| Emerald | `#00695C` |
-| Teal | `#00796B` |
-| Deep teal | `#003F46` |
+| Rose maroon | `#B64E6B` |
+| Maroon | `#7A263F` |
+| Deep maroon | `#3D1424` |
 | Golden amber | `#FFB300` |
 | Charcoal | `#263238` |
 | White detail | `#FFFFFF` |

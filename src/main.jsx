@@ -1,9 +1,13 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import SiteNav from './SiteNav.jsx';
+import SiteFooter from './SiteFooter.jsx';
+import Dashboard from './Dashboard.jsx';
 import siteCopy from './data/site-copy.json';
 import dashboardCopy from './data/dashboard-copy.json';
 import './site-nav.css';
+import './site-footer.css';
+import './dashboard.css';
 
 window.siteCopy = siteCopy;
 window.applySiteLanguage = language => {
@@ -41,3 +45,9 @@ window.applySiteLanguage = language => {
 
 const mount = document.getElementById('site-nav-root');
 if (mount) createRoot(mount).render(<SiteNav page={mount.dataset.page || 'home'} />);
+
+const footerMount = document.getElementById('site-footer-root');
+if (footerMount) createRoot(footerMount).render(<SiteFooter />);
+
+const dashboardMount = document.getElementById('dashboard-root');
+if (dashboardMount) createRoot(dashboardMount).render(<Dashboard role={dashboardMount.dataset.role || 'customer'} />);
