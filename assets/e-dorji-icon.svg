@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="80 35 620 745" role="img" aria-labelledby="title">
+  <title id="title">E-দর্জি tailoring mark</title>
+  <defs>
+    <linearGradient id="emerald" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00796B"/><stop offset=".52" stop-color="#00695C"/><stop offset="1" stop-color="#003F46"/></linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2=".25"><stop offset="0" stop-color="#FFB300"/><stop offset="1" stop-color="#F59E0B"/></linearGradient>
+  </defs>
+  <g>
+    <path fill="url(#emerald)" d="M585 330H248c-72 0-116 45-116 119v221c0 74 44 119 116 119h337v-91H266c-31 0-44-15-44-45v-54h300v-87H222v-48c0-29 13-43 44-43h319z"/>
+    <path d="M365 226c-4-33 43-38 43-78 0-31-25-47-52-38-20 7-29 24-29 42" fill="none" stroke="url(#emerald)" stroke-width="26" stroke-linecap="round"/>
+    <path d="M365 220 143 329c-14 7-10 20 7 20h438c17 0 21-13 7-20L373 220" fill="none" stroke="url(#emerald)" stroke-width="25" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M101 565c142 17 286-115 535-126l21 67c-236 14-383 159-537 139-36-5-56-22-64-47-8-25 9-37 45-33z" fill="url(#gold)"/>
+    <g fill="none" stroke="#263238" stroke-width="8" stroke-linecap="round"><path d="m150 567 7 29"/><path d="m206 565 8 32"/><path d="m266 551 8 31"/><path d="m326 527 8 31"/><path d="m386 504 8 31"/><path d="m446 482 8 31"/><path d="m506 462 8 29"/><path d="m558 450 7 25"/></g>
+    <circle cx="443" cy="706" r="34" fill="#003F46" stroke="#E8F2EF" stroke-width="5"/>
+    <g fill="#FFFFFF"><circle cx="431" cy="694" r="5.5"/><circle cx="455" cy="694" r="5.5"/><circle cx="431" cy="718" r="5.5"/><circle cx="455" cy="718" r="5.5"/></g>
+  </g>
+</svg>

@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8">
+<html lang="en" data-theme="light"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>E-Dorji · ই-দর্জি</title>
+<title>E-দর্জি · E-Dorji</title>
+<link rel="icon" type="image/svg+xml" href="assets/e-dorji-icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+Bengali:wght@500;700&family=Hind+Siliguri:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#f8f3ea;--ink:#14301f;--mute:#5d685f;--acc:#8B2E3D;--card:#fffdf8;--line:#e6dccb;--btn:#14301f;--btnt:#f8f3ea;--sage:#dfe8d9;--peach:#f6dccf;--rose:#f4dcdc;--lav:#e6e0f3;--sky:#d9e8f0;--t1:#1f4a3a;--t2:#8a3a1f;--t3:#8b2e3d;--t4:#4b3a7a;--t5:#1d3f5a;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme=light]{--bg:#f8f3ea;--ink:#14301f;--mute:#5d685f;--acc:#8B2E3D;--card:#fffdf8;--line:#e6dccb;--btn:#14301f;--btnt:#f8f3ea;--sage:#dfe8d9;--peach:#f6dccf;--rose:#f4dcdc;--lav:#e6e0f3;--sky:#d9e8f0;--t1:#1f4a3a;--t2:#8a3a1f;--t3:#8b2e3d;--t4:#4b3a7a;--t5:#1d3f5a;color-scheme:light}
 @media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#101713;--ink:#eaf0e6;--mute:#a7b3a9;--acc:#e08a98;--card:#1b251f;--line:#2e3d33;--btn:#e9efe6;--btnt:#14301f;--sage:#22372b;--peach:#3a2a22;--rose:#3a2428;--lav:#2a2740;--sky:#1f3340;--t1:#bfe0c8;--t2:#f0b48f;--t3:#f0a3ae;--t4:#c9bdf0;--t5:#a9d0ea;color-scheme:dark}}
 :root[data-theme=dark]{--bg:#101713;--ink:#eaf0e6;--mute:#a7b3a9;--acc:#e08a98;--card:#1b251f;--line:#2e3d33;--btn:#e9efe6;--btnt:#14301f;--sage:#22372b;--peach:#3a2a22;--rose:#3a2428;--lav:#2a2740;--sky:#1f3340;--t1:#bfe0c8;--t2:#f0b48f;--t3:#f0a3ae;--t4:#c9bdf0;--t5:#a9d0ea;color-scheme:dark}
 *{box-sizing:border-box;margin:0}html{scroll-behavior:smooth;scroll-padding-top:96px}
@@ -13,21 +15,27 @@ h1,h2,h3{font-family:Newsreader,"Noto Serif Bengali",serif;font-weight:500;lette
 button,input,select{font:inherit;color:inherit}button{cursor:pointer}a{color:inherit}
 :focus-visible{outline:2px solid var(--acc);outline-offset:3px}
 .mono,.tag,.bdg{font:500 12.5px "JetBrains Mono",monospace;letter-spacing:.13em;text-transform:uppercase}
-.nav{position:sticky;top:14px;z-index:20;margin:14px auto 0;width:min(1240px,calc(100% - 32px));display:flex;align-items:center;gap:22px;padding:9px 12px 9px 24px;background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:99px;box-shadow:0 14px 30px -24px #000}
-.lg{display:flex;align-items:center;gap:10px;font:600 22px "Instrument Sans";text-decoration:none;margin-right:auto}
+.nav{position:sticky;top:14px;z-index:20;margin:14px auto 0;width:min(1240px,calc(100% - 32px));display:flex;align-items:center;gap:22px;padding:9px 12px 9px 24px;background:transparent;backdrop-filter:none;border:1px solid transparent;border-radius:99px;box-shadow:none;transition:background .22s,border-color .22s,backdrop-filter .22s,box-shadow .22s}
+.nav.scrolled{background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(14px);border-color:color-mix(in srgb,var(--line) 62%,transparent);box-shadow:0 14px 30px -24px #000}
+.lg{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto}
+.brand-picture{display:block;width:86px}
+.brand-logo{display:block;width:100%;height:auto}
 .lk{display:flex;gap:28px;margin:0 auto}.lk a{text-decoration:none;font-size:16px}.lk a:hover{color:var(--acc)}
 .pill{padding:10px 20px;border-radius:99px;border:1px solid color-mix(in srgb,var(--acc) 35%,transparent);background:color-mix(in srgb,var(--acc) 12%,var(--card));color:var(--acc);text-decoration:none;font-weight:600;font-size:15px}
 .ib{width:40px;height:40px;border-radius:50%;border:0;background:none;display:grid;place-items:center}.ib:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .hero{width:min(1240px,calc(100% - 48px));margin:auto;display:grid;grid-template-columns:1.05fr .95fr;gap:20px;min-height:calc(100vh - 90px);align-items:center;padding:30px 0 50px}
-.mono{color:var(--t1)}.bn{font:700 44px "Noto Serif Bengali",serif;margin-top:22px}
-.wm{font:400 clamp(84px,13vw,176px)/.95 Newsreader,serif;letter-spacing:-.045em}.wm i{color:var(--acc);font-weight:400}
+.mono{color:var(--t1)}.bn{display:none}
+.hero-kicker{display:flex;align-items:center;gap:12px;color:#bd8750;font:500 12px "JetBrains Mono",monospace;letter-spacing:.16em;text-transform:uppercase}
+.hero-kicker:before{content:"";width:38px;border-top:1.5px solid currentColor}
+.hero-title{margin:24px 0 20px;color:#262522;font:400 clamp(50px,5.8vw,76px)/.94 Newsreader,serif;letter-spacing:-.055em}
+.hero-title i{color:var(--t1);font-weight:400}
+.hero-copy{max-width:34em;margin:0 0 24px;color:var(--mute);font-size:18px;line-height:1.75}
 .sub{font-size:clamp(20px,2.1vw,29px);line-height:1.4;color:var(--mute);max-width:20em;margin:26px 0}
 .pills{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px}.pills button{border:1px solid var(--line);background:color-mix(in srgb,var(--card) 70%,transparent);border-radius:99px;padding:10px 20px;font-size:17px}.pills button[aria-pressed=true]{background:var(--sage);border-color:color-mix(in srgb,var(--t1) 30%,transparent);color:var(--t1)}.pills small{font:500 11px "JetBrains Mono";color:var(--t4)}
 .cta{display:flex;gap:14px;flex-wrap:wrap}
 .pb{display:inline-flex;gap:8px;align-items:center;padding:16px 32px;border-radius:99px;border:1px solid var(--ink);text-decoration:none;font-weight:600;font-size:18px;background:none;transition:transform .2s}.pb:hover{transform:translateY(-2px)}
 .pb.dk{background:linear-gradient(180deg,color-mix(in srgb,var(--btn) 86%,#fff),var(--btn));color:var(--btnt);border-color:var(--btn);box-shadow:0 14px 26px -16px var(--btn)}
 .scene{position:relative}.scene>svg{width:100%;height:auto;display:block;overflow:visible;touch-action:pan-y;cursor:grab}
-.blob{position:absolute;inset:6% 4% 14%;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--sage) 90%,transparent),transparent 68%);filter:blur(10px)}
 .bdg{position:absolute;top:0;right:0;border:1px dashed var(--t4);color:var(--t4);background:color-mix(in srgb,var(--lav) 70%,transparent);padding:5px 12px;border-radius:99px;font-size:11.5px}
 .gw{filter:drop-shadow(0 22px 16px rgba(50,30,25,.2))}
 .sc{transform-box:fill-box;transform-origin:center;animation:fl var(--t) ease-in-out infinite}@keyframes fl{50%{transform:translate(var(--x),var(--y)) rotate(var(--r))}}
@@ -35,6 +43,13 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}a{color:inh
 .ds{display:flex;gap:10px;align-items:center}.ds i{width:11px;height:6px;border-radius:3px;background:color-mix(in srgb,var(--ink) 22%,transparent);transition:width .3s}.ds i.on{width:30px;background:var(--t1)}
 .hint{position:absolute;right:0;bottom:2px;border:0;background:none;color:var(--mute);display:flex;gap:8px;align-items:center;font-size:15px}
 .sec{width:min(1240px,calc(100% - 48px));margin:auto;padding:70px 0}.sec>h2{font-size:clamp(34px,4vw,52px);font-weight:400;margin-bottom:26px}
+body:not(.customer-view) #all,body:not(.customer-view) #product,body:not(.customer-view) footer{display:none}
+.how{width:100%;margin:24px 0 0;padding:clamp(54px,7vw,88px) max(24px,calc((100% - 1240px)/2));background:#153f36;color:#f6f1e8;scroll-margin-top:92px}
+.how-head{margin-bottom:38px}.how-kicker{display:flex;align-items:center;gap:12px;color:#e0a065;font:600 12px "JetBrains Mono",monospace;letter-spacing:.16em;text-transform:uppercase}.how-kicker:before{content:"";width:38px;border-top:1px solid currentColor}
+.how h2{font-size:clamp(38px,5vw,58px);font-weight:400;letter-spacing:-.035em;margin:12px 0}.how-intro{color:#d3dfd9;font-size:17px}
+.how-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:24px;margin-top:36px}.how-step{border-top:1px solid #ffffff40;padding:35px 0 38px}
+.how-step .num{display:flex;align-items:center;gap:10px;color:#e0a065;font:400 36px/1 Newsreader,serif}.how-step .num svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.how-step h3{font-size:27px;color:#fff;font-weight:500;margin:23px 0 12px}.how-step p{max-width:31em;color:#d3dfd9;line-height:1.7}
 .eg{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
 .ec{display:flex;gap:14px;align-items:center;text-align:left;padding:18px;border-radius:22px;border:1px solid color-mix(in srgb,var(--ink) 8%,transparent);min-height:106px;transition:transform .25s,box-shadow .25s;background:var(--bg0)}
 .ec:hover{transform:translateY(-4px);box-shadow:0 18px 30px -22px #000}.ec .ico{flex:none;width:46px;height:46px;border-radius:14px;background:var(--card);display:grid;place-items:center;color:var(--tc)}.ec b{display:block;font:600 18px/1.2 "Instrument Sans";color:var(--tc)}.ec span{font-size:14px;color:var(--mute);line-height:1.35;display:block;margin-top:3px}
@@ -62,22 +77,23 @@ svg text{fill:var(--mute);font:11px "JetBrains Mono"}.bar{fill:var(--t2);transfo
 .msg{padding:9px 14px;border-radius:16px;margin:8px 0;max-width:86%;background:var(--card);font-size:15.5px}.msg.u{margin-left:auto;background:var(--btn);color:var(--btnt)}
 footer{width:min(1240px,calc(100% - 48px));margin:auto;padding:30px 0 50px;border-top:1px solid var(--line);color:var(--mute);font-size:14px}
 #toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,90px);background:var(--btn);color:var(--btnt);padding:11px 22px;border-radius:99px;transition:.35s;z-index:30}#toast.on{transform:translate(-50%,0)}
-@media(max-width:960px){.hero,.pg,.pl{grid-template-columns:1fr}.lk{display:none}.eg{grid-template-columns:repeat(2,1fr)}.side{position:static}.nav .pill{display:none}.nav{padding-left:18px}#pn{padding:22px}}
-@media(max-width:520px){.eg{grid-template-columns:1fr}}
+@media(max-width:960px){.hero{grid-template-columns:1.05fr .95fr;gap:12px}.hero-title{font-size:clamp(48px,5.8vw,64px)}.pg,.pl{grid-template-columns:1fr}.lk{display:none}.eg{grid-template-columns:repeat(2,1fr)}.side{position:static}.nav .pill{display:none}.nav{padding-left:18px}#pn{padding:22px}}
+@media(max-width:700px){.hero{grid-template-columns:1fr;min-height:auto;padding:18px 0 42px;gap:8px}.hero>div:first-child{grid-row:2}.hero>div:nth-child(2){grid-row:1}.hero .scene{max-width:400px;margin:0 auto}.hero-title{font-size:clamp(44px,12vw,62px);margin:18px 0 14px}.hero-copy{font-size:16px}.how{padding:48px 24px}.how-grid{grid-template-columns:1fr}.how-step{padding:28px 0}}
+@media(max-width:520px){.brand-picture{width:32px}.eg{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body>
-<header class="nav"><a class="lg" href="#top"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="13" cy="13" r="10"/><circle cx="19.5" cy="4.5" r="2.4" fill="#8B2E3D" stroke="none"/></svg>E-Dorji</a>
-<nav class="lk"><a href="#product" data-p="0" data-i="n1">Find tailors</a><a href="#product" data-p="1" data-i="n2">Design studio</a><a href="#product" data-p="2" data-i="n3">Orders</a><a href="#product" data-p="3" data-i="n4">Tailor desk</a></nav>
+<header class="nav"><a class="lg" href="#top"><picture class="brand-picture"><source media="(max-width:520px)" srcset="assets/e-dorji-icon.svg"><img class="brand-logo" src="assets/e-dorji-logo.svg" alt="E-দর্জি"></picture></a>
+<nav class="lk"><a href="#all" data-i="navall">Everything</a><a href="#product" data-p="0" data-i="n1">Find tailors</a><a href="#product" data-p="1" data-i="n2">Design studio</a><a href="#product" data-p="2" data-i="n3">Orders</a><a href="#product" data-p="3" data-i="n4">Tailor desk</a></nav>
 <a class="pill" href="#product" data-p="2" data-i="n5">Customer dashboard</a>
 <button class="ib" id="lgb" aria-label="Switch language"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 5h9M8.5 3v2M6 5c1 4 3 6 6 8M12 5c-1 4-3 7-7 9M13 21l4-10 4 10M14.5 17.5h5"/></svg></button>
 <button class="ib" id="th" aria-label="Toggle dark mode"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg></button></header>
 
 <main id="top"><section class="hero"><div>
-<p class="mono" data-i="eb">Working demo · Bangladesh tailors · Panjabi &amp; saree</p><p class="bn">ই-দর্জি</p>
-<h1 class="wm">E-<i>Dorji</i></h1>
-<p class="sub" data-i="sub">A tailor, a design studio and an order tracker on every customer’s phone, in their own language.</p>
-<div class="pills" id="pills"><button aria-pressed="true" data-l="en">English</button><button aria-pressed="false" data-l="bn">বাংলা</button><button data-x>हिन्दी <small>PREVIEW</small></button><button data-x>اردو <small>PREVIEW</small></button></div>
-<div class="cta"><a class="pb dk" href="#product" data-p="1" data-i="c1">Try the design studio →</a><a class="pb" href="#all" data-i="c2">See everything it does</a></div></div>
+<p class="hero-kicker">The art of personal tailoring</p>
+<h1 class="hero-title">Your Style.<br><i>Crafted by</i><br>Skilled Hands.</h1>
+<p class="hero-copy">Discover Bangladesh’s finest tailoring artisans. From a timeless Panjabi to your dream outfit, find the hands that bring your style to life.</p>
+<div class="pills" id="pills"><button aria-pressed="true" data-l="en">English</button><button aria-pressed="false" data-l="bn">বাংলা</button></div>
+<div class="cta"><a class="pb dk" href="#product" data-p="1" data-i="c1">Try the design studio →</a><a class="pb" href="#how">How it work</a></div></div>
 <div><div class="scene" id="scene"><div class="blob"></div>
 <svg viewBox="0 0 520 560" role="img" aria-label="A Panjabi and a saree hanging from hangers on a rail. Move your cursor over them and they swing.">
 <defs><pattern id="zr" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1.8" fill="#e7c98f"/></pattern></defs>
@@ -103,6 +119,13 @@ footer{width:min(1240px,calc(100% - 48px));margin:auto;padding:30px 0 50px;borde
 </svg><span class="bdg">Illustration</span><button class="hint" id="gust"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V5a1.5 1.5 0 0 1 3 0v6M11 10V3.5a1.5 1.5 0 0 1 3 0V11M14 10V5a1.5 1.5 0 0 1 3 0v7a7 7 0 0 1-7 7c-3 0-4-1.5-6-5l-1-2a1.5 1.5 0 0 1 2.5-1.5L8 13"/></svg><span data-i="ht">Touch the clothes</span></button></div>
 <div class="cap"><span class="mono" id="cn"></span><h3 id="ct"></h3><div class="ds" id="ds"><i></i><i></i><i></i></div></div></div></section>
 
+<section class="how" id="how" aria-labelledby="how-title"><div class="how-head"><p class="how-kicker">Simple, thoughtful, personal</p><h2 id="how-title">Custom made, made easy.</h2><p class="how-intro">From inspiration to your doorstep, every step is clear.</p></div>
+<div class="how-grid">
+<article class="how-step"><div class="num">01 <svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg></div><h3>Find your artisan</h3><p>Explore local tailors, their specialties, portfolios and customer reviews.</p></article>
+<article class="how-step"><div class="num">02 <svg viewBox="0 0 24 24"><path d="m14 5 5 5M4 20l4.5-1 11-11a2.1 2.1 0 0 0-3-3l-11 11L4 20Z"/></svg></div><h3>Share your vision</h3><p>Send your design, garment details and measurements. Let your ideas take shape.</p></article>
+<article class="how-step"><div class="num">03 <svg viewBox="0 0 24 24"><path d="m12 3 1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3Z"/><path d="m19 16 .8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"/></svg></div><h3>Agree &amp; create</h3><p>Confirm your tailor’s price and timeline, then follow the making journey.</p></article>
+<article class="how-step"><div class="num">04 <svg viewBox="0 0 24 24"><path d="M20.8 8.8c0 5.4-8.8 11-8.8 11s-8.8-5.6-8.8-11A4.8 4.8 0 0 1 12 6.4a4.8 4.8 0 0 1 8.8 2.4Z"/></svg></div><h3>Wear it proudly</h3><p>Receive a garment made with skill, care and a little piece of your story.</p></article>
+</div></section>
 <section class="sec" id="all"><h2 data-i="e1">Everything you can do</h2><div class="eg" id="eg"></div></section>
 
 <section class="sec" id="product"><div class="pg"><div class="side"><p class="mono" style="display:flex;align-items:center;gap:12px"><span style="width:40px;border-top:1.5px solid currentColor"></span>The product</p>
@@ -112,6 +135,7 @@ footer{width:min(1240px,calc(100% - 48px));margin:auto;padding:30px 0 50px;borde
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const nav=$('.nav'),syncNav=()=>nav.classList.toggle('scrolled',window.scrollY>12);window.addEventListener('scroll',syncNav,{passive:true});syncNav();
 const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),2400)};
 const ic=d=>`<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
 const I={s:'<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>',b:'<path d="M21 8 12 3 3 8v8l9 5 9-5Z"/><path d="m3 8 9 5 9-5M12 13v8"/>',r:'<path d="M6 3h12v18l-3-2-3 2-3-2-3 2Z"/><path d="M9 8h6M9 12h6"/>',c:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',m:'<path d="M21 12a8 8 0 0 1-12 7l-5 1 1-4a8 8 0 1 1 16-4Z"/>',x:'<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12"/>',l:'<path d="M4 5h9M8.5 3v2M6 5c1 4 3 6 6 8M12 5c-1 4-3 7-7 9M13 21l4-10 4 10M14.5 17.5h5"/>'};
@@ -120,7 +144,7 @@ const T={bn:{n1:'দর্জি খুঁজুন',n2:'ডিজাইন স�
 $$('[data-i]').forEach(e=>(T.en=T.en||{})[e.dataset.i]=e.textContent);
 function setL(l){document.documentElement.lang=l;$$('[data-i]').forEach(e=>e.textContent=T[l][e.dataset.i]||T.en[e.dataset.i]);$$('#pills [data-l]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.l==l));L=l}let L='en';
 $('#lgb').onclick=()=>setL(L=='en'?'bn':'en');$$('#pills [data-l]').forEach(b=>b.onclick=()=>setL(b.dataset.l));$$('#pills [data-x]').forEach(b=>b.onclick=()=>toast('This language is a preview and not available yet'));
-$('#th').onclick=()=>{const r=document.documentElement,d=r.dataset.theme?r.dataset.theme=='dark':matchMedia('(prefers-color-scheme:dark)').matches;r.dataset.theme=d?'light':'dark'};
+$('#th').onclick=()=>{const r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark'};
 /* hanging clothes: spring physics, reacts to the cursor */
 class Sp{constructor(k,d){this.k=k;this.d=d;this.a=0;this.w=0}step(t,dt){this.w+=(-this.k*(this.a-t)-this.d*this.w)*dt;this.a+=this.w*dt}}
 const SC=$('#scene'),gs=$$('#scene [data-g]').map(el=>({el,px:+el.dataset.x,m:new Sp(20,1.5),p:[...el.querySelectorAll('[data-s]')].map(q=>({q,sp:new Sp(30,2),ox:+q.dataset.ox,oy:+q.dataset.oy,g:+q.dataset.gain}))}));
@@ -151,7 +175,9 @@ let cur=-1,raf3;
 function go(i){cur=i;cancelAnimationFrame(raf3);$('#tabs').innerHTML=NM.map((n,k)=>`<button data-k="${k}" aria-current="${k==i}"><span class="no">${n[0]}</span><span class="sq">${ic(I[n[1]])}</span>${n[2]}</button>`).join('');const pn=$('#pn');pn.className='c'+[0,3,4,1,2][i];pn.style.animation='none';pn.offsetWidth;pn.style.animation='';pn.innerHTML=P[i]();
 if(i==0){tl();$('#q').oninput=tl;$('#so').onchange=tl}if(i==1)studio();if(i==3){for(let d=1;d<=28;d++){const b=document.createElement('button');b.textContent=d;if([9,10,21].includes(d))b.className='f';b.onclick=()=>b.classList.toggle('x');$('#cal').append(b)}}
 if(i==4){$('#cs').onclick=ask;$('#ci').onkeydown=e=>{if(e.key=='Enter')ask()}}}
-$('#tabs').onclick=e=>{const b=e.target.closest('[data-k]');if(b)go(+b.dataset.k)};$$('[data-p]').forEach(a=>a.onclick=()=>go(+a.dataset.p));
+$('#tabs').onclick=e=>{const b=e.target.closest('[data-k]');if(b)go(+b.dataset.k)};$$('[data-p]').forEach(a=>a.onclick=e=>{e.preventDefault();document.body.classList.add('customer-view');go(+a.dataset.p);$('#product').scrollIntoView({behavior:'smooth'})});
+$$('a[href="#all"]').forEach(a=>a.onclick=e=>{e.preventDefault();document.body.classList.add('customer-view');$('#all').scrollIntoView({behavior:'smooth'})});
+$('.lg').onclick=e=>{if(!document.body.classList.contains('customer-view'))return;e.preventDefault();document.body.classList.remove('customer-view');history.replaceState(null,'','#top');window.scrollTo({top:0,behavior:'smooth'})};
 function tl(){const q=$('#q').value.toLowerCase(),s=$('#so').value;const d=TL.filter(t=>(t.join(' ')).toLowerCase().includes(q)).sort((a,b)=>s=='d'?a[6]-b[6]:s=='p'?a[7]-b[7]:b[4]-a[4]);$('#tl').innerHTML=d.length?d.map(t=>`<div class="tm"><div class="av">${t[0][0]}</div><div><b>${t[0]}</b> <span class="mono" style="font-size:10px;color:var(--t1)">Demo verified</span><small>${t[2]} · ${t[3]}</small><small>★ ${t[4]} (${t[5]} demo reviews) · ~${t[6]} days · from ৳${t[7]}</small></div><button class="sm" onclick="toast('Hire request started with ${t[0]}')">Hire</button></div>`).join(''):'<p style="padding:14px">No demo tailors match.</p>'}
 function ask(){const v=$('#ci').value.trim();if(!v)return;const l=$('#log');l.insertAdjacentHTML('beforeend','<div class="msg u"></div>');l.lastChild.textContent=v;$('#ci').value='';const g=/panjabi/i.test(v)?'Panjabi':/saree|blouse/i.test(v)?'Saree blouse':'Salwar Kameez';setTimeout(()=>l.insertAdjacentHTML('beforeend',`<div class="msg">A ${g} suits that. Browse tailors for it, then ask for a written proposal. Prices and dates come only from the tailor.</div>`),500)}
 /* 3D studio */
