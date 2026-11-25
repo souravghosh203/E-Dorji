@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>E-Dorji · ই-দর্জি</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+Bengali:wght@500;700&family=Hind+Siliguri:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f8f3ea;--ink:#14301f;--mute:#5d685f;--acc:#8B2E3D;--card:#fffdf8;--line:#e6dccb;--btn:#14301f;--btnt:#f8f3ea;--sage:#dfe8d9;--peach:#f6dccf;--rose:#f4dcdc;--lav:#e6e0f3;--sky:#d9e8f0;--t1:#1f4a3a;--t2:#8a3a1f;--t3:#8b2e3d;--t4:#4b3a7a;--t5:#1d3f5a;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#101713;--ink:#eaf0e6;--mute:#a7b3a9;--acc:#e08a98;--card:#1b251f;--line:#2e3d33;--btn:#e9efe6;--btnt:#14301f;--sage:#22372b;--peach:#3a2a22;--rose:#3a2428;--lav:#2a2740;--sky:#1f3340;--t1:#bfe0c8;--t2:#f0b48f;--t3:#f0a3ae;--t4:#c9bdf0;--t5:#a9d0ea;color-scheme:dark}}
+:root[data-theme=dark]{--bg:#101713;--ink:#eaf0e6;--mute:#a7b3a9;--acc:#e08a98;--card:#1b251f;--line:#2e3d33;--btn:#e9efe6;--btnt:#14301f;--sage:#22372b;--peach:#3a2a22;--rose:#3a2428;--lav:#2a2740;--sky:#1f3340;--t1:#bfe0c8;--t2:#f0b48f;--t3:#f0a3ae;--t4:#c9bdf0;--t5:#a9d0ea;color-scheme:dark}
+*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{font:17px/1.55 "Instrument Sans","Hind Siliguri",system-ui,sans-serif;color:var(--ink);min-height:100vh;background:radial-gradient(55% 45% at 88% 0,color-mix(in srgb,var(--sky) 90%,transparent),transparent),radial-gradient(45% 40% at 0 25%,color-mix(in srgb,var(--peach) 80%,transparent),transparent),repeating-linear-gradient(transparent 0 33px,color-mix(in srgb,var(--ink) 4%,transparent) 33px 34px),var(--bg)}
+h1,h2,h3{font-family:Newsreader,"Noto Serif Bengali",serif;font-weight:500;letter-spacing:-.02em;line-height:1.1}
+button,input,select{font:inherit;color:inherit}button{cursor:pointer}a{color:inherit}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.mono,.tag,.bdg{font:500 12.5px "JetBrains Mono",monospace;letter-spacing:.13em;text-transform:uppercase}
+.nav{position:sticky;top:14px;z-index:20;margin:14px auto 0;width:min(1240px,calc(100% - 32px));display:flex;align-items:center;gap:22px;padding:9px 12px 9px 24px;background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:99px;box-shadow:0 14px 30px -24px #000}
+.lg{display:flex;align-items:center;gap:10px;font:600 22px "Instrument Sans";text-decoration:none;margin-right:auto}
+.lk{display:flex;gap:28px;margin:0 auto}.lk a{text-decoration:none;font-size:16px}.lk a:hover{color:var(--acc)}
+.pill{padding:10px 20px;border-radius:99px;border:1px solid color-mix(in srgb,var(--acc) 35%,transparent);background:color-mix(in srgb,var(--acc) 12%,var(--card));color:var(--acc);text-decoration:none;font-weight:600;font-size:15px}
+.ib{width:40px;height:40px;border-radius:50%;border:0;background:none;display:grid;place-items:center}.ib:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.hero{width:min(1240px,calc(100% - 48px));margin:auto;display:grid;grid-template-columns:1.05fr .95fr;gap:20px;min-height:calc(100vh - 90px);align-items:center;padding:30px 0 50px}
+.mono{color:var(--t1)}.bn{font:700 44px "Noto Serif Bengali",serif;margin-top:22px}
+.wm{font:400 clamp(84px,13vw,176px)/.95 Newsreader,serif;letter-spacing:-.045em}.wm i{color:var(--acc);font-weight:400}
+.sub{font-size:clamp(20px,2.1vw,29px);line-height:1.4;color:var(--mute);max-width:20em;margin:26px 0}
+.pills{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px}.pills button{border:1px solid var(--line);background:color-mix(in srgb,var(--card) 70%,transparent);border-radius:99px;padding:10px 20px;font-size:17px}.pills button[aria-pressed=true]{background:var(--sage);border-color:color-mix(in srgb,var(--t1) 30%,transparent);color:var(--t1)}.pills small{font:500 11px "JetBrains Mono";color:var(--t4)}
+.cta{display:flex;gap:14px;flex-wrap:wrap}
+.pb{display:inline-flex;gap:8px;align-items:center;padding:16px 32px;border-radius:99px;border:1px solid var(--ink);text-decoration:none;font-weight:600;font-size:18px;background:none;transition:transform .2s}.pb:hover{transform:translateY(-2px)}
+.pb.dk{background:linear-gradient(180deg,color-mix(in srgb,var(--btn) 86%,#fff),var(--btn));color:var(--btnt);border-color:var(--btn);box-shadow:0 14px 26px -16px var(--btn)}
+.scene{position:relative}.scene>svg{width:100%;height:auto;display:block;overflow:visible;touch-action:pan-y;cursor:grab}
+.blob{position:absolute;inset:6% 4% 14%;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--sage) 90%,transparent),transparent 68%);filter:blur(10px)}
+.bdg{position:absolute;top:0;right:0;border:1px dashed var(--t4);color:var(--t4);background:color-mix(in srgb,var(--lav) 70%,transparent);padding:5px 12px;border-radius:99px;font-size:11.5px}
+.gw{filter:drop-shadow(0 22px 16px rgba(50,30,25,.2))}
+.sc{transform-box:fill-box;transform-origin:center;animation:fl var(--t) ease-in-out infinite}@keyframes fl{50%{transform:translate(var(--x),var(--y)) rotate(var(--r))}}
+.cap{margin-top:6px}.cap .mono{display:block}.cap h3{font-size:clamp(24px,2.6vw,34px);font-weight:400;margin:6px 0 14px}
+.ds{display:flex;gap:10px;align-items:center}.ds i{width:11px;height:6px;border-radius:3px;background:color-mix(in srgb,var(--ink) 22%,transparent);transition:width .3s}.ds i.on{width:30px;background:var(--t1)}
+.hint{position:absolute;right:0;bottom:2px;border:0;background:none;color:var(--mute);display:flex;gap:8px;align-items:center;font-size:15px}
+.sec{width:min(1240px,calc(100% - 48px));margin:auto;padding:70px 0}.sec>h2{font-size:clamp(34px,4vw,52px);font-weight:400;margin-bottom:26px}
+.eg{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.ec{display:flex;gap:14px;align-items:center;text-align:left;padding:18px;border-radius:22px;border:1px solid color-mix(in srgb,var(--ink) 8%,transparent);min-height:106px;transition:transform .25s,box-shadow .25s;background:var(--bg0)}
+.ec:hover{transform:translateY(-4px);box-shadow:0 18px 30px -22px #000}.ec .ico{flex:none;width:46px;height:46px;border-radius:14px;background:var(--card);display:grid;place-items:center;color:var(--tc)}.ec b{display:block;font:600 18px/1.2 "Instrument Sans";color:var(--tc)}.ec span{font-size:14px;color:var(--mute);line-height:1.35;display:block;margin-top:3px}
+.c0{--bg0:var(--sage);--tc:var(--t1)}.c1{--bg0:var(--peach);--tc:var(--t2)}.c2{--bg0:var(--rose);--tc:var(--t3)}.c3{--bg0:var(--lav);--tc:var(--t4)}.c4{--bg0:var(--sky);--tc:var(--t5)}
+.pg{display:grid;grid-template-columns:400px 1fr;gap:50px;align-items:start}.side{position:sticky;top:100px}
+.side h2{font-size:clamp(40px,4.6vw,64px);margin:16px 0 30px;font-weight:500}.side h2 i{color:var(--t1);font-weight:400}
+.tabs button{display:flex;align-items:center;gap:14px;width:100%;padding:11px 12px;border:0;border-radius:16px;background:none;font:500 18px "Instrument Sans";text-align:left}.tabs button[aria-current=true]{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.tabs .no{font:500 13px "JetBrains Mono";color:var(--mute);width:20px}.tabs .sq{width:42px;height:42px;border-radius:12px;background:var(--ink);color:var(--bg);display:grid;place-items:center}
+#pn{border-radius:34px;padding:34px;border:1px solid color-mix(in srgb,var(--ink) 8%,transparent);min-height:560px;box-shadow:0 34px 60px -44px #000;background:var(--bg0);animation:in .5s both}@keyframes in{from{opacity:.4;transform:translateY(10px)}}
+.pl{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:start}.pl hr{border:0;border-top:1.5px solid var(--tc);margin-bottom:16px}.pl .n{color:var(--tc)}.pl h3{font-size:42px;margin:6px 0 12px;font-weight:400}.pl p{color:var(--mute)}
+.tag{display:inline-block;border:1px solid color-mix(in srgb,var(--ink) 18%,transparent);border-radius:99px;padding:5px 12px;margin:14px 0 0;font-size:11.5px}
+.in{background:var(--card);border-radius:22px;padding:14px 18px}
+.tm{display:grid;grid-template-columns:46px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}.tm:last-child{border:0}
+.av{width:46px;height:46px;border-radius:50%;background:var(--acc);color:#fff;display:grid;place-items:center;font:500 20px Newsreader}.tm small{color:var(--mute);display:block;font-size:13.5px}
+.sm{border:1px solid var(--ink);background:none;border-radius:99px;padding:6px 16px;font-size:14px;font-weight:600}.sm:hover{background:var(--btn);color:var(--btnt)}
+.fld{display:flex;gap:8px;margin:16px 0 6px}.fld input,.fld select{flex:1;min-width:0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 14px}
+#cv{aspect-ratio:1/1.1;border-radius:24px;background:radial-gradient(circle at 50% 38%,color-mix(in srgb,var(--card) 80%,transparent),transparent 72%);cursor:grab;position:relative}
+.sw{width:30px;height:30px;border-radius:50%;border:2px solid var(--card);box-shadow:0 0 0 1px var(--line);margin-right:6px}.sw[aria-pressed=true]{box-shadow:0 0 0 2px var(--ink)}
+.sg{display:flex;gap:6px;margin:10px 0;align-items:center;flex-wrap:wrap}.sg label{width:64px;font-size:14px;color:var(--mute)}.sg button.o{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:4px 14px;font-size:14px}.sg button.o[aria-pressed=true]{background:var(--btn);color:var(--btnt);border-color:var(--btn)}
+.tl{list-style:none;padding:0}.tl li{padding:0 0 11px 28px;position:relative;font-size:15px;color:var(--mute)}.tl li:before{content:"";position:absolute;left:0;top:6px;width:12px;height:12px;border-radius:50%;border:2px solid var(--tc)}.tl li.d{color:var(--ink)}.tl li.d:before{background:var(--tc)}.tl li.c{color:var(--ink);font-weight:600}.tl li.c:before{background:var(--ink);border-color:var(--ink);box-shadow:0 0 0 5px color-mix(in srgb,var(--tc) 30%,transparent);animation:pu 2s infinite}@keyframes pu{50%{box-shadow:0 0 0 9px transparent}}
+.dr{display:grid;grid-template-columns:128px 1fr;gap:12px;align-items:center;background:#14231b;border-radius:16px;padding:6px;margin-bottom:8px;color:#f4efe5}.dr em{font-style:normal;padding:13px 12px;border-radius:11px;font-weight:600;font-size:15px;color:#14301f}.dr b{font:400 29px Newsreader}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.cal button{aspect-ratio:1;border:0;border-radius:9px;background:var(--card);font-size:12.5px}.cal button.x{background:var(--mute);color:var(--bg);text-decoration:line-through}.cal button.f{background:var(--t2);color:#fff}
+.kp{display:flex;gap:10px;margin:0 0 14px}.kp div{flex:1;background:var(--card);border-radius:16px;padding:12px}.kp b{display:block;font:400 28px Newsreader}.kp span{font-size:13px;color:var(--mute)}
+svg text{fill:var(--mute);font:11px "JetBrains Mono"}.bar{fill:var(--t2);transform-origin:bottom;transform-box:fill-box;animation:gr .9s both}@keyframes gr{from{transform:scaleY(0)}}
+.msg{padding:9px 14px;border-radius:16px;margin:8px 0;max-width:86%;background:var(--card);font-size:15.5px}.msg.u{margin-left:auto;background:var(--btn);color:var(--btnt)}
+footer{width:min(1240px,calc(100% - 48px));margin:auto;padding:30px 0 50px;border-top:1px solid var(--line);color:var(--mute);font-size:14px}
+#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,90px);background:var(--btn);color:var(--btnt);padding:11px 22px;border-radius:99px;transition:.35s;z-index:30}#toast.on{transform:translate(-50%,0)}
+@media(max-width:960px){.hero,.pg,.pl{grid-template-columns:1fr}.lk{display:none}.eg{grid-template-columns:repeat(2,1fr)}.side{position:static}.nav .pill{display:none}.nav{padding-left:18px}#pn{padding:22px}}
+@media(max-width:520px){.eg{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<header class="nav"><a class="lg" href="#top"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="13" cy="13" r="10"/><circle cx="19.5" cy="4.5" r="2.4" fill="#8B2E3D" stroke="none"/></svg>E-Dorji</a>
+<nav class="lk"><a href="#product" data-p="0" data-i="n1">Find tailors</a><a href="#product" data-p="1" data-i="n2">Design studio</a><a href="#product" data-p="2" data-i="n3">Orders</a><a href="#product" data-p="3" data-i="n4">Tailor desk</a></nav>
+<a class="pill" href="#product" data-p="2" data-i="n5">Customer dashboard</a>
+<button class="ib" id="lgb" aria-label="Switch language"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 5h9M8.5 3v2M6 5c1 4 3 6 6 8M12 5c-1 4-3 7-7 9M13 21l4-10 4 10M14.5 17.5h5"/></svg></button>
+<button class="ib" id="th" aria-label="Toggle dark mode"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg></button></header>
+
+<main id="top"><section class="hero"><div>
+<p class="mono" data-i="eb">Working demo · Bangladesh tailors · Panjabi &amp; saree</p><p class="bn">ই-দর্জি</p>
+<h1 class="wm">E-<i>Dorji</i></h1>
+<p class="sub" data-i="sub">A tailor, a design studio and an order tracker on every customer’s phone, in their own language.</p>
+<div class="pills" id="pills"><button aria-pressed="true" data-l="en">English</button><button aria-pressed="false" data-l="bn">বাংলা</button><button data-x>हिन्दी <small>PREVIEW</small></button><button data-x>اردو <small>PREVIEW</small></button></div>
+<div class="cta"><a class="pb dk" href="#product" data-p="1" data-i="c1">Try the design studio →</a><a class="pb" href="#all" data-i="c2">See everything it does</a></div></div>
+<div><div class="scene" id="scene"><div class="blob"></div>
+<svg viewBox="0 0 520 560" role="img" aria-label="A Panjabi and a saree hanging from hangers on a rail. Move your cursor over them and they swing.">
+<defs><pattern id="zr" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1.8" fill="#e7c98f"/></pattern></defs>
+<g id="sc2"></g>
+<path d="M30 0V58M490 0V58" stroke="#b08a5a" stroke-width="3"/><rect x="18" y="56" width="484" height="9" rx="4.5" fill="#b08a5a"/>
+<ellipse cx="260" cy="528" rx="190" ry="12" fill="rgba(60,40,30,.12)"/>
+<g data-g data-x="165"><g class="gw"><path d="M0 30V6C0-10-15-10-15 0" fill="none" stroke="#6b5a48" stroke-width="3.5" stroke-linecap="round"/>
+<g data-s data-ox="-58" data-oy="72" data-gain="1.7"><path d="M-58 72L-112 240L-86 252L-62 150Z" fill="#1b4133"/><path d="M-112 240L-86 252" stroke="#d8b27a" stroke-width="6"/></g>
+<g data-s data-ox="58" data-oy="72" data-gain="1.7"><path d="M58 72L112 240L86 252L62 150Z" fill="#1b4133"/><path d="M112 240L86 252" stroke="#d8b27a" stroke-width="6"/></g>
+<path d="M-58 72L-20 66Q0 84 20 66L58 72L66 130L62 290Q70 300 78 312Q0 330-78 312Q-70 300-62 290L-66 130Z" fill="#1f4a3a"/>
+<path d="M-32 100Q-36 200-42 300M34 100Q38 200 44 300" stroke="#2f6a53" stroke-width="3" fill="none" opacity=".6"/>
+<rect x="-6" y="76" width="12" height="112" rx="3" fill="#d8b27a"/><g fill="#f8f3ea"><circle cx="0" cy="96" r="2.6"/><circle cx="0" cy="120" r="2.6"/><circle cx="0" cy="144" r="2.6"/><circle cx="0" cy="168" r="2.6"/></g>
+<path d="M-20 66Q0 86 20 66L18 58Q0 76-18 58Z" fill="#14352a" stroke="#d8b27a" stroke-width="1.5"/>
+<path d="M-70 304Q0 322 70 304" stroke="#d8b27a" stroke-width="2.5" stroke-dasharray="2 5" fill="none" stroke-linecap="round"/>
+<path d="M0 30L-70 66Q-76 70-70 72H70Q76 70 70 66Z" fill="none" stroke="#b08a5a" stroke-width="4" stroke-linejoin="round" transform="translate(0 -2)"/></g></g>
+<g data-g data-x="355"><g class="gw"><path d="M0 30V6C0-10-15-10-15 0" fill="none" stroke="#6b5a48" stroke-width="3.5" stroke-linecap="round"/>
+<path d="M-66 72H66L92 320Q69 338 46 322Q23 306 0 324Q-23 342-46 324Q-69 308-92 322Z" fill="#8B2E3D"/>
+<path d="M-66 72H66L92 320Q69 338 46 322Q23 306 0 324Q-23 342-46 324Q-69 308-92 322Z" fill="url(#zr)" opacity=".55"/>
+<path d="M-40 90L-48 312M-20 90L-22 322M0 90L0 326M20 90L24 322" stroke="#a9455a" stroke-width="3" opacity=".7" fill="none"/>
+<path d="M-92 322Q-69 308-46 324Q-23 342 0 324Q23 306 46 322Q69 338 92 320" stroke="#d8b27a" stroke-width="8" fill="none"/>
+<g data-s data-ox="52" data-oy="74" data-gain="1.9"><path d="M38 72L72 72L100 392Q82 408 62 392Z" fill="#a23a4d"/><path d="M62 392L100 392M60 366L98 366" stroke="#d8b27a" stroke-width="7"/><path d="M38 72L72 72L100 392Q82 408 62 392Z" fill="url(#zr)" opacity=".5"/></g>
+<path d="M0 30L-70 66Q-76 70-70 72H70Q76 70 70 66Z" fill="none" stroke="#b08a5a" stroke-width="4" stroke-linejoin="round" transform="translate(0 -2)"/></g></g>
+</svg><span class="bdg">Illustration</span><button class="hint" id="gust"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V5a1.5 1.5 0 0 1 3 0v6M11 10V3.5a1.5 1.5 0 0 1 3 0V11M14 10V5a1.5 1.5 0 0 1 3 0v7a7 7 0 0 1-7 7c-3 0-4-1.5-6-5l-1-2a1.5 1.5 0 0 1 2.5-1.5L8 13"/></svg><span data-i="ht">Touch the clothes</span></button></div>
+<div class="cap"><span class="mono" id="cn"></span><h3 id="ct"></h3><div class="ds" id="ds"><i></i><i></i><i></i></div></div></div></section>
+
+<section class="sec" id="all"><h2 data-i="e1">Everything you can do</h2><div class="eg" id="eg"></div></section>
+
+<section class="sec" id="product"><div class="pg"><div class="side"><p class="mono" style="display:flex;align-items:center;gap:12px"><span style="width:40px;border-top:1.5px solid currentColor"></span>The product</p>
+<h2>One workspace for the whole stitch. <i>Every price in writing.</i></h2><div class="tabs" id="tabs"></div></div><div id="pn" role="region" aria-live="polite"></div></div></section>
+<footer>E-Dorji · ই-দর্জি · Prototype with demo data. Tailors, ratings, prices and orders are samples. Payments, messaging and measurements are not connected.</footer>
+<div id="toast" role="status"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),2400)};
+const ic=d=>`<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+const I={s:'<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>',b:'<path d="M21 8 12 3 3 8v8l9 5 9-5Z"/><path d="m3 8 9 5 9-5M12 13v8"/>',r:'<path d="M6 3h12v18l-3-2-3 2-3-2-3 2Z"/><path d="M9 8h6M9 12h6"/>',c:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',m:'<path d="M21 12a8 8 0 0 1-12 7l-5 1 1-4a8 8 0 1 1 16-4Z"/>',x:'<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12"/>',l:'<path d="M4 5h9M8.5 3v2M6 5c1 4 3 6 6 8M12 5c-1 4-3 7-7 9M13 21l4-10 4 10M14.5 17.5h5"/>'};
+/* theme + language */
+const T={bn:{n1:'দর্জি খুঁজুন',n2:'ডিজাইন স্টুডিও',n3:'অর্ডার',n4:'দর্জির ডেস্ক',n5:'কাস্টমার ড্যাশবোর্ড',eb:'ওয়ার্কিং ডেমো · বাংলাদেশের দর্জি · পাঞ্জাবি ও শাড়ি',sub:'প্রতিটি গ্রাহকের ফোনে একজন দর্জি, একটি ডিজাইন স্টুডিও ও অর্ডার ট্র্যাকার, নিজের ভাষায়।',c1:'ডিজাইন স্টুডিও দেখুন →',c2:'সবকিছু দেখুন',ht:'কাপড়গুলো ছুঁয়ে দেখুন',e1:'সবকিছু যা আপনি করতে পারেন'}};
+$$('[data-i]').forEach(e=>(T.en=T.en||{})[e.dataset.i]=e.textContent);
+function setL(l){document.documentElement.lang=l;$$('[data-i]').forEach(e=>e.textContent=T[l][e.dataset.i]||T.en[e.dataset.i]);$$('#pills [data-l]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.l==l));L=l}let L='en';
+$('#lgb').onclick=()=>setL(L=='en'?'bn':'en');$$('#pills [data-l]').forEach(b=>b.onclick=()=>setL(b.dataset.l));$$('#pills [data-x]').forEach(b=>b.onclick=()=>toast('This language is a preview and not available yet'));
+$('#th').onclick=()=>{const r=document.documentElement,d=r.dataset.theme?r.dataset.theme=='dark':matchMedia('(prefers-color-scheme:dark)').matches;r.dataset.theme=d?'light':'dark'};
+/* hanging clothes: spring physics, reacts to the cursor */
+class Sp{constructor(k,d){this.k=k;this.d=d;this.a=0;this.w=0}step(t,dt){this.w+=(-this.k*(this.a-t)-this.d*this.w)*dt;this.a+=this.w*dt}}
+const SC=$('#scene'),gs=$$('#scene [data-g]').map(el=>({el,px:+el.dataset.x,m:new Sp(20,1.5),p:[...el.querySelectorAll('[data-s]')].map(q=>({q,sp:new Sp(30,2),ox:+q.dataset.ox,oy:+q.dataset.oy,g:+q.dataset.gain}))}));
+let last=null;SC.addEventListener('pointermove',e=>{const r=SC.querySelector('svg').getBoundingClientRect(),s=520/r.width,x=(e.clientX-r.left)*s,y=(e.clientY-r.top)*s,t=performance.now();
+if(last){const vx=(x-last.x)/Math.max(t-last.t,8)*1000;gs.forEach(g=>{const dx=x-g.px;if(Math.abs(dx)<125&&y>70&&y<420)g.m.w+=Math.max(-110,Math.min(110,vx*.05*(y/260)))})}last={x,t}});
+SC.addEventListener('pointerleave',()=>last=null);
+const gust=()=>gs.forEach((g,i)=>g.m.w+=(i?-1:1)*70);$('#gust').onclick=gust;SC.addEventListener('pointerdown',e=>{if(e.target.closest('#gust'))return;const r=SC.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*520;gs.forEach(g=>g.m.w+=(x<g.px?1:-1)*45)});
+let T0=0;(function f(t){requestAnimationFrame(f);const dt=Math.min((t-T0)/1000||.016,.04);T0=t;gs.forEach((g,i)=>{g.m.step(rm?0:Math.sin(t/1700+i*2.3)*1.8,dt);g.m.a=Math.max(-32,Math.min(32,g.m.a));g.el.setAttribute('transform',`translate(${g.px} 62) rotate(${g.m.a})`);g.p.forEach(p=>{p.sp.step(g.m.a,dt);p.q.setAttribute('transform',`rotate(${(p.sp.a-g.m.a)*p.g} ${p.ox} ${p.oy})`)})})})(0);
+/* floating fabric scraps */
+$('#sc2').innerHTML=Array.from({length:26},(_,i)=>{const c=['#9bb89a','#e8b9a6','#e9c3c6','#c9bfe6','#b9d3df'][i%5],x=Math.random()*500+10,y=Math.random()*470+80;return`<path class="sc" d="M0 0C7-9 16-9 20 0C16 9 7 9 0 0Z" fill="${c}" opacity=".75" transform="translate(${x} ${y}) rotate(${Math.random()*180})" style="--t:${5+Math.random()*5}s;--x:${Math.random()*24-12}px;--y:${Math.random()*24-12}px;--r:${Math.random()*50-25}deg"/>`}).join('');
+/* captions */
+const CP=[['Panjabi','Hand-finished by a tailor near you.'],['Saree','Blouse, fall and pico, stitched to measure.'],['Bespoke','Your price and date, in writing first.']];let ci=0;
+function cap(){$('#cn').textContent=`0${ci+1} / 0${CP.length} · ${CP[ci][0]}`;$('#ct').textContent=CP[ci][1];[...$('#ds').children].forEach((d,i)=>d.className=i==ci?'on':'')}cap();if(!rm)setInterval(()=>{ci=(ci+1)%3;cap()},5000);
+/* feature grid */
+const EG=[['s','Find a tailor','Search by garment, city and rating',0,0],['x','Compare tailors','Rating, delivery time and price',1,0],['b','Design in 3D','Sleeve, collar and buttons, live',2,1],['b','Pick your fabric','Try colours before you order',3,1],['r','Approve a price','An itemised proposal in writing',4,2],['r','Track every stitch','Eight clear order stages',1,2],['c','Tailor calendar','Block busy and festival days',0,3],['c','See earnings','A monthly view for tailors',2,3],['m','Ask the assistant','Suggestions, never made-up prices',4,4],['l','Bangla and English','Switch the whole page',3,-1]];
+$('#eg').innerHTML=EG.map((e,i)=>`<button class="ec c${e[3]}" data-go="${e[4]}"><span class="ico">${ic(I[e[0]])}</span><span><b>${e[1]}</b><span>${e[2]}</span></span></button>`).join('');
+$('#eg').onclick=e=>{const b=e.target.closest('.ec');if(!b)return;const g=+b.dataset.go;if(g<0){setL(L=='en'?'bn':'en');return}go(g);$('#product').scrollIntoView()};
+/* panels */
+const TL=[['Nusrat Jahan Chowdhury','নুসরাত চৌধুরী','Atelier Bengal','Dhaka · Gulshan',5,27,7,1200,'Bridal, Saree Blouse'],['Taslima Akter','তাসলিমা আক্তার','Taslima Boutique','Dhaka · Dhanmondi',4.9,48,4,1450,'Salwar Kameez, Kurti'],['Rashida Begum','রাশিদা বেগম','Rashida Home Tailoring','Rajshahi',4.8,29,3,380,'Kurti, Salwar Kameez'],['Kamal Hossain','কামাল হোসেন','Hossain Panjabi House','Dhaka · Old Dhaka',4.9,34,5,500,'Panjabi, Sherwani']];
+const ST=['Request submitted','Proposal sent','Customer approved','Confirmed','Production started','Quality check','Out for delivery','Delivered'];
+const NM=[['01','s','Find a tailor'],['02','b','Design in 3D'],['03','r','Price and tracking'],['04','c','Tailor workspace'],['05','m','Fashion assistant']];
+const P=[()=>`<div class="pl"><div><hr><span class="mono n">01</span><h3>Find a tailor</h3><p>Search by garment or city. Ranked by completed orders, quality and on-time delivery.</p><div class="fld"><input id="q" aria-label="Search" placeholder="Panjabi, Kurti, Dhaka"><select id="so" aria-label="Sort"><option value="r">Top rated</option><option value="d">Fastest</option><option value="p">Lowest price</option></select></div><span class="tag">Demo data · 4 tailors</span></div><div class="in" id="tl"></div></div>`,
+()=>`<div class="pl"><div id="cv" aria-label="Interactive 3D Panjabi. Drag to rotate."></div><div><hr><span class="mono n">02</span><h3>Design in 3D</h3><p>Change fabric, sleeve and collar, then attach the choices to your order as written details.</p><span class="tag">Illustrative 3D preview</span><div class="sg" style="margin-top:18px"><label>Fabric</label><span id="sws"></span></div><div class="sg"><label>Sleeve</label><button class="o" data-o="s:full" aria-pressed="true">Full</button><button class="o" data-o="s:half" aria-pressed="false">Half</button></div><div class="sg"><label>Collar</label><button class="o" data-o="k:band" aria-pressed="true">Band</button><button class="o" data-o="k:none" aria-pressed="false">Round</button></div><div class="sg"><label>Buttons</label><button class="o" data-o="b:#d8b27a" aria-pressed="true">Gold</button><button class="o" data-o="b:#f8f3ea" aria-pressed="false">Ivory</button></div><button class="pb dk" style="margin-top:14px;padding:12px 26px;font-size:16px" onclick="toast('Design attached to your order')">Attach to order</button></div></div>`,
+()=>`<div class="pl"><div><hr><span class="mono n">03</span><h3>Price and tracking</h3><p style="margin-bottom:16px">Mizanur Rahman · Eid Panjabi</p><div class="in"><ul class="tl">${ST.map((s,i)=>`<li class="${i<4?'d':i==4?'c':''}">${s}</li>`).join('')}</ul></div></div><div><span class="tag" style="margin-top:0">Proposal · Rahela Khatun</span><h3 style="font-size:34px;margin:12px 0">৳2,400 · ready in 9 days</h3><div class="dr"><em style="background:#bcd3b4">Stitching</em><b>৳1,440</b></div><div class="dr"><em style="background:#a8cbe0">Embroidery</em><b>৳600</b></div><div class="dr"><em style="background:#f0a285">Delivery</em><b>৳360</b></div><p style="margin:8px 0 14px">Deposit ৳800 now, the rest on delivery.</p><button class="pb dk" style="padding:12px 26px;font-size:16px" onclick="toast('Proposal approved. Order confirmed.')">Approve</button> <button class="pb" style="padding:12px 26px;font-size:16px" onclick="toast('Question sent to the tailor')">Ask a question</button></div></div>`,
+()=>`<div class="pl"><div><hr><span class="mono n">04</span><h3>Tailor workspace</h3><p>Tap days to block them. Gold marks festival bookings.</p><div class="in" style="margin-top:16px"><div class="cal" id="cal"></div></div></div><div><div class="kp"><div><b>৳38,500</b><span>Earned this month</span></div><div><b>8</b><span>Active orders</span></div></div><div class="in"><svg viewBox="0 0 280 120" width="100%" role="img" aria-label="Earnings by month">${[40,55,48,70,62,90,76].map((n,i)=>`<rect class="bar" style="animation-delay:${i*.08}s" x="${10+i*38}" y="${100-n}" width="26" height="${n}" rx="4"/><text x="${23+i*38}" y="115" text-anchor="middle">${['Jun','Jul','Aug','Sep','Oct','Nov','Dec'][i]}</text>`).join('')}</svg></div><span class="tag">Sample figures</span></div></div>`,
+()=>`<div class="pl"><div><hr><span class="mono n">05</span><h3>Fashion assistant</h3><p>Suggestions only. It never invents prices, availability or delivery dates.</p></div><div class="in"><div id="log"><div class="msg">What is the occasion, and what is your budget?</div></div><div class="fld"><input id="ci" aria-label="Message" placeholder="Eid Panjabi under ৳3,000"><button class="sm" id="cs">Send</button></div></div></div>`];
+let cur=-1,raf3;
+function go(i){cur=i;cancelAnimationFrame(raf3);$('#tabs').innerHTML=NM.map((n,k)=>`<button data-k="${k}" aria-current="${k==i}"><span class="no">${n[0]}</span><span class="sq">${ic(I[n[1]])}</span>${n[2]}</button>`).join('');const pn=$('#pn');pn.className='c'+[0,3,4,1,2][i];pn.style.animation='none';pn.offsetWidth;pn.style.animation='';pn.innerHTML=P[i]();
+if(i==0){tl();$('#q').oninput=tl;$('#so').onchange=tl}if(i==1)studio();if(i==3){for(let d=1;d<=28;d++){const b=document.createElement('button');b.textContent=d;if([9,10,21].includes(d))b.className='f';b.onclick=()=>b.classList.toggle('x');$('#cal').append(b)}}
+if(i==4){$('#cs').onclick=ask;$('#ci').onkeydown=e=>{if(e.key=='Enter')ask()}}}
+$('#tabs').onclick=e=>{const b=e.target.closest('[data-k]');if(b)go(+b.dataset.k)};$$('[data-p]').forEach(a=>a.onclick=()=>go(+a.dataset.p));
+function tl(){const q=$('#q').value.toLowerCase(),s=$('#so').value;const d=TL.filter(t=>(t.join(' ')).toLowerCase().includes(q)).sort((a,b)=>s=='d'?a[6]-b[6]:s=='p'?a[7]-b[7]:b[4]-a[4]);$('#tl').innerHTML=d.length?d.map(t=>`<div class="tm"><div class="av">${t[0][0]}</div><div><b>${t[0]}</b> <span class="mono" style="font-size:10px;color:var(--t1)">Demo verified</span><small>${t[2]} · ${t[3]}</small><small>★ ${t[4]} (${t[5]} demo reviews) · ~${t[6]} days · from ৳${t[7]}</small></div><button class="sm" onclick="toast('Hire request started with ${t[0]}')">Hire</button></div>`).join(''):'<p style="padding:14px">No demo tailors match.</p>'}
+function ask(){const v=$('#ci').value.trim();if(!v)return;const l=$('#log');l.insertAdjacentHTML('beforeend','<div class="msg u"></div>');l.lastChild.textContent=v;$('#ci').value='';const g=/panjabi/i.test(v)?'Panjabi':/saree|blouse/i.test(v)?'Saree blouse':'Salwar Kameez';setTimeout(()=>l.insertAdjacentHTML('beforeend',`<div class="msg">A ${g} suits that. Browse tailors for it, then ask for a written proposal. Prices and dates come only from the tailor.</div>`),500)}
+/* 3D studio */
+const S3={c:'#8B2E3D',s:'full',k:'band',b:'#d8b27a'};let rb;
+function studio(){const el=$('#cv');$('#sws').innerHTML=['#8B2E3D','#E8DFCB','#1f4a3a','#2F4A6B','#C49A68'].map(c=>`<button class="sw" data-c="${c}" style="background:${c}" aria-label="Fabric ${c}" aria-pressed="${c==S3.c}"></button>`).join('');
+$$('#pn [data-o]').forEach(b=>{const[k,v]=b.dataset.o.split(':');b.setAttribute('aria-pressed',S3[k]==v)});
+try{const R=new THREE.WebGLRenderer({antialias:true,alpha:true}),S=new THREE.Scene(),C=new THREE.PerspectiveCamera(32,1,.1,50),G=new THREE.Group();R.setPixelRatio(Math.min(devicePixelRatio,2));el.append(R.domElement);C.position.set(0,.1,6.4);S.add(new THREE.AmbientLight(0xffffff,.8));const d=new THREE.DirectionalLight(0xfff0dd,.9);d.position.set(3,4,5);S.add(d,G);
+rb=()=>{while(G.children.length){const o=G.children.pop();o.geometry&&o.geometry.dispose()}const m=new THREE.MeshStandardMaterial({color:S3.c,roughness:.85,side:THREE.DoubleSide}),bm=new THREE.MeshStandardMaterial({color:S3.b,metalness:.6,roughness:.3});
+const p=[[.17,1.3],[.4,1.22],[.5,.95],[.5,.4],[.56,-.4],[.65,-1.25]].map(a=>new THREE.Vector2(a[0],a[1])),bd=new THREE.Mesh(new THREE.LatheGeometry(p,40),m);bd.scale.z=.62;bd.position.y=-.1;G.add(bd);
+const len=S3.s=='full'?1.25:.62;[-1,1].forEach(x=>{const sl=new THREE.Mesh(new THREE.CylinderGeometry(.15,.12,len,20,1,true),m);sl.geometry.translate(0,-len/2,0);sl.position.set(x*.44,1,0);sl.rotation.z=x*.3;G.add(sl)});
+if(S3.k=='band'){const c=new THREE.Mesh(new THREE.CylinderGeometry(.2,.22,.12,28,1,true),m);c.position.y=1.2;G.add(c)}else{const c=new THREE.Mesh(new THREE.TorusGeometry(.2,.02,8,28),bm);c.rotation.x=Math.PI/2;c.position.y=1.17;G.add(c)}
+const pl=new THREE.Mesh(new THREE.BoxGeometry(.05,1.1,.02),bm);pl.position.set(0,.55,.335);G.add(pl);for(let i=0;i<6;i++){const b=new THREE.Mesh(new THREE.SphereGeometry(.036,12,12),bm);b.position.set(0,1-i*.17,.35);G.add(b)}};rb();
+const sz=()=>{const w=el.clientWidth,h=el.clientHeight;R.setSize(w,h);C.aspect=w/h;C.updateProjectionMatrix()};sz();let dg=0,px=0;el.onpointerdown=e=>{dg=1;px=e.clientX};addEventListener('pointerup',()=>dg=0);el.addEventListener('pointermove',e=>{if(dg){G.rotation.y+=(e.clientX-px)*.012;px=e.clientX}});
+(function lp(t){if(!el.isConnected){R.dispose();return}raf3=requestAnimationFrame(lp);if(!dg&&!rm)G.rotation.y+=.006;G.position.y=rm?0:Math.sin(t/900)*.05;sz();R.render(S,C)})(0)}catch(e){el.innerHTML='<p style="padding:30px">3D preview is unavailable on this device. Your choices are still sent as written details.</p>'}}
+$('#pn').addEventListener('click',e=>{const b=e.target.closest('[data-c],[data-o]');if(!b)return;if(b.dataset.c)S3.c=b.dataset.c;else{const[k,v]=b.dataset.o.split(':');S3[k]=v}[...b.parentNode.querySelectorAll('button')].forEach(x=>x.setAttribute('aria-pressed',x===b));rb&&rb()});
+go(0);
+</script></body></html>
