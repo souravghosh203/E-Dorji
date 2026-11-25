@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title data-copy="tailorApplyDocTitle">Become a tailor · E-দর্জি</title><link rel="icon" type="image/svg+xml" href="assets/e-dorji-icon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+Bengali:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/portal.css"><script type="module" src="assets/portal.js"></script>
+</head>
+<body class="portal-page">
+<div id="site-nav-root" data-page="tailor-application"></div>
+<main class="portal-layout portal-application-layout">
+  <section class="portal-story"><div><p class="portal-kicker" data-copy="tailorApplyKicker">Join our artisan community</p><h1 data-copy="tailorApplyTitle">Let more people discover your craft.</h1><p data-copy="tailorApplyIntro">Share your experience and specialties. We’ll use these details to introduce your work to customers looking for a skilled tailor.</p></div><img class="mini-logo" src="assets/e-dorji-logo.svg" alt="E-দর্জি"></section>
+  <section class="portal-card" aria-labelledby="application-title"><h2 id="application-title" data-copy="tailorApplyHeading">Tailor application</h2><p class="portal-lead" data-copy="tailorApplyLead">Tell us about yourself and your work.</p>
+    <form class="portal-form tailor-form" id="tailor-application-form">
+      <label><span data-copy="nameLabel">Full name</span><input name="name" autocomplete="name" required placeholder="Your name" data-placeholder="namePlaceholder"></label>
+      <div class="application-fields-two"><label><span data-copy="emailLabel">Email address</span><input name="email" type="email" autocomplete="email" required placeholder="you@example.com" data-placeholder="emailPlaceholder"></label><label><span data-copy="phoneLabel">Phone number</span><input name="phone" type="tel" autocomplete="tel" required placeholder="Your mobile number" data-placeholder="phonePlaceholder"></label></div>
+      <div class="application-fields-two"><label><span data-copy="cityLabel">City</span><input name="city" autocomplete="address-level2" required placeholder="Your city" data-placeholder="cityPlaceholder"></label><label><span data-copy="experienceLabel">Years of experience</span><input name="experience" type="number" min="0" max="70" required placeholder="For example, 5" data-placeholder="experiencePlaceholder"></label></div>
+      <label><span data-copy="specialtiesLabel">What do you make?</span><input name="specialties" required placeholder="Panjabi, saree blouse, bridal wear..." data-placeholder="specialtiesPlaceholder"></label>
+      <label><span data-copy="workshopLabel">Workshop or service area</span><input name="workshop" required placeholder="Neighborhood, market, or workshop address" data-placeholder="workshopPlaceholder"></label>
+      <label><span data-copy="portfolioLabel">Portfolio link (optional)</span><input name="portfolio" type="url" placeholder="https://your-work.example" data-placeholder="portfolioPlaceholder"></label>
+      <label><span data-copy="introductionLabel">A little about your work</span><textarea name="introduction" rows="4" required minlength="30" placeholder="Describe your craft, process, and what customers can request." data-placeholder="introductionPlaceholder"></textarea></label>
+      <label class="application-consent"><input name="consent" type="checkbox" required><span data-copy="consentCopy">I confirm these details are accurate and agree to be contacted about my application.</span></label>
+      <button type="submit" data-copy="submitApplication">Send tailor application</button>
+      <p class="portal-status" id="application-status" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+</main>
+<script type="module" src="/src/main.jsx"></script></body></html>

@@ -1,5 +1,6 @@
 {
   "en": {
+    "becomeTailor": "Become a tailor",
     "search": "Search tailors",
     "searchLabel": "Search tailors",
     "translator": "Switch between English and Bangla",
@@ -9,6 +10,7 @@
     "startLabel": "Get started and open login"
   },
   "bn": {
+    "becomeTailor": "দর্জি হিসেবে যোগ দিন",
     "search": "দর্জি খুঁজুন",
     "searchLabel": "দর্জি খুঁজুন",
     "translator": "বাংলা ও ইংরেজির মধ্যে পরিবর্তন করুন",

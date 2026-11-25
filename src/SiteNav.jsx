@@ -84,6 +84,7 @@ export default function SiteNav() {
           </button>) : <p className="search-empty">{language === 'bn' ? 'কোনো দর্জি খুঁজে পাওয়া যায়নি' : 'No tailors found'}</p>}
         </div>}
       </div>
+      <a className="site-tailor" href="become-tailor.html"><span aria-hidden="true">✦</span>{labels.becomeTailor}</a>
       <button className="site-option site-language" type="button" onClick={toggleLanguage} aria-label={labels.translator}>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h9M8.5 3v2M6 5c1 4 3 6 6 8M12 5c-1 4-3 7-7 9M13 21l4-10 4 10M14.5 17.5h5"/></svg>
       </button>

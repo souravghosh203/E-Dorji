@@ -5,6 +5,7 @@ import siteCopy from './data/site-copy.json';
 import dashboardCopy from './data/dashboard-copy.json';
 import './site-nav.css';
 
+window.siteCopy = siteCopy;
 window.applySiteLanguage = language => {
   const selected = language === 'bn' ? 'bn' : 'en';
   document.documentElement.lang = selected;

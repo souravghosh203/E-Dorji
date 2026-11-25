@@ -10,6 +10,7 @@ export default defineConfig({
         about: resolve(import.meta.dirname, 'about.html'),
         login: resolve(import.meta.dirname, 'login.html'),
         register: resolve(import.meta.dirname, 'register.html'),
+        tailorApplication: resolve(import.meta.dirname, 'become-tailor.html'),
       },
     },
   },

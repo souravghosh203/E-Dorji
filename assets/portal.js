@@ -35,4 +35,11 @@
       ? 'তথ্যগুলো প্রস্তুত। নিবন্ধন সম্পূর্ণ করতে অ্যাকাউন্ট সেবা যুক্ত করতে হবে।'
       : 'Your details are ready. Connect an account service to finish registration.';
   });
+
+  document.querySelector('#tailor-application-form')?.addEventListener('submit', event => {
+    event.preventDefault();
+    const language = document.documentElement.lang === 'bn' ? 'bn' : 'en';
+    const status = document.querySelector('#application-status');
+    status.textContent = window.siteCopy?.[language]?.applicationReady || 'Application form complete.';
+  });
 })();
