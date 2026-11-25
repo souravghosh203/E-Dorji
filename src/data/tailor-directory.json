@@ -1,0 +1,90 @@
+[
+  {
+    "slug": "shirin-akter",
+    "name": { "en": "Shirin Akter", "bn": "শিরিন আক্তার" },
+    "shop": { "en": "Shirin Handloom Studio", "bn": "শিরিন হ্যান্ডলুম স্টুডিও" },
+    "city": { "en": "Chawkbazar, Chattogram", "bn": "চকবাজার, চট্টগ্রাম" },
+    "rating": "4.9",
+    "experience": { "en": "10 years working with handloom sarees", "bn": "হ্যান্ডলুম শাড়ি নিয়ে ১০ বছরের অভিজ্ঞতা" },
+    "bio": { "en": "Shirin helps customers style and finish Jamdani and handloom sarees, with careful blouse fitting and clean finishing.", "bn": "শিরিন যত্নসহকারে জামদানি ও হ্যান্ডলুম শাড়ির ব্লাউজের মাপ ও ফিনিশিংয়ের কাজ করেন।" },
+    "hours": { "en": "Sat–Thu · 10:00–18:00", "bn": "শনি–বৃহস্পতি · সকাল ১০টা–সন্ধ্যা ৬টা" },
+    "crafts": [{ "id": "shirin-jamdani-blouse", "name": { "en": "Jamdani saree and fitted blouse", "bn": "জামদানি শাড়ি ও মাপমতো ব্লাউজ" }, "description": { "en": "A handloom saree styling service with a fitted blouse, fall, pico and finishing options.", "bn": "মাপমতো ব্লাউজ, ফল, পিকো ও ফিনিশিংসহ হ্যান্ডলুম শাড়ি সাজানোর সেবা।" }, "price": 5200, "days": { "en": "8–14 working days", "bn": "৮–১৪ কর্মদিবস" }, "kind": "saree", "color": "#397d83", "accent": "#e8c986" }]
+  },
+  {
+    "slug": "farzana-yasmin",
+    "name": { "en": "Farzana Yasmin", "bn": "ফারজানা ইয়াসমিন" },
+    "shop": { "en": "Farzana Occasion Atelier", "bn": "ফারজানা অকেশন অ্যাটেলিয়ার" },
+    "city": { "en": "Zindabazar, Sylhet", "bn": "জিন্দাবাজার, সিলেট" },
+    "rating": "4.8",
+    "experience": { "en": "8 years creating occasion wear", "bn": "উৎসবের পোশাক তৈরিতে ৮ বছরের অভিজ্ঞতা" },
+    "bio": { "en": "Farzana creates made-to-measure festive sets with balanced silhouettes, thoughtful colour combinations and detailed finishing.", "bn": "ফারজানা মাপমতো উৎসবের পোশাক তৈরি করেন, যেখানে থাকে মানানসই রং ও যত্নশীল ফিনিশিং।" },
+    "hours": { "en": "Sun–Thu · 10:30–19:00", "bn": "রবি–বৃহস্পতি · সকাল ১০:৩০–সন্ধ্যা ৭টা" },
+    "crafts": [{ "id": "farzana-occasion-set", "name": { "en": "Embroidered festive three-piece", "bn": "এমব্রয়ডারি করা উৎসবের থ্রি-পিস" }, "description": { "en": "A coordinated kameez, trouser and dupatta with optional neckline and sleeve embroidery.", "bn": "গলা ও হাতায় ঐচ্ছিক সূচিকর্মসহ মানানসই কামিজ, ট্রাউজার ও ওড়নার সেট।" }, "price": 5800, "days": { "en": "10–16 working days", "bn": "১০–১৬ কর্মদিবস" }, "kind": "salwar", "color": "#733c68", "accent": "#eacb88" }]
+  },
+  {
+    "slug": "jamil-uddin",
+    "name": { "en": "Jamil Uddin", "bn": "জামিল উদ্দিন" },
+    "shop": { "en": "Jamil Menswear Tailoring", "bn": "জামিল মেন্সওয়্যার টেইলারিং" },
+    "city": { "en": "Fatullah, Narayanganj", "bn": "ফতুল্লা, নারায়ণগঞ্জ" },
+    "rating": "4.7",
+    "experience": { "en": "13 years in custom menswear", "bn": "কাস্টম পুরুষদের পোশাকে ১৩ বছরের অভিজ্ঞতা" },
+    "bio": { "en": "Jamil focuses on everyday shirts and trousers, accurate measurements, comfortable movement and durable seams.", "bn": "জামিল মাপমতো শার্ট ও ট্রাউজার তৈরি করেন, যেখানে আরাম ও টেকসই সেলাইয়ে গুরুত্ব দেন।" },
+    "hours": { "en": "Sat–Thu · 09:00–18:00", "bn": "শনি–বৃহস্পতি · সকাল ৯টা–সন্ধ্যা ৬টা" },
+    "crafts": [{ "id": "jamil-formal-shirt", "name": { "en": "Made-to-measure formal shirt", "bn": "মাপমতো ফরমাল শার্ট" }, "description": { "en": "A clean-cut shirt tailored to your measurements, with your choice of collar, cuff and pocket details.", "bn": "আপনার মাপে তৈরি শার্ট; কলার, কাফ ও পকেটের নকশা বেছে নেওয়ার সুযোগ রয়েছে।" }, "price": 2200, "days": { "en": "5–8 working days", "bn": "৫–৮ কর্মদিবস" }, "kind": "panjabi", "color": "#8ba2ac", "accent": "#dbc394" }]
+  },
+  {
+    "slug": "sabina-yeasmin",
+    "name": { "en": "Sabina Yeasmin", "bn": "সাবিনা ইয়াসমিন" },
+    "shop": { "en": "Sabina Modest Wear", "bn": "সাবিনা মডেস্ট ওয়্যার" },
+    "city": { "en": "Mirpur, Dhaka", "bn": "মিরপুর, ঢাকা" },
+    "rating": "4.9",
+    "experience": { "en": "7 years making modest wear", "bn": "মডেস্ট পোশাক তৈরিতে ৭ বছরের অভিজ্ঞতা" },
+    "bio": { "en": "Sabina makes practical borkas and abayas with comfortable proportions, useful pockets and neat finishing.", "bn": "সাবিনা আরামদায়ক মাপ, ব্যবহারযোগ্য পকেট ও পরিপাটি ফিনিশিংসহ বোরকা ও আবায়া তৈরি করেন।" },
+    "hours": { "en": "Sun–Fri · 10:00–18:30", "bn": "রবি–শুক্র · সকাল ১০টা–সন্ধ্যা ৬:৩০" },
+    "crafts": [{ "id": "sabina-borka", "name": { "en": "Everyday borka with matching hijab", "bn": "মিলানো হিজাবসহ দৈনন্দিন বোরকা" }, "description": { "en": "A relaxed modest silhouette with custom length, sleeve finish and optional matching hijab.", "bn": "নিজস্ব দৈর্ঘ্য, হাতার ফিনিশিং ও ঐচ্ছিক মিলানো হিজাবসহ আরামদায়ক বোরকা।" }, "price": 3400, "days": { "en": "7–11 working days", "bn": "৭–১১ কর্মদিবস" }, "kind": "kurti", "color": "#25252b", "accent": "#d0ad74" }]
+  },
+  {
+    "slug": "munni-sultana",
+    "name": { "en": "Munni Sultana", "bn": "মুন্নী সুলতানা" },
+    "shop": { "en": "Munni Kidswear Corner", "bn": "মুন্নী কিডসওয়্যার কর্নার" },
+    "city": { "en": "Sonadanga, Khulna", "bn": "সোনাডাঙ্গা, খুলনা" },
+    "rating": "4.8",
+    "experience": { "en": "9 years sewing children's clothing", "bn": "শিশুদের পোশাকে ৯ বছরের অভিজ্ঞতা" },
+    "bio": { "en": "Munni makes playful children's outfits from comfortable fabrics, with careful sizing and easy-to-wear closures.", "bn": "মুন্নী আরামদায়ক কাপড়ে শিশুদের পোশাক তৈরি করেন, যেখানে মাপ ও সহজে পরার সুবিধায় যত্ন নেন।" },
+    "hours": { "en": "Sat–Thu · 09:30–17:30", "bn": "শনি–বৃহস্পতি · সকাল ৯:৩০–বিকেল ৫:৩০" },
+    "crafts": [{ "id": "munni-floral-frock", "name": { "en": "Floral gathered girls’ dress", "bn": "ফুলেল নকশার ঘেরওয়ালা মেয়েদের পোশাক" }, "description": { "en": "A light gathered dress with soft lining, colourful embroidery and a choice of sleeve length.", "bn": "নরম আস্তরণ, রঙিন সূচিকর্ম ও পছন্দের হাতার দৈর্ঘ্যসহ হালকা ঘেরওয়ালা পোশাক।" }, "price": 2100, "days": { "en": "5–8 working days", "bn": "৫–৮ কর্মদিবস" }, "kind": "salwar", "color": "#d47b25", "accent": "#68a7a0" }]
+  },
+  {
+    "slug": "abdul-karim",
+    "name": { "en": "Abdul Karim", "bn": "আব্দুল করিম" },
+    "shop": { "en": "Karim Panjabi & Alteration House", "bn": "করিম পাঞ্জাবি ও অল্টারেশন হাউস" },
+    "city": { "en": "Islampur, Old Dhaka", "bn": "ইসলামপুর, পুরান ঢাকা" },
+    "rating": "4.9",
+    "experience": { "en": "18 years tailoring traditional menswear", "bn": "ঐতিহ্যবাহী পুরুষদের পোশাকে ১৮ বছরের অভিজ্ঞতা" },
+    "bio": { "en": "Karim specialises in classic Panjabis, sherwanis and precise alterations, with a focus on fit and finishing.", "bn": "করিম মাপ ও ফিনিশিংয়ে গুরুত্ব দিয়ে পাঞ্জাবি, শেরওয়ানি ও অল্টারেশনের কাজ করেন।" },
+    "hours": { "en": "Sat–Thu · 10:00–20:00", "bn": "শনি–বৃহস্পতি · সকাল ১০টা–রাত ৮টা" },
+    "crafts": [{ "id": "karim-classic-panjabi", "name": { "en": "Classic cotton Panjabi", "bn": "ক্লাসিক সুতি পাঞ্জাবি" }, "description": { "en": "A made-to-measure cotton Panjabi with a band collar, clean placket and optional pocket detail.", "bn": "ব্যান্ড কলার, পরিপাটি প্ল্যাকেট ও ঐচ্ছিক পকেটসহ মাপমতো সুতি পাঞ্জাবি।" }, "price": 3600, "days": { "en": "8–12 working days", "bn": "৮–১২ কর্মদিবস" }, "kind": "panjabi", "color": "#3c6458", "accent": "#d5ba81" }]
+  },
+  {
+    "slug": "laila-khatun",
+    "name": { "en": "Laila Khatun", "bn": "লায়লা খাতুন" },
+    "shop": { "en": "Laila Nakshi & Saree Studio", "bn": "লায়লা নকশি ও শাড়ি স্টুডিও" },
+    "city": { "en": "Kandirpar, Cumilla", "bn": "কান্দিরপাড়, কুমিল্লা" },
+    "rating": "4.8",
+    "experience": { "en": "14 years in hand embroidery and saree finishing", "bn": "হাতের সূচিকর্ম ও শাড়ির ফিনিশিংয়ে ১৪ বছরের অভিজ্ঞতা" },
+    "bio": { "en": "Laila brings Bengali kantha-inspired stitch patterns to blouses, dupattas and thoughtful saree finishing.", "bn": "লায়লা ব্লাউজ, ওড়না ও শাড়ির ফিনিশিংয়ে বাংলার কাঁথা-অনুপ্রাণিত সেলাইয়ের নকশা করেন।" },
+    "hours": { "en": "Sat–Thu · 09:00–17:00", "bn": "শনি–বৃহস্পতি · সকাল ৯টা–বিকেল ৫টা" },
+    "crafts": [{ "id": "laila-kantha-blouse", "name": { "en": "Kantha stitch blouse and saree finish", "bn": "কাঁথা সেলাইয়ের ব্লাউজ ও শাড়ির ফিনিশিং" }, "description": { "en": "A custom blouse with hand-worked stitch details, plus optional fall and pico finishing.", "bn": "হাতের সেলাইয়ের নকশাসহ কাস্টম ব্লাউজ, সঙ্গে ঐচ্ছিক ফল ও পিকো ফিনিশিং।" }, "price": 3900, "days": { "en": "8–13 working days", "bn": "৮–১৩ কর্মদিবস" }, "kind": "blouse", "color": "#a65e48", "accent": "#edcf91" }]
+  },
+  {
+    "slug": "rupa-das",
+    "name": { "en": "Rupa Das", "bn": "রূপা দাস" },
+    "shop": { "en": "Rupa Contemporary Stitch", "bn": "রূপা কনটেম্পোরারি স্টিচ" },
+    "city": { "en": "Uttara, Dhaka", "bn": "উত্তরা, ঢাকা" },
+    "rating": "4.7",
+    "experience": { "en": "6 years making contemporary everyday wear", "bn": "আধুনিক দৈনন্দিন পোশাকে ৬ বছরের অভিজ্ঞতা" },
+    "bio": { "en": "Rupa creates versatile kurtis and salwar sets, combining simple silhouettes with carefully chosen fabric and trim.", "bn": "রূপা মানানসই কাপড় ও ট্রিম দিয়ে সহজ নকশার কুর্তি ও সালোয়ার সেট তৈরি করেন।" },
+    "hours": { "en": "Sun–Fri · 10:00–19:00", "bn": "রবি–শুক্র · সকাল ১০টা–সন্ধ্যা ৭টা" },
+    "crafts": [{ "id": "rupa-everyday-kurti", "name": { "en": "Everyday cotton kurti", "bn": "দৈনন্দিন সুতি কুর্তি" }, "description": { "en": "A breathable cotton kurti with a choice of neckline, sleeve and contrast piping.", "bn": "পছন্দের গলা, হাতা ও কনট্রাস্ট পাইপিংসহ আরামদায়ক সুতি কুর্তি।" }, "price": 1900, "days": { "en": "5–8 working days", "bn": "৫–৮ কর্মদিবস" }, "kind": "kurti", "color": "#597b71", "accent": "#e7c589" }]
+  }
+]

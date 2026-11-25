@@ -1,13 +1,18 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import tailors from './data/tailors.json';
+import directory from './data/tailor-directory.json';
 import ui from './data/dashboard-ui.json';
 import DesignStudio from './DesignStudio.jsx';
+import FeaturedWork from './FeaturedWork.jsx';
+import FeaturedWorkManager from './FeaturedWorkManager.jsx';
+import ReadyMade, { TailorReadyMadeManager } from './ReadyMade.jsx';
 
 const read = (key, fallback) => {
   try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
 };
 const write = (key, value) => localStorage.setItem(key, JSON.stringify(value));
 const id = () => crypto.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+const directoryTailors = directory.map(tailor => ({ name: tailor.name.en, nameBn: tailor.name.bn, work: { en: tailor.crafts.map(craft => craft.name.en).join(' · '), bn: tailor.crafts.map(craft => craft.name.bn).join(' · ') }, city: { en: tailor.city.en, bn: tailor.city.bn }, rating: tailor.rating, slug: tailor.slug }));
 const api = async (path, options = {}) => {
   const response = await fetch(path, { credentials: 'same-origin', headers: { 'content-type': 'application/json', ...(options.headers || {}) }, ...options });
   const result = await response.json().catch(() => ({}));
@@ -17,7 +22,7 @@ const api = async (path, options = {}) => {
 
 export default function Dashboard({ role }) {
   const [language, setLanguage] = useState(document.documentElement.lang === 'bn' ? 'bn' : 'en');
-  const [tab, setTab] = useState('overview');
+  const [tab, setTab] = useState(() => new URLSearchParams(window.location.search).get('tab') || 'overview');
   const [notice, setNotice] = useState('');
   const [users, setUsers] = useState([]);
   const [orders, setOrders] = useState([]);
@@ -29,8 +34,10 @@ export default function Dashboard({ role }) {
   const [notifications, setNotifications] = useState([]);
   const [measurements, setMeasurements] = useState({});
   const [tailorProfile, setTailorProfile] = useState(null);
+  const [tailorProducts, setTailorProducts] = useState([]);
+  const [productOrder, setProductOrder] = useState(null);
   const [notificationPreferences, setNotificationPreferences] = useState({ inApp: true, email: false, sms: false });
-  const [marketTailors, setMarketTailors] = useState(tailors);
+  const [marketTailors, setMarketTailors] = useState([...tailors, ...directoryTailors]);
   const [savedByUser, setSavedByUser] = useState(() => read('e-dorji-saved-tailors', {}));
   const [filter, setFilter] = useState('');
   const [applicationSearch, setApplicationSearch] = useState('');
@@ -54,11 +61,12 @@ export default function Dashboard({ role }) {
     api('/api/session').then(async ({ user }) => {
       setSession(user);
       if (user && isAdmin) {
-        const [appResult, customerResult, summaryResult, orderResult] = await Promise.all([api('/api/admin/applications'), api('/api/admin/customers'), api('/api/admin/summary'), api('/api/orders')]);
+        const [appResult, customerResult, summaryResult, orderResult, notificationResult] = await Promise.all([api('/api/admin/applications'), api('/api/admin/customers'), api('/api/admin/summary'), api('/api/orders'), api('/api/notifications')]);
         setApplications(appResult.applications);
         setUsers(customerResult.users);
         setAdminSummary(summaryResult);
         setOrders(orderResult.orders);
+        setNotifications(notificationResult.notifications || []);
       } else if (user) {
         const [applicationResult, notificationResult, orderResult, savedResult, measurementResult, preferenceResult] = await Promise.all([api('/api/tailor-applications'), api('/api/notifications'), api(`/api/orders${isTailor ? '?mode=tailor' : ''}`), api('/api/saved-tailors'), api('/api/measurements'), api('/api/notification-preferences')]);
         setApplication(applicationResult.application);
@@ -67,7 +75,11 @@ export default function Dashboard({ role }) {
         setSavedByUser({ [user.email]: savedResult.names });
         setMeasurements(measurementResult.measurements);
         setNotificationPreferences(preferenceResult.preferences);
-        if (isTailor) setTailorProfile((await api('/api/tailor-profile')).profile);
+        if (isTailor) {
+          const [profileResult, productsResult] = await Promise.all([api('/api/tailor-profile'), api('/api/tailor/ready-made')]);
+          setTailorProfile(profileResult.profile);
+          setTailorProducts(productsResult.items || []);
+        }
       }
       setAuthReady(true);
     }).catch(() => setAuthReady(true));
@@ -75,19 +87,24 @@ export default function Dashboard({ role }) {
   }, [isAdmin, isTailor]);
 
   useEffect(() => {
+    const syncNotifications = event => setNotifications(event.detail || []);
+    window.addEventListener('e-dorji-notifications-updated', syncNotifications);
+    return () => window.removeEventListener('e-dorji-notifications-updated', syncNotifications);
+  }, []);
+
+  useEffect(() => {
     fetch('/api/public-tailors').then(response => response.ok ? response.json() : { tailors: [] }).then(result => {
       const registered = (result.tailors || []).map(item => ({ name: item.name, nameBn: item.name, work: { en: [item.shopName, ...item.services].filter(Boolean).join(' · '), bn: [item.shopName, ...item.services].filter(Boolean).join(' · ') }, city: { en: item.city, bn: item.city }, rating: 'New', verified: true }));
-      setMarketTailors([...tailors.filter(sample => !registered.some(item => item.name.toLowerCase() === sample.name.toLowerCase())), ...registered]);
+      const registeredNames = new Set(registered.map(item => item.name.toLowerCase()));
+      setMarketTailors([...tailors.filter(sample => !registeredNames.has(sample.name.toLowerCase())), ...directoryTailors.filter(sample => !registeredNames.has(sample.name.toLowerCase())), ...registered]);
     }).catch(() => {});
   }, []);
   const say = message => { setNotice(message); window.setTimeout(() => setNotice(''), 3000); };
-  const signOut = async () => { try { await api('/api/logout', { method: 'POST', body: '{}' }); } finally { location.href = 'e-dorji.html'; } };
-
   const navItems = isAdmin
-    ? [['overview', labels.adminTabs[0]], ['orders', labels.adminTabs[1]], ['applications', labels.adminTabs[2]], ['customers', labels.adminTabs[3]]]
+    ? [['overview', labels.adminTabs[0]], ['orders', labels.adminTabs[1]], ['applications', labels.adminTabs[2]], ['customers', labels.adminTabs[3]], ['featured', labels.adminTabs[4]]]
     : isTailor
-      ? [['overview', 'Overview'], ['orders', 'Work orders'], ['profile', 'Tailor profile'], ['notifications', 'Notifications']]
-      : [['overview', labels.tabLabels[0]], ['orders', labels.tabLabels[1]], ['find', labels.tabLabels[2]], ['studio', labels.tabLabels[6]], ['new', labels.tabLabels[3]], ['saved', labels.tabLabels[4]], ['measurements', 'My measurements'], ['profile', labels.tabLabels[5]], ['notifications', 'Notifications'], ['settings', 'Account settings']];
+      ? [['overview', 'Overview'], ['orders', 'Work orders']]
+      : [['overview', labels.tabLabels[0]], ['ready', 'Ready-made dress'], ['find', labels.tabLabels[2]], ['studio', labels.tabLabels[6]], ['new', labels.tabLabels[3]], ['measurements', 'My measurements']];
 
   async function toggleSaved(tailorName) {
     const current = savedByUser[activeUser.email] || [];
@@ -105,16 +122,24 @@ export default function Dashboard({ role }) {
       const { order } = await api('/api/orders', { method: 'POST', body: JSON.stringify({ tailor: data.get('tailor'), garment: data.get('garment'), budget: data.get('budget'), neededBy: data.get('neededBy'), notes: data.get('notes'), design: attachedDesign }) });
       setOrders(current => [order, ...current]);
       localStorage.removeItem('e-dorji-active-design'); setAttachedDesign(null);
-      form.reset(); setTab('orders'); say(labels.requestSuccess);
+      form.reset(); setProductOrder(null); setTab('orders'); say(labels.requestSuccess);
     } catch (error) { say(error.message); }
   }
 
   async function updateProfile(event) {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const form = event.currentTarget, data = new FormData(form), photo = data.get('avatar');
     try {
-      const { user } = await api('/api/profile', { method: 'PATCH', body: JSON.stringify({ name: data.get('name'), phone: data.get('phone'), city: data.get('city'), address: data.get('address') || '' }) });
-      setSession(user); say(labels.profileSaved);
+      let avatarData;
+      if (photo instanceof File && photo.size) {
+        if (photo.size > 3 * 1024 * 1024) throw new Error('Use a profile photo smaller than 3 MB.');
+        avatarData = await new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = reject; reader.readAsDataURL(photo); });
+      }
+      const { user } = await api('/api/profile', { method: 'PATCH', body: JSON.stringify({ name: data.get('name'), phone: data.get('phone'), city: data.get('city'), address: data.get('address') || '', avatarData, removeAvatar: data.get('removeAvatar') === 'on' && !avatarData }) });
+      const updatedUser = user.avatarUrl ? { ...user, avatarUrl: `${user.avatarUrl}?v=${Date.now()}` } : user;
+      setSession(updatedUser); window.dispatchEvent(new CustomEvent('e-dorji-account-updated', { detail: updatedUser }));
+      const avatarInput = form.querySelector('[name="avatar"]'); if (avatarInput) avatarInput.value = '';
+      say(labels.profileSaved);
     } catch (error) { say(error.message); }
   }
 
@@ -134,6 +159,16 @@ export default function Dashboard({ role }) {
       const result = await api('/api/tailor-profile', { method: 'PATCH', body: JSON.stringify({ shopName: data.get('shopName'), biography: data.get('biography'), services: String(data.get('services') || '').split(',').map(item => item.trim()).filter(Boolean), portfolio: String(data.get('portfolio') || '').split(/\r?\n/).map(item => item.trim()).filter(Boolean), availability: data.get('availability'), public: data.get('public') === 'on' }) });
       setTailorProfile(result.profile); say('Your tailor profile has been saved.');
     } catch (error) { say(error.message); }
+  }
+
+  async function refreshTailorProducts() {
+    const result = await api('/api/tailor/ready-made');
+    setTailorProducts(result.items || []);
+  }
+
+  function hireFromReadyMade(item, tailorName) {
+    setProductOrder({ id: item.id, tailor: tailorName, garment: item.title, budget: item.price, notes: `Ready-made style request: ${item.title}. ${item.description || ''}` });
+    setTab('new');
   }
 
   async function changePassword(event) {
@@ -224,7 +259,7 @@ export default function Dashboard({ role }) {
     })}</div>;
   }
 
-  const heading = useMemo(() => navItems.find(item => item[0] === tab)?.[1] || labels.overview, [navItems, tab, labels.overview]);
+  const heading = useMemo(() => navItems.find(item => item[0] === tab)?.[1] || (tab === 'profile' ? (isTailor ? 'Tailor profile' : 'Account profile') : tab === 'settings' ? 'Security & settings' : tab === 'notifications' ? 'Notifications' : labels.overview), [navItems, tab, labels.overview, isTailor]);
 
   if (!authReady) return <main className="dash-gate"><div><img src="assets/e-dorji-logo.svg" alt="E-Dorji"/><p>Loading your secure account…</p></div></main>;
   const hasPermission = isAdmin ? session?.permissions?.includes('ADMIN') : isTailor ? session?.permissions?.includes('TAILOR') : session?.permissions?.includes('CUSTOMER');
@@ -232,12 +267,12 @@ export default function Dashboard({ role }) {
 
   return <main className={`dashboard-shell ${isAdmin ? 'admin-dashboard' : 'customer-dashboard'}`}>
     <aside className="dash-sidebar">
-      <a className="dash-brand" href="e-dorji.html"><img src="assets/e-dorji-logo.svg" alt="E-Dorji"/></a>
+      <a className="dash-brand" href={isAdmin ? 'admin-dashboard.html' : isTailor ? 'tailor-dashboard.html' : 'customer-dashboard.html'} aria-label={`${isAdmin ? 'Admin' : isTailor ? 'Tailor' : 'Customer'} dashboard overview`}><img src="assets/e-dorji-logo.svg" alt="E-Dorji"/></a>
       <p className="dash-sidebar-label">{isAdmin ? labels.eyebrowAdmin : labels.eyebrowCustomer}</p>
-      <nav aria-label={isAdmin ? 'Admin management' : 'Customer management'}>{navItems.map(([key, text]) => <button key={key} className={tab === key ? 'active' : ''} onClick={() => setTab(key)}><span aria-hidden="true">{({ overview: '◫', orders: '▤', find: '⌕', studio: '✦', new: '+', saved: '♡', profile: '◉', applications: '✂', customers: '♙' })[key]}</span>{text}</button>)}</nav>
-      <div className="dash-sidebar-bottom"><span className="dash-user-avatar">{(activeUser?.name || (isAdmin ? 'A' : activeUser?.email || '?')).slice(0, 1).toUpperCase()}</span><div><b>{activeUser?.name || (isAdmin ? 'Admin' : activeUser?.email)}</b><small>{isAdmin ? 'Admin · demo' : activeUser?.email}</small></div><button onClick={signOut} title={labels.signOut} aria-label={labels.signOut}>↪</button></div>
+      <nav aria-label={isAdmin ? 'Admin management' : 'Customer management'}>{navItems.map(([key, text]) => <button key={key} className={tab === key ? 'active' : ''} onClick={() => setTab(key)}><span aria-hidden="true">{({ overview: '◫', orders: '▤', find: '⌕', ready: '◈', studio: '✦', new: '+', saved: '♡', profile: '◉', applications: '✂', customers: '♙', featured: '✦' })[key]}</span>{text}</button>)}</nav>
     </aside>
     <section className="dash-content">
+      {tab === 'overview' && !isAdmin && !isTailor && <FeaturedWork />}
       <header className="dash-topline"><div><p>{isAdmin ? labels.eyebrowAdmin : isTailor ? 'APPROVED ARTISAN' : labels.eyebrowCustomer}</p><h1>{heading}</h1></div><div className="dash-top-actions">{session?.permissions?.includes('TAILOR') && <a className="dash-secondary" href={isTailor ? 'customer-dashboard.html' : 'tailor-dashboard.html'}>{isTailor ? 'Customer mode' : 'Tailor mode'}</a>}<span className="dash-demo-badge">{isAdmin ? 'Secure admin workspace' : isTailor ? 'Verified tailor' : labels.demoNotice}</span></div></header>
       {notice && <p className="dash-notice" role="status">{notice}</p>}
       {tab === 'overview' && <>
@@ -249,24 +284,28 @@ export default function Dashboard({ role }) {
       </>}
       {tab === 'orders' && <section className="dash-panel full"><div className="dash-panel-head"><div><h2>{isAdmin ? labels.manageOrders : isTailor ? 'Work orders' : labels.orders}</h2><p>{isAdmin ? labels.demoNotice : labels.noOrdersCopy}</p></div>{!isAdmin && !isTailor && <button className="dash-primary" onClick={() => setTab('new')}>+ {labels.newOrder}</button>}</div>{orderTable(userOrders, isAdmin)}</section>}
       {tab === 'find' && <section className="dash-panel full"><div className="dash-panel-head"><div><h2>{labels.findTailors}</h2><p>{labels.browseAll}</p></div><input className="dash-search" value={filter} onChange={event => setFilter(event.target.value)} placeholder={labels.specialty}/></div>{tailorCards()}</section>}
+      {tab === 'ready' && !isAdmin && !isTailor && <ReadyMade onHire={hireFromReadyMade}/>}
       {tab === 'studio' && !isAdmin && <section className="dash-panel full studio-dash-panel"><DesignStudio language={language} onUseDesign={useDesign}/></section>}
       {tab === 'saved' && <section className="dash-panel full"><div className="dash-panel-head"><div><h2>{labels.saved}</h2><p>{labels.noSavedCopy}</p></div></div>{tailorCards(favoriteNames)}</section>}
-      {tab === 'new' && <section className="dash-panel dash-form-panel"><div className="dash-panel-head"><div><h2>{labels.newOrder}</h2><p>{labels.quickStartCopy}</p></div></div><form className="dash-form" onSubmit={createOrder}>
-        <label>{labels.garment}<select name="garment" required defaultValue=""><option value="" disabled>{labels.chooseGarment}</option>{labels.garments.map(garment => <option key={garment}>{garment}</option>)}</select></label>
-        <label>{labels.tailor}<select name="tailor" required defaultValue=""><option value="" disabled>{labels.chooseTailor}</option>{marketTailors.map(tailor => <option key={tailor.name}>{language === 'bn' ? tailor.nameBn : tailor.name}</option>)}</select></label>
-        <div className="dash-form-row"><label>{labels.budget}<input name="budget" type="number" min="0" step="100" placeholder="5000"/></label><label>{labels.neededBy}<input name="neededBy" type="date"/></label></div>
+      {tab === 'new' && <section className="dash-panel dash-form-panel"><div className="dash-panel-head"><div><h2>{labels.newOrder}</h2><p>{productOrder ? `Requesting ${productOrder.garment} from ${productOrder.tailor}. Review and edit the details below.` : labels.quickStartCopy}</p></div></div><form className="dash-form" key={productOrder?.id || 'new-order'} onSubmit={createOrder}>
+        <label>{labels.garment}<select name="garment" required defaultValue={productOrder?.garment || ''}><option value="" disabled>{labels.chooseGarment}</option>{productOrder && !labels.garments.includes(productOrder.garment) && <option>{productOrder.garment}</option>}{labels.garments.map(garment => <option key={garment}>{garment}</option>)}</select></label>
+        <label>{labels.tailor}<select name="tailor" required defaultValue={productOrder?.tailor || ''}><option value="" disabled>{labels.chooseTailor}</option>{productOrder && !marketTailors.some(tailor => tailor.name === productOrder.tailor) && <option>{productOrder.tailor}</option>}{marketTailors.map(tailor => <option key={tailor.name}>{language === 'bn' ? tailor.nameBn : tailor.name}</option>)}</select></label>
+        <div className="dash-form-row"><label>{labels.budget}<input name="budget" type="number" min="0" step="100" defaultValue={productOrder?.budget || ''} placeholder="5000"/></label><label>{labels.neededBy}<input name="neededBy" type="date"/></label></div>
         {attachedDesign && <div className="attached-design"><span className="attached-design-chip" style={{ background: attachedDesign.fabric }}></span><div><b>{labels.attachedDesign}</b><small>{attachedDesign.label}</small></div><button type="button" onClick={() => { localStorage.removeItem('e-dorji-active-design'); setAttachedDesign(null); }}>{labels.removeDesign}</button></div>}
         {!attachedDesign && <button className="dash-secondary order-design-link" type="button" onClick={() => setTab('studio')}>✦ {labels.tabLabels[6]}</button>}
-        <label>{labels.orderNotes}<textarea name="notes" rows="4" placeholder={labels.orderNotesPlaceholder}/></label>
+        <label>{labels.orderNotes}<textarea name="notes" rows="4" defaultValue={productOrder?.notes || ''} placeholder={labels.orderNotesPlaceholder}/></label>
         <button className="dash-primary" type="submit">{labels.placeRequest} →</button>
       </form></section>}
       {tab === 'measurements' && <section className="dash-panel dash-form-panel"><div className="dash-panel-head"><div><h2>My measurements</h2><p>Only you can view and update these private sizing details.</p></div></div><form className="dash-form" onSubmit={saveMeasurements}><div className="dash-form-row">{[['chest','Chest'],['waist','Waist'],['hip','Hip'],['shoulder','Shoulder'],['sleeve','Sleeve'],['inseam','Inseam'],['length','Garment length']].map(([key,label]) => <label key={key}>{label} (cm)<input name={key} type="number" min="0" max="300" step="0.1" defaultValue={measurements[key] || ''}/></label>)}</div><button className="dash-primary">Save measurements</button></form></section>}
       {tab === 'profile' && isTailor && <section className="dash-panel dash-form-panel"><div className="dash-panel-head"><div><h2>Tailor profile</h2><p><span className="verification-badge">✓ Verified tailor</span> · {activeUser.email}</p></div></div><form className="dash-form" onSubmit={saveTailorProfile}><label>Shop or studio name<input name="shopName" defaultValue={tailorProfile?.shopName || ''} required/></label><label>About your craft<textarea name="biography" rows="4" defaultValue={tailorProfile?.biography || ''} required minLength="30"/></label><label>Services, separated by commas<input name="services" defaultValue={tailorProfile?.services?.join(', ') || ''} placeholder="Panjabi, alterations, embroidery"/></label><label>Portfolio links, one HTTPS URL per line<textarea name="portfolio" rows="3" defaultValue={tailorProfile?.portfolio?.join('\n') || ''}/></label><label>Availability<select name="availability" defaultValue={tailorProfile?.availability || 'available'}><option value="available">Available</option><option value="limited">Limited availability</option><option value="unavailable">Not taking orders</option></select></label><label className="dash-check-label"><input name="public" type="checkbox" defaultChecked={tailorProfile?.public || false}/> Show my tailor profile publicly</label><button className="dash-primary">Save tailor profile</button></form></section>}
-      {tab === 'profile' && !isTailor && <section className="dash-panel dash-form-panel"><div className="dash-panel-head"><div><h2>{labels.profileDetails}</h2><p>{activeUser.email}</p></div></div><form className="dash-form" onSubmit={updateProfile}><label>{labels.fullName}<input name="name" defaultValue={activeUser.name || ''} required/></label><label>{labels.email}<input value={activeUser.email} readOnly/></label><label>{labels.phone}<input name="phone" defaultValue={activeUser.phone || ''} required/></label><label>{labels.city}<input name="city" defaultValue={activeUser.city || ''} required/></label><label>Address<input name="address" defaultValue={activeUser.address || ''}/></label><button className="dash-primary">{labels.saveProfile}</button></form></section>}
-      {!isAdmin && !isTailor && tab === 'settings' && <section className="dash-panel dash-form-panel"><div className="dash-panel-head"><div><h2>Account security</h2><p>Update your password, notification preferences, or account.</p></div></div><form className="dash-form" onSubmit={changePassword}><label>Current password<input name="oldPassword" type="password" required autoComplete="current-password"/></label><label>New password<input name="newPassword" type="password" required minLength="10" autoComplete="new-password"/></label><label>Confirm new password<input name="confirmPassword" type="password" required minLength="10" autoComplete="new-password"/></label><button className="dash-primary">Change password</button></form><form className="dash-form preference-form" onSubmit={saveNotificationPreferences}><h3>Notification preferences</h3><label className="dash-check-label"><input name="inApp" type="checkbox" defaultChecked={notificationPreferences.inApp}/> In-app alerts</label><label className="dash-check-label"><input name="email" type="checkbox" defaultChecked={notificationPreferences.email}/> Email alerts (available when email delivery is configured)</label><label className="dash-check-label"><input name="sms" type="checkbox" defaultChecked={notificationPreferences.sms}/> SMS alerts (available when SMS delivery is configured)</label><button className="dash-secondary">Save preferences</button></form><button className="dash-secondary delete-account-button" onClick={deleteAccount}>Delete my account</button></section>}
+      {tab === 'profile' && isTailor && <TailorReadyMadeManager products={tailorProducts} onRefresh={refreshTailorProducts} onNotice={say}/>}
+      {tab === 'profile' && isTailor && <section className="dash-panel dash-form-panel"><div className="dash-panel-head"><div><h2>Personal details</h2><p>These details are used for your account and tailor dashboard.</p></div></div><form className="dash-form" onSubmit={updateProfile}><label>Full name<input name="name" defaultValue={activeUser.name || ''} required/></label><label>Email address<input value={activeUser.email} readOnly/></label><label>Phone number<input name="phone" defaultValue={activeUser.phone || ''} required/></label><label>City<input name="city" defaultValue={activeUser.city || ''} required/></label><label>Address<input name="address" defaultValue={activeUser.address || ''}/></label><label>Profile photo (JPG, PNG or WebP, max 3 MB)<input name="avatar" type="file" accept="image/jpeg,image/png,image/webp"/></label>{activeUser.avatarUrl && <label className="dash-check-label"><input name="removeAvatar" type="checkbox"/> Remove current profile photo</label>}<button className="dash-primary">Save personal details</button></form></section>}
+      {tab === 'profile' && !isTailor && <section className="dash-panel dash-form-panel"><div className="dash-panel-head"><div><h2>{labels.profileDetails}</h2><p>{activeUser.email}</p></div></div><form className="dash-form" onSubmit={updateProfile}><label>{labels.fullName}<input name="name" defaultValue={activeUser.name || ''} required/></label><label>{labels.email}<input value={activeUser.email} readOnly/></label><label>{labels.phone}<input name="phone" defaultValue={activeUser.phone || ''} required/></label><label>{labels.city}<input name="city" defaultValue={activeUser.city || ''} required/></label><label>Address<input name="address" defaultValue={activeUser.address || ''}/></label><label>Profile photo (JPG, PNG or WebP, max 3 MB)<input name="avatar" type="file" accept="image/jpeg,image/png,image/webp"/></label>{activeUser.avatarUrl && <label className="dash-check-label"><input name="removeAvatar" type="checkbox"/> Remove current profile photo</label>}<button className="dash-primary">{labels.saveProfile}</button></form></section>}
+      {tab === 'settings' && <section className="dash-panel dash-form-panel"><div className="dash-panel-head"><div><h2>Account security</h2><p>Change your password, notification preferences, or sign out of this account.</p></div></div><form className="dash-form" onSubmit={changePassword}><label>Current password<input name="oldPassword" type="password" required autoComplete="current-password"/></label><label>New password<input name="newPassword" type="password" required minLength="10" autoComplete="new-password"/></label><label>Confirm new password<input name="confirmPassword" type="password" required minLength="10" autoComplete="new-password"/></label><button className="dash-primary">Change password</button></form><form className="dash-form preference-form" onSubmit={saveNotificationPreferences}><h3>Notification preferences</h3><label className="dash-check-label"><input name="inApp" type="checkbox" defaultChecked={notificationPreferences.inApp}/> In-app alerts</label><label className="dash-check-label"><input name="email" type="checkbox" defaultChecked={notificationPreferences.email}/> Email alerts (available when email delivery is configured)</label><label className="dash-check-label"><input name="sms" type="checkbox" defaultChecked={notificationPreferences.sms}/> SMS alerts (available when SMS delivery is configured)</label><button className="dash-secondary">Save preferences</button></form><button className="dash-secondary delete-account-button" onClick={deleteAccount}>Delete my account</button></section>}
       {tab === 'notifications' && <section className="dash-panel full"><div className="dash-panel-head"><div><h2>Notifications</h2><p>Your account and application updates</p></div></div>{notifications.length ? <div className="dash-application-list">{notifications.map(item => <article className="dash-application" key={item.id}><div><span className="dash-status">{item.kind.replaceAll('_', ' ')}</span><p>{item.message}</p><small>{new Date(item.createdAt).toLocaleString()}</small></div></article>)}</div> : <div className="dash-empty"><h3>You’re all caught up.</h3></div>}</section>}
       {isAdmin && tab === 'applications' && <section className="dash-panel full"><div className="dash-panel-head"><div><h2>{labels.applicationsTitle}</h2><p>Review submissions and send a decision or information request.</p></div></div><div className="application-filters"><input aria-label="Search applications" placeholder="Search name, email, specialty or city" value={applicationSearch} onChange={event => setApplicationSearch(event.target.value)}/><select aria-label="Filter by application status" value={applicationFilter} onChange={event => setApplicationFilter(event.target.value)}><option value="all">All statuses</option>{['SUBMITTED','UNDER_REVIEW','APPROVED','REJECTED','NEEDS_INFORMATION'].map(status => <option key={status} value={status}>{status.replaceAll('_', ' ')}</option>)}</select></div>{visibleApplications.length ? <div className="dash-application-list">{visibleApplications.map(application => <article className="dash-application" key={application.id}><div><span className={`dash-status ${application.status.toLowerCase()}`}>{application.status.replaceAll('_', ' ')}</span><h3>{application.name}</h3><p>{application.email} · {application.phone} · {application.city}</p><p><b>{labels.specialty}:</b> {application.specialties.join(', ')} · {application.experience} {labels.experience}</p><p><b>{labels.workshopLabel || labels.city}:</b> {application.workshop}</p>{application.portfolio && <a href={application.portfolio} target="_blank" rel="noreferrer">{application.portfolio}</a>}<p>{application.introduction}</p>{application.reviewMessage && <p><b>Applicant message:</b> {application.reviewMessage}</p>}<label className="internal-note">Internal admin note<textarea rows="2" defaultValue={application.internalNote} onBlur={event => saveInternalNote(application.id, event.currentTarget.value)} placeholder="Only visible to admins"/></label></div>{application.status !== 'APPROVED' && <div className="dash-actions"><button className="dash-secondary" onClick={() => reviewApplication(application.id, 'UNDER_REVIEW')}>Under review</button><button className="dash-primary" onClick={() => reviewApplication(application.id, 'APPROVED')}>{labels.approve}</button><button className="dash-secondary" onClick={() => reviewApplication(application.id, 'NEEDS_INFORMATION')}>Request information</button><button className="dash-secondary" onClick={() => reviewApplication(application.id, 'REJECTED')}>{labels.reject}</button></div>}</article>)}</div> : <div className="dash-empty"><span>✂</span><h3>{applications.length ? 'No matching applications.' : labels.noApplications}</h3></div>}</section>}
       {isAdmin && tab === 'customers' && <section className="dash-panel full"><div className="dash-panel-head"><div><h2>{labels.customersTitle}</h2><p>{users.length} {labels.registeredCustomers.toLowerCase()}</p></div></div>{users.length ? <div className="dash-customer-list">{users.map(user => <article key={user.email}><span className="dash-user-avatar">{(user.name || user.email).slice(0,1).toUpperCase()}</span><div><b>{user.name} {user.applicationStatus === 'APPROVED' && !user.tailorSuspended && <span className="verification-badge" title="Approved tailor">✓</span>}</b><small>{user.email} · {user.phone || labels.empty} · {user.city || labels.empty} · {user.applicationStatus.replaceAll('_', ' ')}</small></div>{user.applicationStatus === 'APPROVED' && <button className="dash-secondary" onClick={() => toggleTailorAccess(user)}>{user.tailorSuspended ? 'Reactivate tailor' : 'Suspend tailor'}</button>}</article>)}</div> : <div className="dash-empty"><span>♙</span><h3>{labels.noCustomers}</h3></div>}</section>}
+      {isAdmin && tab === 'featured' && <FeaturedWorkManager />}
     </section>
   </main>;
 }

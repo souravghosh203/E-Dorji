@@ -1,0 +1,58 @@
+[
+  {
+    "slug": "nusrat-jahan-chowdhury",
+    "name": { "en": "Nusrat Jahan Chowdhury", "bn": "নুসরাত জাহান চৌধুরী" },
+    "shop": { "en": "Atelier Bengal", "bn": "অ্যাটেলিয়ার বেঙ্গল" },
+    "city": { "en": "Gulshan, Dhaka", "bn": "গুলশান, ঢাকা" },
+    "rating": "5.0",
+    "experience": { "en": "12 years of hand-finished occasion wear", "bn": "হাতে তৈরি উৎসবের পোশাকে ১২ বছরের অভিজ্ঞতা" },
+    "bio": { "en": "Nusrat combines heirloom Bengali needlework with careful, made-to-measure construction for celebrations and keepsake pieces.", "bn": "নুসরাত উৎসব ও স্মৃতির পোশাকে ঐতিহ্যবাহী বাংলা সূচিকর্মের সঙ্গে নিখুঁত মাপের সেলাই মিলিয়ে কাজ করেন।" },
+    "hours": { "en": "Sat–Thu · 10:00–19:00", "bn": "শনি–বৃহস্পতি · সকাল ১০টা–সন্ধ্যা ৭টা" },
+    "crafts": [
+      { "id": "bridal-blouse", "name": { "en": "Nakshi Kantha bridal blouse", "bn": "নকশি কাঁথার কনের ব্লাউজ" }, "description": { "en": "A fitted silk blouse with hand-stitched floral motifs, custom neckline and a measured finish.", "bn": "হাতে সেলাই করা ফুলের নকশা, পছন্দমতো গলা ও নিখুঁত মাপে তৈরি সিল্কের ব্লাউজ।" }, "price": 4800, "days": { "en": "8–12 working days", "bn": "৮–১২ কর্মদিবস" }, "kind": "blouse", "color": "#8c2944", "accent": "#e8bc78", "imageUrl": "https://images.unsplash.com/photo-1742891602328-5425e0114edc?auto=format&fit=crop&crop=entropy&w=1000&h=1200&q=82", "imageCredit": "Rohit Dey · Unsplash" },
+      { "id": "kantha-saree", "name": { "en": "Embroidered saree finishing", "bn": "সূচিকর্ম করা শাড়ির কাজ" }, "description": { "en": "Personalised border embroidery and blouse, fall and pico finishing for a complete occasion look.", "bn": "বিশেষ দিনের সাজে পছন্দমতো পাড়ের সূচিকর্ম, ব্লাউজ, ফল ও পিকোর কাজ।" }, "price": 8500, "days": { "en": "14–18 working days", "bn": "১৪–১৮ কর্মদিবস" }, "kind": "saree", "color": "#9c3851", "accent": "#efca85", "imageUrl": "https://images.unsplash.com/photo-1717835735088-4c821959bdaa?auto=format&fit=crop&crop=entropy&w=1000&h=1200&q=82", "imageCredit": "Abhay Sachan · Unsplash" }
+    ]
+  },
+  {
+    "slug": "taslima-akter",
+    "name": { "en": "Taslima Akter", "bn": "তাসলিমা আক্তার" },
+    "shop": { "en": "Taslima Boutique", "bn": "তাসলিমা বুটিক" },
+    "city": { "en": "Dhanmondi, Dhaka", "bn": "ধানমন্ডি, ঢাকা" },
+    "rating": "4.9",
+    "experience": { "en": "9 years creating everyday and festive wear", "bn": "দৈনন্দিন ও উৎসবের পোশাকে ৯ বছরের অভিজ্ঞতা" },
+    "bio": { "en": "Taslima makes expressive salwar kameez and kurtis with practical details, flattering fits and thoughtful fabric pairings.", "bn": "তাসলিমা আরামদায়ক মাপ, ব্যবহারিক নকশা ও মানানসই কাপড়ে সালোয়ার কামিজ এবং কুর্তি তৈরি করেন।" },
+    "hours": { "en": "Sun–Fri · 10:30–18:30", "bn": "রবি–শুক্র · সকাল ১০:৩০–সন্ধ্যা ৬:৩০" },
+    "crafts": [
+      { "id": "salwar-kameez", "name": { "en": "Peacock blue salwar kameez", "bn": "ময়ূর নীল সালোয়ার কামিজ" }, "description": { "en": "A made-to-measure kameez with fine contrast piping, paired with a comfortable straight trouser.", "bn": "সূক্ষ্ম কনট্রাস্ট পাইপিংসহ মাপমতো কামিজ এবং আরামদায়ক সোজা পায়জামা।" }, "price": 3200, "days": { "en": "7–10 working days", "bn": "৭–১০ কর্মদিবস" }, "kind": "salwar", "color": "#246d70", "accent": "#edc587", "imageUrl": "https://images.unsplash.com/photo-1742800786544-e935375035e3?auto=format&fit=crop&crop=entropy&w=1000&h=1200&q=82", "imageCredit": "Naseebo · Unsplash" },
+      { "id": "embroidered-kurti", "name": { "en": "Everyday embroidered kurti", "bn": "দৈনন্দিন এমব্রয়ডারি কুর্তি" }, "description": { "en": "A breathable cotton kurti with a hand-finished neckline and subtle threadwork.", "bn": "হাতে করা গলার কাজ ও সূক্ষ্ম সুতার নকশায় আরামদায়ক সুতি কুর্তি।" }, "price": 1800, "days": { "en": "5–7 working days", "bn": "৫–৭ কর্মদিবস" }, "kind": "kurti", "color": "#58764b", "accent": "#f1d39a", "imageUrl": "https://images.unsplash.com/photo-1618901185975-d59f7091bcfe?auto=format&fit=crop&crop=entropy&w=1000&h=1200&q=82", "imageCredit": "inesh thamotharampillai · Unsplash" }
+    ]
+  },
+  {
+    "slug": "rashida-begum",
+    "name": { "en": "Rashida Begum", "bn": "রাশিদা বেগম" },
+    "shop": { "en": "Rashida Home Tailoring", "bn": "রাশিদা হোম টেইলারিং" },
+    "city": { "en": "Rajshahi", "bn": "রাজশাহী" },
+    "rating": "4.8",
+    "experience": { "en": "15 years of thoughtful home tailoring", "bn": "যত্নশীল ঘরোয়া সেলাইয়ে ১৫ বছরের অভিজ্ঞতা" },
+    "bio": { "en": "Rashida is known for comfortable daily pieces, precise alterations and small hand-worked details inspired by local craft.", "bn": "রাশিদা আরামদায়ক দৈনন্দিন পোশাক, নিখুঁত অল্টারেশন এবং স্থানীয় কারুশিল্প থেকে অনুপ্রাণিত হাতের কাজের জন্য পরিচিত।" },
+    "hours": { "en": "Sat–Thu · 09:00–17:00", "bn": "শনি–বৃহস্পতি · সকাল ৯টা–বিকেল ৫টা" },
+    "crafts": [
+      { "id": "kantha-kurti", "name": { "en": "Kantha stitch cotton kurti", "bn": "কাঁথা সেলাইয়ের সুতি কুর্তি" }, "description": { "en": "Soft cotton with a hand-stitched neckline and small running-stitch motifs inspired by kantha.", "bn": "কাঁথা সেলাই থেকে অনুপ্রাণিত গলার নকশাসহ নরম সুতি কাপড়ের কুর্তি।" }, "price": 1800, "days": { "en": "5–7 working days", "bn": "৫–৭ কর্মদিবস" }, "kind": "kurti", "color": "#aa623f", "accent": "#f1d29b", "imageUrl": "https://images.unsplash.com/photo-1742800786544-e935375035e3?auto=format&fit=crop&crop=entropy&w=1000&h=1200&q=82", "imageCredit": "Naseebo · Unsplash" },
+      { "id": "three-piece", "name": { "en": "Custom three-piece set", "bn": "মাপমতো থ্রি-পিস সেট" }, "description": { "en": "A coordinated kameez, trouser and dupatta, cut to your measurements and colour choices.", "bn": "আপনার মাপ ও রঙের পছন্দ অনুযায়ী কামিজ, পায়জামা ও ওড়নার সমন্বিত সেট।" }, "price": 4200, "days": { "en": "9–12 working days", "bn": "৯–১২ কর্মদিবস" }, "kind": "salwar", "color": "#5d547d", "accent": "#e8c88c", "imageUrl": "https://images.unsplash.com/photo-1745482036050-3d644032416d?auto=format&fit=crop&crop=entropy&w=1000&h=1200&q=82", "imageCredit": "iKshana Productions · Unsplash" }
+    ]
+  },
+  {
+    "slug": "kamal-hossain",
+    "name": { "en": "Kamal Hossain", "bn": "কামাল হোসেন" },
+    "shop": { "en": "Hossain Panjabi House", "bn": "হোসেন পাঞ্জাবি হাউস" },
+    "city": { "en": "Old Dhaka", "bn": "পুরান ঢাকা" },
+    "rating": "4.9",
+    "experience": { "en": "11 years specialising in menswear", "bn": "পুরুষদের পোশাকে ১১ বছরের বিশেষ অভিজ্ঞতা" },
+    "bio": { "en": "Kamal specialises in structured Panjabi and sherwani, with clean collars, balanced proportions and carefully finished seams.", "bn": "কামাল পরিপাটি কলার, সুষম মাপ এবং নিখুঁত ফিনিশিংয়ে পাঞ্জাবি ও শেরওয়ানি তৈরিতে বিশেষজ্ঞ।" },
+    "hours": { "en": "Sat–Thu · 11:00–20:00", "bn": "শনি–বৃহস্পতি · সকাল ১১টা–রাত ৮টা" },
+    "crafts": [
+      { "id": "eid-panjabi", "name": { "en": "Emerald Eid Panjabi", "bn": "এমেরাল্ড ঈদ পাঞ্জাবি" }, "description": { "en": "A smooth cotton-silk Panjabi with a shaped band collar, neat placket and optional hand embroidery.", "bn": "শেপ করা ব্যান্ড কলার, পরিপাটি প্ল্যাকেট ও ঐচ্ছিক হাতের নকশায় কটন-সিল্ক পাঞ্জাবি।" }, "price": 4200, "days": { "en": "8–11 working days", "bn": "৮–১১ কর্মদিবস" }, "kind": "panjabi", "color": "#236653", "accent": "#e6c17e", "imageUrl": "https://images.unsplash.com/photo-1756734004064-3c796a9939ca?auto=format&fit=crop&crop=entropy&w=1000&h=1200&q=82", "imageCredit": "Sanket Mishra · Unsplash" },
+      { "id": "formal-sherwani", "name": { "en": "Formal occasion sherwani", "bn": "আনুষ্ঠানিক শেরওয়ানি" }, "description": { "en": "A structured long jacket with a custom fit, fabric-covered buttons and optional tonal detail.", "bn": "মাপমতো তৈরি লম্বা জ্যাকেট, কাপড় মোড়ানো বোতাম ও ঐচ্ছিক সূক্ষ্ম নকশা।" }, "price": 12500, "days": { "en": "16–22 working days", "bn": "১৬–২২ কর্মদিবস" }, "kind": "sherwani", "color": "#73513c", "accent": "#e7c58b", "imageUrl": "https://images.unsplash.com/photo-1505975281173-b339d9fd992c?auto=format&fit=crop&crop=entropy&w=1000&h=1200&q=82", "imageCredit": "Aditya Saxena · Unsplash" }
+    ]
+  }
+]

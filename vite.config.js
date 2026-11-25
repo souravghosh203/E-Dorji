@@ -13,6 +13,7 @@ export default defineConfig({
         forgotPassword: resolve(import.meta.dirname, 'forgot-password.html'),
         register: resolve(import.meta.dirname, 'register.html'),
         tailorApplication: resolve(import.meta.dirname, 'become-tailor.html'),
+        tailorProfile: resolve(import.meta.dirname, 'tailor-profile.html'),
         help: resolve(import.meta.dirname, 'help.html'),
         customerDashboard: resolve(import.meta.dirname, 'customer-dashboard.html'),
         adminDashboard: resolve(import.meta.dirname, 'admin-dashboard.html'),

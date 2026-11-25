@@ -25,7 +25,8 @@ db.exec(`
     id TEXT PRIMARY KEY, name TEXT NOT NULL, email TEXT NOT NULL UNIQUE COLLATE NOCASE,
     phone TEXT NOT NULL, city TEXT NOT NULL, address TEXT NOT NULL DEFAULT '',
     salt TEXT NOT NULL, password_hash TEXT NOT NULL, is_admin INTEGER NOT NULL DEFAULT 0, is_demo INTEGER NOT NULL DEFAULT 0,
-    tailor_suspended INTEGER NOT NULL DEFAULT 0, created_at TEXT NOT NULL
+    tailor_suspended INTEGER NOT NULL DEFAULT 0, avatar_type TEXT NOT NULL DEFAULT '', avatar_data BLOB,
+    created_at TEXT NOT NULL
   );
   CREATE TABLE IF NOT EXISTS sessions (
     token_hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -77,11 +78,70 @@ db.exec(`
     id TEXT PRIMARY KEY, actor_id TEXT REFERENCES users(id), action TEXT NOT NULL,
     subject_id TEXT, created_at TEXT NOT NULL
   );
+  CREATE TABLE IF NOT EXISTS featured_work (
+    id TEXT PRIMARY KEY, payload TEXT NOT NULL, created_at TEXT NOT NULL
+  );
+  CREATE TABLE IF NOT EXISTS featured_images (
+    item_id TEXT PRIMARY KEY REFERENCES featured_work(id) ON DELETE CASCADE,
+    content_type TEXT NOT NULL, data BLOB NOT NULL
+  );
+  CREATE TABLE IF NOT EXISTS ready_made_products (
+    id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    title TEXT NOT NULL, category TEXT NOT NULL, description TEXT NOT NULL,
+    price INTEGER NOT NULL, time TEXT NOT NULL, image_type TEXT NOT NULL, image_data BLOB NOT NULL,
+    created_at TEXT NOT NULL, updated_at TEXT NOT NULL
+  );
+  CREATE INDEX IF NOT EXISTS ready_made_owner_idx ON ready_made_products(user_id,created_at DESC);
+  CREATE TABLE IF NOT EXISTS app_settings (key TEXT PRIMARY KEY, value TEXT NOT NULL);
   CREATE INDEX IF NOT EXISTS session_expiry_idx ON sessions(expires_at);
   CREATE INDEX IF NOT EXISTS application_status_idx ON tailor_applications(status);
 `);
 try { db.exec('ALTER TABLE users ADD COLUMN is_demo INTEGER NOT NULL DEFAULT 0'); } catch {}
+try { db.exec("ALTER TABLE users ADD COLUMN avatar_type TEXT NOT NULL DEFAULT ''"); } catch {}
+try { db.exec('ALTER TABLE users ADD COLUMN avatar_data BLOB'); } catch {}
 try { db.exec("ALTER TABLE tailor_profiles ADD COLUMN portfolio TEXT NOT NULL DEFAULT '[]'"); } catch {}
+
+if (!db.prepare("SELECT value FROM app_settings WHERE key='featured_work_seeded'").get()) {
+  const seedProfiles = JSON.parse(readFileSync(resolve(root, 'src/data/artisan-showcase.json'), 'utf8'));
+  const insertSeed = db.prepare('INSERT OR IGNORE INTO featured_work (id,payload,created_at) VALUES (?,?,?)');
+  for (const profile of seedProfiles) {
+    const { crafts, ...tailor } = profile;
+    for (const craft of crafts) insertSeed.run(`seed-${tailor.slug}-${craft.id}`, JSON.stringify({ tailor, craft }), new Date().toISOString());
+  }
+  db.prepare("INSERT INTO app_settings (key,value) VALUES ('featured_work_seeded','1')").run();
+}
+if (!db.prepare("SELECT value FROM app_settings WHERE key='featured_work_photos_added'").get()) {
+  const profilesWithPhotos = JSON.parse(readFileSync(resolve(root, 'src/data/artisan-showcase.json'), 'utf8'));
+  for (const profile of profilesWithPhotos) for (const craft of profile.crafts) {
+    const seedId = `seed-${profile.slug}-${craft.id}`;
+    const row = db.prepare('SELECT payload FROM featured_work WHERE id=?').get(seedId);
+    if (!row) continue;
+    const payload = JSON.parse(row.payload);
+    payload.craft.imageUrl ||= craft.imageUrl;
+    payload.craft.imageCredit ||= craft.imageCredit;
+    db.prepare('UPDATE featured_work SET payload=? WHERE id=?').run(JSON.stringify(payload), seedId);
+  }
+  db.prepare("INSERT INTO app_settings (key,value) VALUES ('featured_work_photos_added','1')").run();
+}
+if (!db.prepare("SELECT value FROM app_settings WHERE key='featured_work_customer_photos_added'").get()) {
+  const profiles = JSON.parse(readFileSync(resolve(root, 'src/data/artisan-showcase.json'), 'utf8'));
+  const profileBySlug = new Map(profiles.map(profile => [profile.slug, profile]));
+  const featured = JSON.parse(readFileSync(resolve(root, 'src/data/featured-work-seed.json'), 'utf8'));
+  const insertSeed = db.prepare('INSERT OR REPLACE INTO featured_work (id,payload,created_at) VALUES (?,?,?)');
+  const keepIds = new Set();
+  for (const { tailorSlug, craft } of featured) {
+    const profile = profileBySlug.get(tailorSlug);
+    if (!profile) continue;
+    const { crafts, ...tailor } = profile;
+    const id = `seed-${tailorSlug}-${craft.id}`;
+    keepIds.add(id);
+    insertSeed.run(id, JSON.stringify({ tailor, craft }), new Date().toISOString());
+  }
+  const oldSeeds = db.prepare("SELECT id FROM featured_work WHERE id LIKE 'seed-%'").all();
+  const removeSeed = db.prepare('DELETE FROM featured_work WHERE id=?');
+  for (const row of oldSeeds) if (!keepIds.has(row.id)) removeSeed.run(row.id);
+  db.prepare("INSERT INTO app_settings (key,value) VALUES ('featured_work_customer_photos_added','1')").run();
+}
 
 const nowIso = () => new Date().toISOString();
 const hashToken = token => createHash('sha256').update(token).digest('hex');
@@ -97,11 +157,11 @@ function setSessionCookie(res, token, maxAge) {
   res.setHeader('set-cookie', `ed_session=${encodeURIComponent(token)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${maxAge}${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`);
 }
 function clearSessionCookie(res) { res.setHeader('set-cookie', 'ed_session=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0'); }
-async function body(req) {
+async function body(req, maxBytes = 32768) {
   let raw = '';
   for await (const chunk of req) {
     raw += chunk;
-    if (raw.length > 32768) throw Object.assign(new Error('Request too large'), { status: 413 });
+    if (raw.length > maxBytes) throw Object.assign(new Error('Request too large'), { status: 413 });
   }
   try { return raw ? JSON.parse(raw) : {}; } catch { throw Object.assign(new Error('Invalid JSON'), { status: 400 }); }
 }
@@ -111,7 +171,7 @@ function publicUser(row) {
   const approvedTailor = application?.status === 'APPROVED' && !row.tailor_suspended;
   return {
     id: row.id, name: row.name, email: row.email, phone: row.phone, city: row.city,
-    address: row.address, permissions: row.is_admin ? ['ADMIN'] : approvedTailor ? ['CUSTOMER', 'TAILOR'] : ['CUSTOMER'],
+    address: row.address, avatarUrl: row.avatar_type ? `/api/avatar/${encodeURIComponent(row.id)}` : '', permissions: row.is_admin ? ['ADMIN'] : approvedTailor ? ['CUSTOMER', 'TAILOR'] : ['CUSTOMER'],
     accountType: row.is_admin ? 'ADMIN' : approvedTailor ? 'CUSTOMER + TAILOR' : 'CUSTOMER',
     tailorSuspended: Boolean(row.tailor_suspended), applicationStatus: application?.status || 'NOT_APPLIED',
   };
@@ -293,20 +353,157 @@ async function api(req, res) {
       const user = currentUser(req);
       return user ? send(res, 200, { user: publicUser(user) }) : send(res, 200, { user: null });
     }
+    const avatarMatch = path.match(/^\/api\/avatar\/([a-f\d]+)$/i);
+    if (avatarMatch && method === 'GET') {
+      const viewer = requireUser(req, res); if (!viewer) return;
+      if (viewer.id !== avatarMatch[1]) return send(res, 403, { error: 'You can only view your own account photo.' });
+      const profile = db.prepare('SELECT avatar_type,avatar_data FROM users WHERE id=?').get(avatarMatch[1]);
+      if (!profile?.avatar_data || !profile.avatar_type) return send(res, 404, { error: 'Profile photo not found.' });
+      res.writeHead(200, { 'content-type': profile.avatar_type, 'cache-control': 'private, no-cache, must-revalidate', 'x-content-type-options': 'nosniff' });
+      return res.end(profile.avatar_data);
+    }
     if (path === '/api/public-tailors' && method === 'GET') {
       const rows = db.prepare(`SELECT u.name,u.city,p.shop_name,p.biography,p.services,p.portfolio,p.availability
         FROM users u JOIN tailor_profiles p ON p.user_id=u.id
         WHERE u.is_admin=0 AND u.tailor_suspended=0 AND p.public=1 AND p.verification='verified'
         AND EXISTS (SELECT 1 FROM tailor_applications a WHERE a.user_id=u.id AND a.status='APPROVED')
         ORDER BY u.name COLLATE NOCASE`).all();
-      return send(res, 200, { tailors: rows.map(row => ({ name: row.name, city: row.city, shopName: row.shop_name, biography: row.biography, services: JSON.parse(row.services), portfolio: JSON.parse(row.portfolio), availability: row.availability, verified: true })) });
+      return send(res, 200, { tailors: rows.map(row => ({ name: row.name, slug: row.name.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''), city: row.city, shopName: row.shop_name, biography: row.biography, services: JSON.parse(row.services), portfolio: JSON.parse(row.portfolio), availability: row.availability, verified: true })) });
+    }
+    const readyImageMatch = path.match(/^\/api\/ready-made\/([a-f\d]{24})\/image$/i);
+    if (readyImageMatch && method === 'GET') {
+      const image = db.prepare('SELECT image_type,image_data FROM ready_made_products WHERE id=?').get(readyImageMatch[1]);
+      if (!image) return send(res, 404, { error: 'Product photo not found.' });
+      res.writeHead(200, { 'content-type': image.image_type, 'cache-control': 'public, max-age=31536000, immutable', 'x-content-type-options': 'nosniff' });
+      return res.end(image.image_data);
+    }
+    if (path === '/api/ready-made' && method === 'GET') {
+      const rows = db.prepare(`SELECT r.*,u.name AS tailor_name,u.city,p.shop_name,u.id AS tailor_id
+        FROM ready_made_products r JOIN users u ON u.id=r.user_id
+        JOIN tailor_profiles p ON p.user_id=u.id
+        WHERE u.is_admin=0 AND u.tailor_suspended=0 AND p.public=1 AND p.verification='verified'
+        AND EXISTS (SELECT 1 FROM tailor_applications a WHERE a.user_id=u.id AND a.status='APPROVED')
+        ORDER BY r.created_at DESC`).all();
+      return send(res, 200, { items: rows.map(readyMadeJson) });
+    }
+    if (path === '/api/tailor/ready-made' && method === 'GET') {
+      const user = requireUser(req, res); if (!user) return;
+      if (!publicUser(user).permissions.includes('TAILOR')) return send(res, 403, { error: 'Only approved tailors can manage ready-made items.' });
+      const rows = db.prepare('SELECT r.*,u.name AS tailor_name,u.city,p.shop_name,u.id AS tailor_id FROM ready_made_products r JOIN users u ON u.id=r.user_id LEFT JOIN tailor_profiles p ON p.user_id=u.id WHERE r.user_id=? ORDER BY r.created_at DESC').all(user.id);
+      return send(res, 200, { items: rows.map(readyMadeJson) });
+    }
+    if (path === '/api/tailor/ready-made' && method === 'POST') {
+      const user = requireUser(req, res); if (!user) return;
+      if (!publicUser(user).permissions.includes('TAILOR')) return send(res, 403, { error: 'Only approved tailors can manage ready-made items.' });
+      const data = await body(req, 4_250_000);
+      const title = String(data.title || '').trim().slice(0, 120), description = String(data.description || '').trim().slice(0, 1000);
+      const category = String(data.category || '').trim(), time = String(data.time || '').trim().slice(0, 80), price = Math.floor(Number(data.price));
+      const categories = ['Borka','Saree','Lungi','Panjabi','Girls’ dress','Other'];
+      if (title.length < 2 || !categories.includes(category) || description.length < 12 || !time || !Number.isSafeInteger(price) || price < 1 || price > 10000000) return send(res, 400, { error: 'Enter the item name, category, description, price, and ready or making time.' });
+      const imageMatch = String(data.imageData || '').match(/^data:image\/(jpeg|png|webp);base64,([A-Za-z0-9+/]+={0,2})$/);
+      if (!imageMatch) return send(res, 400, { error: 'Upload a product photo in JPG, PNG, or WebP format.' });
+      const imageBytes = Buffer.from(imageMatch[2], 'base64');
+      const imageType = imageMatch[1] === 'jpeg' ? 'image/jpeg' : `image/${imageMatch[1]}`;
+      const isJpeg = imageBytes[0] === 0xff && imageBytes[1] === 0xd8 && imageBytes[2] === 0xff;
+      const isPng = imageBytes.subarray(0, 8).equals(Buffer.from([0x89,0x50,0x4e,0x47,0x0d,0x0a,0x1a,0x0a]));
+      const isWebp = imageBytes.toString('ascii', 0, 4) === 'RIFF' && imageBytes.toString('ascii', 8, 12) === 'WEBP';
+      if (!imageBytes.length || imageBytes.length > 3 * 1024 * 1024 || !(imageType === 'image/jpeg' ? isJpeg : imageType === 'image/png' ? isPng : isWebp)) return send(res, 400, { error: 'Use a valid product image smaller than 3 MB.' });
+      const profile = db.prepare('SELECT public FROM tailor_profiles WHERE user_id=?').get(user.id);
+      if (!profile) return send(res, 409, { error: 'Save your tailor profile before publishing products.' });
+      const id = randomBytes(12).toString('hex'), timeNow = nowIso();
+      db.prepare('INSERT INTO ready_made_products (id,user_id,title,category,description,price,time,image_type,image_data,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?)')
+        .run(id,user.id,title,category,description,price,time,imageType,imageBytes,timeNow,timeNow);
+      audit(user, 'ready_made.created', id);
+      const row = db.prepare('SELECT r.*,u.name AS tailor_name,u.city,p.shop_name,u.id AS tailor_id FROM ready_made_products r JOIN users u ON u.id=r.user_id LEFT JOIN tailor_profiles p ON p.user_id=u.id WHERE r.id=?').get(id);
+      return send(res, 201, { item: readyMadeJson(row) });
+    }
+    const readyMadeMatch = path.match(/^\/api\/tailor\/ready-made\/([a-f\d]{24})$/i);
+    if (readyMadeMatch && method === 'DELETE') {
+      const user = requireUser(req, res); if (!user) return;
+      if (!publicUser(user).permissions.includes('TAILOR')) return send(res, 403, { error: 'Only approved tailors can manage ready-made items.' });
+      const result = db.prepare('DELETE FROM ready_made_products WHERE id=? AND user_id=?').run(readyMadeMatch[1], user.id);
+      if (!result.changes) return send(res, 404, { error: 'Ready-made item not found in your listings.' });
+      audit(user, 'ready_made.deleted', readyMadeMatch[1]);
+      return send(res, 200, { ok: true });
+    }
+    const featuredImageMatch = path.match(/^\/api\/featured-work\/([a-z\d-]+)\/image$/i);
+    if (featuredImageMatch && method === 'GET') {
+      const image = db.prepare('SELECT content_type,data FROM featured_images WHERE item_id=?').get(featuredImageMatch[1]);
+      if (!image) return send(res, 404, { error: 'Featured photo not found.' });
+      res.writeHead(200, { 'content-type': image.content_type, 'cache-control': 'public, max-age=31536000, immutable', 'x-content-type-options': 'nosniff' });
+      return res.end(image.data);
+    }
+    if (path === '/api/featured-work' && method === 'GET') {
+      const items = db.prepare('SELECT f.*,i.content_type AS image_type FROM featured_work f LEFT JOIN featured_images i ON i.item_id=f.id ORDER BY f.created_at,f.id').all().map(featuredWorkJson);
+      return send(res, 200, { items });
+    }
+    if (path === '/api/admin/featured-work' && method === 'GET') {
+      const admin = requireUser(req, res, true); if (!admin) return;
+      const items = db.prepare('SELECT f.*,i.content_type AS image_type FROM featured_work f LEFT JOIN featured_images i ON i.item_id=f.id ORDER BY f.created_at,f.id').all().map(featuredWorkJson);
+      return send(res, 200, { items });
+    }
+    if (path === '/api/admin/featured-work' && method === 'POST') {
+      const admin = requireUser(req, res, true); if (!admin) return;
+      const data = await body(req, 4_250_000);
+      const name = String(data.tailorName || '').trim().slice(0, 100), shopName = String(data.shopName || '').trim().slice(0, 100);
+      const city = String(data.city || '').trim().slice(0, 100), biography = String(data.biography || '').trim().slice(0, 1200);
+      const experience = String(data.experience || '').trim().slice(0, 120), hours = String(data.hours || '').trim().slice(0, 120);
+      const craftName = String(data.craftName || '').trim().slice(0, 120), description = String(data.description || '').trim().slice(0, 1200);
+      const days = String(data.days || '').trim().slice(0, 80), price = Math.floor(Number(data.price));
+      const kinds = ['panjabi','saree','blouse','kurti','salwar','sherwani'];
+      const kind = kinds.includes(data.kind) ? data.kind : 'panjabi';
+      const color = /^#[0-9a-f]{6}$/i.test(data.color) ? data.color : '#236653';
+      const accent = /^#[0-9a-f]{6}$/i.test(data.accent) ? data.accent : '#e6c17e';
+      const imageCredit = String(data.imageCredit || 'Admin supplied photo').trim().slice(0, 120);
+      if (name.length < 2 || shopName.length < 2 || city.length < 2 || biography.length < 12 || !hours || craftName.length < 2 || description.length < 12 || !days || !Number.isSafeInteger(price) || price < 1 || price > 10000000) return send(res, 400, { error: 'Complete the tailor, garment, price, and working-time details.' });
+      const imageMatch = String(data.imageData || '').match(/^data:image\/(jpeg|png|webp);base64,([A-Za-z0-9+/]+={0,2})$/);
+      if (!imageMatch) return send(res, 400, { error: 'Upload a real garment photo in JPG, PNG, or WebP format.' });
+      const imageBytes = Buffer.from(imageMatch[2], 'base64');
+      const imageType = imageMatch[1] === 'jpeg' ? 'image/jpeg' : `image/${imageMatch[1]}`;
+      const isJpeg = imageBytes[0] === 0xff && imageBytes[1] === 0xd8 && imageBytes[2] === 0xff;
+      const isPng = imageBytes.subarray(0, 8).equals(Buffer.from([0x89,0x50,0x4e,0x47,0x0d,0x0a,0x1a,0x0a]));
+      const isWebp = imageBytes.toString('ascii', 0, 4) === 'RIFF' && imageBytes.toString('ascii', 8, 12) === 'WEBP';
+      if (imageBytes.length > 3 * 1024 * 1024 || imageBytes.length === 0 || !(imageType === 'image/jpeg' ? isJpeg : imageType === 'image/png' ? isPng : isWebp)) return send(res, 400, { error: 'Use a valid JPG, PNG, or WebP photo smaller than 3 MB.' });
+      const slug = name.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 80);
+      if (!slug) return send(res, 400, { error: 'Enter a tailor name using letters or numbers.' });
+      const id = randomBytes(12).toString('hex'), craft = { id, name: { en: craftName, bn: craftName }, description: { en: description, bn: description }, price, days: { en: days, bn: days }, kind, color, accent, imageUrl: `/api/featured-work/${id}/image`, imageCredit };
+      const tailor = { slug, name: { en: name, bn: name }, shop: { en: shopName, bn: shopName }, city: { en: city, bn: city }, rating: 'New', experience: { en: experience || 'Featured local artisan', bn: experience || 'নির্বাচিত স্থানীয় কারিগর' }, bio: { en: biography, bn: biography }, hours: { en: hours, bn: hours } };
+      db.exec('BEGIN');
+      try {
+        db.prepare('INSERT INTO featured_work (id,payload,created_at) VALUES (?,?,?)').run(id, JSON.stringify({ tailor, craft }), nowIso());
+        db.prepare('INSERT INTO featured_images (item_id,content_type,data) VALUES (?,?,?)').run(id, imageType, imageBytes);
+        db.exec('COMMIT');
+      } catch (error) { db.exec('ROLLBACK'); throw error; }
+      audit(admin, 'featured_work.created', id);
+      return send(res, 201, { item: { id, tailor, craft } });
+    }
+    const featuredWorkMatch = path.match(/^\/api\/admin\/featured-work\/([a-z\d-]+)$/i);
+    if (featuredWorkMatch && method === 'DELETE') {
+      const admin = requireUser(req, res, true); if (!admin) return;
+      const result = db.prepare('DELETE FROM featured_work WHERE id=?').run(featuredWorkMatch[1]);
+      if (!result.changes) return send(res, 404, { error: 'Featured work item not found.' });
+      audit(admin, 'featured_work.deleted', featuredWorkMatch[1]);
+      return send(res, 200, { ok: true });
     }
     if (path === '/api/profile' && method === 'PATCH') {
       const user = requireUser(req, res); if (!user) return;
-      const data = await body(req);
+      const data = await body(req, 4_250_000);
       const name = String(data.name || '').trim(), phone = String(data.phone || '').trim(), city = String(data.city || '').trim(), address = String(data.address || '').trim();
       if (name.length < 2 || phone.length < 7 || city.length < 2) return send(res, 400, { error: 'Enter a valid name, phone number, and city.' });
-      db.prepare('UPDATE users SET name=?,phone=?,city=?,address=? WHERE id=?').run(name, phone, city, address, user.id);
+      if (data.removeAvatar === true) {
+        db.prepare("UPDATE users SET name=?,phone=?,city=?,address=?,avatar_type='',avatar_data=NULL WHERE id=?").run(name, phone, city, address, user.id);
+      } else if (data.avatarData) {
+        const imageMatch = String(data.avatarData).match(/^data:image\/(jpeg|png|webp);base64,([A-Za-z0-9+/]+={0,2})$/);
+        if (!imageMatch) return send(res, 400, { error: 'Upload a JPG, PNG, or WebP profile photo.' });
+        const image = Buffer.from(imageMatch[2], 'base64'), type = imageMatch[1] === 'jpeg' ? 'image/jpeg' : `image/${imageMatch[1]}`;
+        const jpegOk = image[0] === 0xff && image[1] === 0xd8 && image[2] === 0xff;
+        const pngOk = image.subarray(0, 8).equals(Buffer.from([0x89,0x50,0x4e,0x47,0x0d,0x0a,0x1a,0x0a]));
+        const webpOk = image.toString('ascii',0,4) === 'RIFF' && image.toString('ascii',8,12) === 'WEBP';
+        if (!image.length || image.length > 3 * 1024 * 1024 || !(type === 'image/jpeg' ? jpegOk : type === 'image/png' ? pngOk : webpOk)) return send(res, 400, { error: 'Use a valid profile photo smaller than 3 MB.' });
+        db.prepare('UPDATE users SET name=?,phone=?,city=?,address=?,avatar_type=?,avatar_data=? WHERE id=?').run(name, phone, city, address, type, image, user.id);
+      } else {
+        db.prepare('UPDATE users SET name=?,phone=?,city=?,address=? WHERE id=?').run(name, phone, city, address, user.id);
+      }
       return send(res, 200, { user: publicUser(db.prepare('SELECT * FROM users WHERE id=?').get(user.id)) });
     }
     if (path === '/api/password' && method === 'PATCH') {
@@ -529,6 +726,18 @@ function orderJson(row) {
 function tailorProfileJson(row) {
   return { shopName: row.shop_name, biography: row.biography, services: JSON.parse(row.services || '[]'), portfolio: JSON.parse(row.portfolio || '[]'), availability: row.availability, public: Boolean(row.public), verification: row.verification };
 }
+function featuredWorkJson(row) {
+  const item = { id: row.id, ...JSON.parse(row.payload) };
+  if (row.image_type) item.craft.imageUrl = `/api/featured-work/${encodeURIComponent(row.id)}/image`;
+  return item;
+}
+function readyMadeJson(row) {
+  return {
+    id: row.id, title: row.title, category: row.category, description: row.description,
+    price: row.price, time: row.time, imageUrl: `/api/ready-made/${encodeURIComponent(row.id)}/image`,
+    tailor: { id: row.tailor_id, name: row.tailor_name, city: row.city, shop: row.shop_name || '', slug: row.tailor_name.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') }
+  };
+}
 
 const server = createServer(async (req, res) => {
   const path = new URL(req.url, 'http://localhost').pathname;
@@ -543,7 +752,7 @@ const server = createServer(async (req, res) => {
   try {
     const { readFile } = await import('node:fs/promises');
     const file = await readFile(filePath);
-    const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.json': 'application/json' };
+    const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.json': 'application/json', '.jpg': 'image/jpeg' };
     res.writeHead(200, { 'content-type': types[extname(filePath)] || 'application/octet-stream' }); res.end(file);
   } catch { res.writeHead(404); res.end('Not found'); }
 });

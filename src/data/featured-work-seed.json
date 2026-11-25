@@ -1,0 +1,77 @@
+[
+  {
+    "tailorSlug": "kamal-hossain",
+    "craft": {
+      "id": "ivory-maroon-panjabi",
+      "name": { "en": "Ivory Panjabi with Maroon Embroidery", "bn": "মেরুন সুতার নকশায় আইভরি পাঞ্জাবি" },
+      "description": { "en": "An ivory Panjabi with a rich maroon embroidered bib, fine neckline and cuff detailing, and matching scattered motifs.", "bn": "মেরুন রঙের ঘন নকশার বুকের অংশ, গলা ও হাতার সূক্ষ্ম কাজ এবং ছোট ছোট মিলানো মোটিফসহ আইভরি পাঞ্জাবি।" },
+      "price": 4600,
+      "days": { "en": "10–14 working days", "bn": "১০–১৪ কর্মদিবস" },
+      "kind": "panjabi",
+      "color": "#f4eee2",
+      "accent": "#8d2942",
+      "imageUrl": "/featured-work/01-white-red-panjabi.jpg",
+      "imageCredit": "Photo supplied for E-Dorji"
+    }
+  },
+  {
+    "tailorSlug": "kamal-hossain",
+    "craft": {
+      "id": "ivory-floral-panjabi",
+      "name": { "en": "Ivory Panjabi with Red Floral Threadwork", "bn": "লাল ফুলেল সুতার কাজে আইভরি পাঞ্জাবি" },
+      "description": { "en": "A clean ivory Panjabi finished with red floral embroidery around the collar, chest, and sleeves for a coordinated occasion look.", "bn": "গলা, বুক ও হাতাজুড়ে লাল ফুলেল সুতার কাজের সমন্বয়ে তৈরি পরিপাটি আইভরি পাঞ্জাবি।" },
+      "price": 4200,
+      "days": { "en": "9–13 working days", "bn": "৯–১৩ কর্মদিবস" },
+      "kind": "panjabi",
+      "color": "#f7f1e9",
+      "accent": "#9b314b",
+      "imageUrl": "/featured-work/02-white-embroidered-panjabi.jpg",
+      "imageCredit": "Photo supplied for E-Dorji"
+    }
+  },
+  {
+    "tailorSlug": "rashida-begum",
+    "craft": {
+      "id": "rust-orange-floral-dress",
+      "name": { "en": "Rust Orange Floral Girls’ Dress", "bn": "কমলা রঙের ফুলেল নকশার মেয়েদের পোশাক" },
+      "description": { "en": "A warm rust-orange button-front dress with a gathered skirt and colourful hand-embroidered flowers across the bodice and hem.", "bn": "বডি ও নিচের অংশে রঙিন ফুলের সূচিকর্ম, বোতাম এবং ঘেরওয়ালা স্কার্টসহ উষ্ণ কমলা রঙের পোশাক।" },
+      "price": 2400,
+      "days": { "en": "7–10 working days", "bn": "৭–১০ কর্মদিবস" },
+      "kind": "kurti",
+      "color": "#c8660b",
+      "accent": "#f4cf78",
+      "imageUrl": "/featured-work/03-orange-floral-dress.jpg",
+      "imageCredit": "Photo supplied for E-Dorji"
+    }
+  },
+  {
+    "tailorSlug": "taslima-akter",
+    "craft": {
+      "id": "royal-blue-floral-dress",
+      "name": { "en": "Royal Blue Floral Dress with Matching Scarf", "bn": "মিলানো ওড়নাসহ রয়্যাল ব্লু ফুলেল পোশাক" },
+      "description": { "en": "A royal-blue gathered dress with bright floral embroidery on the bodice and skirt, paired with a matching white embroidered scarf.", "bn": "বডি ও স্কার্টে উজ্জ্বল ফুলের সূচিকর্ম করা রয়্যাল ব্লু ঘেরওয়ালা পোশাক, সঙ্গে মিলানো সাদা নকশার ওড়না।" },
+      "price": 2900,
+      "days": { "en": "8–12 working days", "bn": "৮–১২ কর্মদিবস" },
+      "kind": "salwar",
+      "color": "#173f91",
+      "accent": "#f1c75b",
+      "imageUrl": "/featured-work/04-blue-floral-dress.jpg",
+      "imageCredit": "Photo supplied for E-Dorji"
+    }
+  },
+  {
+    "tailorSlug": "nusrat-jahan-chowdhury",
+    "craft": {
+      "id": "ivory-jewel-border-occasionwear",
+      "name": { "en": "Ivory Occasionwear with Multicolour Embroidered Border", "bn": "বহুরঙা সূচিকর্মের পাড়ে আইভরি উৎসবের পোশাক" },
+      "description": { "en": "An ivory occasion piece with delicate gold details and an ornate border embroidered in deep teal, ruby, and antique gold tones.", "bn": "সোনালি ছোট নকশা এবং গাঢ় টিল, রুবি ও পুরোনো সোনালি রঙের অলংকৃত সূচিকর্মের পাড়সহ আইভরি উৎসবের পোশাক।" },
+      "price": 8500,
+      "days": { "en": "14–20 working days", "bn": "১৪–২০ কর্মদিবস" },
+      "kind": "saree",
+      "color": "#f3eee5",
+      "accent": "#a98147",
+      "imageUrl": "/featured-work/05-ivory-embroidered-occasionwear.jpg",
+      "imageCredit": "Photo supplied for E-Dorji"
+    }
+  }
+]

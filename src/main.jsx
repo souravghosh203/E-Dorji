@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import SiteNav from './SiteNav.jsx';
 import SiteFooter from './SiteFooter.jsx';
 import Dashboard from './Dashboard.jsx';
+import TailorProfile from './TailorProfile.jsx';
 import siteCopy from './data/site-copy.json';
 import dashboardCopy from './data/dashboard-copy.json';
 import './site-nav.css';
@@ -57,3 +58,6 @@ if (footerMount) createRoot(footerMount).render(<SiteFooter />);
 
 const dashboardMount = document.getElementById('dashboard-root');
 if (dashboardMount) createRoot(dashboardMount).render(<Dashboard role={dashboardMount.dataset.role || 'customer'} />);
+
+const profileMount = document.getElementById('tailor-profile-root');
+if (profileMount) createRoot(profileMount).render(<TailorProfile />);

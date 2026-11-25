@@ -105,7 +105,8 @@
       "Overview",
       "Orders",
       "Tailor applications",
-      "Customers"
+      "Customers",
+      "Featured work"
     ],
     "adminAccess": "Admin demo access starts from the login page.",
     "adminDemoCta": "Open admin demo",
@@ -220,7 +221,8 @@
       "সারসংক্ষেপ",
       "অর্ডার",
       "দর্জির আবেদন",
-      "গ্রাহক"
+      "গ্রাহক",
+      "নির্বাচিত কাজ"
     ],
     "adminAccess": "অ্যাডমিন ডেমো খুলতে লগইন পৃষ্ঠা ব্যবহার করুন।",
     "adminDemoCta": "অ্যাডমিন ডেমো খুলুন",
