@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: e-dorji
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: E_DORJI_DB_PATH
+        value: /tmp/e-dorji.sqlite
+      - key: E_DORJI_ENABLE_DEMO_ACCOUNTS
+        value: "true"
+      - key: E_DORJI_ADMIN_NAME
+        value: Amrito Ghosh
+      - key: E_DORJI_ADMIN_EMAIL
+        sync: false
+      - key: E_DORJI_ADMIN_PASSWORD
+        sync: false

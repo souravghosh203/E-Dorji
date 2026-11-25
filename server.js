@@ -2,9 +2,8 @@ import { createServer } from 'node:http';
 import { createHash, randomBytes, scrypt as scryptCallback, timingSafeEqual } from 'node:crypto';
 import { promisify } from 'node:util';
 import { mkdirSync, readFileSync, existsSync } from 'node:fs';
-import { resolve, extname, join } from 'node:path';
+import { resolve, extname, join, dirname } from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
-import { createServer as createViteServer } from 'vite';
 
 const scrypt = promisify(scryptCallback);
 const root = process.cwd();
@@ -17,8 +16,11 @@ if (existsSync(envFile)) {
 }
 const dataDir = resolve(root, 'data');
 mkdirSync(dataDir, { recursive: true });
-const db = new DatabaseSync(process.env.E_DORJI_DB_PATH ? resolve(process.env.E_DORJI_DB_PATH) : resolve(dataDir, 'e-dorji.sqlite'));
+const databasePath = process.env.E_DORJI_DB_PATH ? resolve(process.env.E_DORJI_DB_PATH) : resolve(dataDir, 'e-dorji.sqlite');
+mkdirSync(dirname(databasePath), { recursive: true });
+const db = new DatabaseSync(databasePath);
 const production = process.env.NODE_ENV === 'production' || process.argv.includes('--production');
+const demoAccountsEnabled = !production || process.env.E_DORJI_ENABLE_DEMO_ACCOUNTS === 'true';
 db.exec(`
   PRAGMA foreign_keys = ON;
   CREATE TABLE IF NOT EXISTS users (
@@ -277,7 +279,7 @@ async function api(req, res) {
       notify(user.id, 'registration', 'Your E-Dorji customer account is ready.');
       return send(res, 201, { user: await issueSession(user, res) });
     }
-    if (path === '/api/demo/customer' && method === 'POST' && !production) {
+    if (path === '/api/demo/customer' && method === 'POST' && demoAccountsEnabled) {
       const secondDemo = url.searchParams.get('account') === 'rafiq';
       const demoAccount = secondDemo
         ? { name: 'Rafiq Islam', email: 'rafiq.islam.demo@e-dorji.local', phone: '+880 1700-000003', orderId: 'demo-order-rafiq' }
@@ -293,7 +295,7 @@ async function api(req, res) {
       }
       return send(res, 200, { user: await issueSession(user, res) });
     }
-    if (path === '/api/demo/admin' && method === 'POST' && !production) {
+    if (path === '/api/demo/admin' && method === 'POST' && demoAccountsEnabled) {
       const admin = db.prepare('SELECT * FROM users WHERE email=? AND is_admin=1').get(adminEmail);
       if (!admin) return send(res, 503, { error: 'The local admin demo is not provisioned.' });
       audit(admin, 'demo.admin_access', admin.id);
@@ -752,13 +754,14 @@ const server = createServer(async (req, res) => {
   try {
     const { readFile } = await import('node:fs/promises');
     const file = await readFile(filePath);
-    const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.json': 'application/json', '.jpg': 'image/jpeg' };
+    const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.json': 'application/json', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp', '.woff2': 'font/woff2' };
     res.writeHead(200, { 'content-type': types[extname(filePath)] || 'application/octet-stream' }); res.end(file);
   } catch { res.writeHead(404); res.end('Not found'); }
 });
-const vite = !production ? await createViteServer({ server: { middlewareMode: true }, appType: 'spa' }) : null;
-server.listen(Number(process.env.PORT) || 5173, '127.0.0.1', () => {
-  console.log(`E-Dorji ${production ? 'production' : 'development'} server listening on http://127.0.0.1:${process.env.PORT || 5173}`);
+const vite = !production ? await import('vite').then(({ createServer }) => createServer({ server: { middlewareMode: true }, appType: 'spa' })) : null;
+const host = process.env.HOST || (production ? '0.0.0.0' : '127.0.0.1');
+server.listen(Number(process.env.PORT) || 5173, host, () => {
+  console.log(`E-Dorji ${production ? 'production' : 'development'} server listening on http://${host}:${process.env.PORT || 5173}`);
   if (generatedAdmin) console.warn(`One-time admin created: ${adminEmail}. Its generated password is stored in the ignored .env file.`);
   if (!adminEmail || !adminPassword) console.warn('Admin login is not provisioned. Set E_DORJI_ADMIN_EMAIL and E_DORJI_ADMIN_PASSWORD before creating the admin account.');
 });
