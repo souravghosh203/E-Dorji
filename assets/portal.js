@@ -1,9 +1,11 @@
 (() => {
   const root = document.documentElement;
-  const read = (key, fallback) => {
-    try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
+  const request = async (path, options = {}) => {
+    const response = await fetch(path, { credentials: 'same-origin', headers: { 'content-type': 'application/json', ...(options.headers || {}) }, ...options });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(result.error || 'The request could not be completed.');
+    return result;
   };
-  const write = (key, value) => localStorage.setItem(key, JSON.stringify(value));
   const language = () => root.lang === 'bn' ? 'bn' : 'en';
   const messages = {
     en: {
@@ -14,6 +16,14 @@
       accountUnavailable: 'Secure browser storage is unavailable. Please use a modern browser on localhost or HTTPS.',
       passwordMismatch: 'The passwords do not match. Please check them and try again.',
       applicationSaved: 'Your application has been saved in this browser for admin review. It has not been sent to a server.',
+      resetMissing: 'We could not find a customer or tailor account for that email or phone in this browser.',
+      resetAdmin: 'Use the Admin demo account on the login page to open the demo workspace.',
+      resetCodeSent: 'Demo verification code created. Enter the code shown below. It expires in 10 minutes.',
+      resetCodeLabel: 'Demo verification code: ',
+      resetCodeWrong: 'That verification code is not valid.',
+      resetCodeExpired: 'This code has expired. Request a new one.',
+      resetPasswordMismatch: 'The new passwords do not match.',
+      resetPasswordDone: 'Your password was updated in this browser. You can now log in.',
     },
     bn: {
       missing: 'এই অ্যাকাউন্টটি পাওয়া যায়নি। আগে একটি অ্যাকাউন্ট খুলুন।',
@@ -26,31 +36,83 @@
     },
   };
 
-  async function passwordDigest(salt, password) {
-    const input = new TextEncoder().encode(`${salt}:${password}`);
-    const digest = await crypto.subtle.digest('SHA-256', input);
-    return [...new Uint8Array(digest)].map(byte => byte.toString(16).padStart(2, '0')).join('');
-  }
+  Object.assign(messages.bn, {
+    resetMissing: 'এই ব্রাউজারে এই ইমেইল বা ফোন নম্বরের কোনো গ্রাহক বা দর্জি অ্যাকাউন্ট পাওয়া যায়নি।',
+    resetAdmin: 'ডেমো ওয়ার্কস্পেস খুলতে লগইন পৃষ্ঠার অ্যাডমিন ডেমো অ্যাকাউন্ট ব্যবহার করুন।',
+    resetCodeSent: 'ডেমো যাচাইকরণ কোড তৈরি হয়েছে। নিচের কোডটি লিখুন। ১০ মিনিট পর কোডটির মেয়াদ শেষ হবে।',
+    resetCodeLabel: 'ডেমো যাচাইকরণ কোড: ',
+    resetCodeWrong: 'যাচাইকরণ কোডটি সঠিক নয়।',
+    resetCodeExpired: 'কোডটির মেয়াদ শেষ হয়েছে। নতুন কোড নিন।',
+    resetPasswordMismatch: 'নতুন পাসওয়ার্ড দুটি মিলছে না।',
+    resetPasswordDone: 'এই ব্রাউজারে আপনার পাসওয়ার্ড হালনাগাদ হয়েছে। এখন লগ ইন করতে পারবেন।',
+  });
+
+  const routeAfterLogin = user => {
+    if (user.permissions?.includes('ADMIN')) location.href = 'admin-dashboard.html';
+    else if (new URLSearchParams(location.search).get('next') === 'become-tailor.html') location.href = 'become-tailor.html';
+    else if (user.permissions?.includes('TAILOR')) location.href = 'customer-dashboard.html?mode=customer';
+    else location.href = 'customer-dashboard.html';
+  };
 
   document.querySelector('#login-form')?.addEventListener('submit', async event => {
     event.preventDefault();
     const form = event.currentTarget;
     const status = document.querySelector('#login-status');
-    const data = new FormData(form);
-    const identity = String(data.get('identity')).trim().toLowerCase();
-    const user = read('e-dorji-users', []).find(account => account.email === identity || account.phone === identity);
-    if (!user) { status.textContent = messages[language()].missing; return; }
     try {
-      if (await passwordDigest(user.passwordSalt, data.get('password')) !== user.passwordHash) {
-        status.textContent = messages[language()].wrong;
-        return;
-      }
-      const session = { email: user.email, name: user.name, role: user.role, phone: user.phone, city: user.city };
-      write('e-dorji-session', session);
+      const data = new FormData(form);
+      const { user } = await request('/api/login', { method: 'POST', body: JSON.stringify({ email: data.get('identity'), password: data.get('password') }) });
       status.textContent = messages[language()].accountReady;
-      setTimeout(() => { location.href = user.role === 'tailor' ? 'become-tailor.html' : 'customer-dashboard.html'; }, 350);
-    } catch {
-      status.textContent = messages[language()].accountUnavailable;
+      setTimeout(() => routeAfterLogin(user), 250);
+    } catch (error) {
+      status.textContent = error.message;
+    }
+  });
+
+  document.querySelector('#admin-login-form')?.addEventListener('submit', async event => {
+    event.preventDefault();
+    const form = event.currentTarget, data = new FormData(form), status = document.querySelector('#admin-login-status');
+    try {
+      await request('/api/admin/login', { method: 'POST', body: JSON.stringify({ email: data.get('email'), password: data.get('password') }) });
+      location.href = 'admin-dashboard.html';
+    } catch (error) { status.textContent = error.message; }
+  });
+
+  document.querySelector('#password-reset-request')?.addEventListener('submit', async event => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const status = document.querySelector('#reset-request-status');
+    try {
+      const result = await request('/api/password-reset/request', { method: 'POST', body: JSON.stringify({ identity: data.get('identity') }) });
+      const step = document.querySelector('#reset-next-step'), codeNotice = document.querySelector('#demo-reset-code');
+      if (result.demoCode || result.delivery === 'email') {
+        step.hidden = false;
+        if (result.demoCode) { codeNotice.hidden = false; codeNotice.textContent = `${messages[language()].resetCodeLabel}${result.demoCode}`; }
+        status.textContent = result.demoCode ? messages[language()].resetCodeSent : 'If the account exists, recovery instructions have been sent.';
+        event.currentTarget.elements.identity.readOnly = true;
+      } else {
+        status.textContent = 'If the account exists, recovery instructions have been sent.';
+      }
+    } catch (error) { status.textContent = error.message; }
+  });
+
+  document.querySelector('#password-reset-form')?.addEventListener('submit', async event => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const status = document.querySelector('#reset-status');
+    if (data.get('password') !== data.get('confirm')) {
+      status.textContent = messages[language()].resetPasswordMismatch;
+      form.elements.confirm.focus();
+      return;
+    }
+    try {
+      const identity = document.querySelector('#password-reset-request').elements.identity.value;
+      await request('/api/password-reset/complete', { method: 'POST', body: JSON.stringify({ identity, code: data.get('code'), password: data.get('password') }) });
+      form.querySelectorAll('label,button').forEach(element => { element.hidden = true; });
+      document.querySelector('#demo-reset-code').hidden = true;
+      status.textContent = messages[language()].resetPasswordDone;
+    } catch (error) {
+      status.textContent = error.message;
     }
   });
 
@@ -65,54 +127,53 @@
       return;
     }
     try {
-      const users = read('e-dorji-users', []);
-      const email = String(data.get('email')).trim().toLowerCase();
-      if (users.some(user => user.email === email)) { status.textContent = messages[language()].exists; return; }
-      const passwordSalt = crypto.randomUUID();
-      const user = {
-        id: crypto.randomUUID(), name: String(data.get('name')).trim(), email,
-        phone: String(data.get('phone')).trim(), city: String(data.get('city')).trim(),
-        role: String(data.get('role') || 'customer'), passwordSalt,
-        passwordHash: await passwordDigest(passwordSalt, data.get('password')),
-        createdAt: new Date().toISOString(),
-      };
-      write('e-dorji-users', [...users, user]);
-      write('e-dorji-session', { email: user.email, name: user.name, role: user.role, phone: user.phone, city: user.city });
+      const userData = Object.fromEntries(data.entries());
+      const { user } = await request('/api/register', { method: 'POST', body: JSON.stringify(userData) });
       status.textContent = messages[language()].accountReady;
-      setTimeout(() => { location.href = user.role === 'tailor' ? 'become-tailor.html' : 'customer-dashboard.html'; }, 350);
-    } catch {
-      status.textContent = messages[language()].accountUnavailable;
+      setTimeout(() => routeAfterLogin(user), 250);
+    } catch (error) {
+      status.textContent = error.message;
     }
   });
 
-  document.querySelector('#admin-demo-link')?.addEventListener('click', event => {
-    event.preventDefault();
-    write('e-dorji-session', { email: 'admin-demo@e-dorji.local', name: 'E-Dorji Admin', role: 'admin' });
-    location.href = 'admin-dashboard.html';
+  document.querySelector('#demo-admin-link')?.addEventListener('click', async () => {
+    try {
+      await request('/api/demo/admin', { method: 'POST', body: '{}' });
+      location.href = 'admin-dashboard.html';
+    } catch (error) { document.querySelector('#login-status').textContent = error.message; }
+  });
+
+  document.querySelector('#demo-customer-link')?.addEventListener('click', async () => {
+    try {
+      const { user } = await request('/api/demo/customer', { method: 'POST', body: '{}' });
+      routeAfterLogin(user);
+    } catch (error) { document.querySelector('#login-status').textContent = error.message; }
+  });
+  document.querySelector('#demo-customer-two-link')?.addEventListener('click', async () => {
+    try {
+      const { user } = await request('/api/demo/customer?account=rafiq', { method: 'POST', body: '{}' });
+      routeAfterLogin(user);
+    } catch (error) { document.querySelector('#login-status').textContent = error.message; }
   });
 
   const applicationForm = document.querySelector('#tailor-application-form');
   if (applicationForm) {
-    const session = read('e-dorji-session', null);
-    if (session?.role === 'tailor') {
-      for (const field of ['name', 'email', 'phone', 'city']) {
-        if (session[field]) applicationForm.elements[field].value = session[field];
+    request('/api/session').then(({ user }) => {
+      if (!user) { location.href = 'login.html?next=become-tailor.html'; return; }
+      for (const [field, value] of Object.entries({ name: user.name, email: user.email, phone: user.phone, city: user.city })) {
+        const input = applicationForm.elements[field];
+        if (input && value) { input.value = value; input.readOnly = true; }
       }
-    }
-    applicationForm.addEventListener('submit', event => {
+    }).catch(() => { location.href = 'login.html?next=become-tailor.html'; });
+    applicationForm.addEventListener('submit', async event => {
       event.preventDefault();
-      const data = new FormData(applicationForm);
-      const applications = read('e-dorji-applications', []);
-      const submission = Object.fromEntries(data.entries());
-      submission.id = crypto.randomUUID();
-      submission.status = 'pending';
-      submission.createdAt = new Date().toISOString();
-      write('e-dorji-applications', [submission, ...applications]);
-      document.querySelector('#application-status').textContent = messages[language()].applicationSaved;
-      applicationForm.reset();
-      if (session?.role === 'tailor') {
-        for (const field of ['name', 'email', 'phone', 'city']) if (session[field]) applicationForm.elements[field].value = session[field];
-      }
+      const data = new FormData(applicationForm), status = document.querySelector('#application-status');
+      try {
+        const specialties = data.getAll('specialties').map(item => String(item).trim()).filter(Boolean);
+        await request('/api/tailor-applications', { method: 'POST', body: JSON.stringify({ experience: data.get('experience'), specialties, workshop: data.get('workshop'), portfolio: data.get('portfolio'), introduction: data.get('introduction'), consent: data.get('consent') === 'on' }) });
+        status.textContent = 'Application submitted. You can track its review in your customer dashboard.';
+        applicationForm.reset();
+      } catch (error) { status.textContent = error.message; }
     });
   }
 })();

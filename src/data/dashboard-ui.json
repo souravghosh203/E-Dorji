@@ -5,7 +5,7 @@
     "welcome": "Welcome back",
     "customerTitle": "Your tailoring, all in one place.",
     "adminTitle": "Manage the marketplace with care.",
-    "demoNotice": "Prototype workspace · Data is saved in this browser only.",
+    "demoNotice": "Secure workspace · Your account data is saved securely.",
     "overview": "Overview",
     "orders": "Orders",
     "findTailors": "Find tailors",
@@ -98,7 +98,8 @@
       "Find tailors",
       "New order",
       "Saved tailors",
-      "My profile"
+      "My profile",
+      "Design studio"
     ],
     "adminTabs": [
       "Overview",
@@ -107,7 +108,11 @@
       "Customers"
     ],
     "adminAccess": "Admin demo access starts from the login page.",
-    "adminDemoCta": "Open admin demo"
+    "adminDemoCta": "Open admin demo",
+    "design": "Design",
+    "attachedDesign": "Design attached to this order",
+    "removeDesign": "Remove",
+    "designAttached": "Your design is ready to attach to a new order."
   },
   "bn": {
     "eyebrowCustomer": "আপনার নিজস্ব জায়গা",
@@ -115,7 +120,7 @@
     "welcome": "স্বাগতম",
     "customerTitle": "আপনার দর্জির সব কাজ, এক জায়গায়।",
     "adminTitle": "যত্ন নিয়ে মার্কেটপ্লেস পরিচালনা করুন।",
-    "demoNotice": "প্রোটোটাইপ ওয়ার্কস্পেস · তথ্য শুধু এই ব্রাউজারেই সংরক্ষিত হয়।",
+    "demoNotice": "সুরক্ষিত ওয়ার্কস্পেস · আপনার অ্যাকাউন্টের তথ্য নিরাপদে সংরক্ষিত হয়।",
     "overview": "সারসংক্ষেপ",
     "orders": "অর্ডার",
     "findTailors": "দর্জি খুঁজুন",
@@ -208,7 +213,8 @@
       "দর্জি খুঁজুন",
       "নতুন অর্ডার",
       "পছন্দের দর্জি",
-      "আমার প্রোফাইল"
+      "আমার প্রোফাইল",
+      "ডিজাইন স্টুডিও"
     ],
     "adminTabs": [
       "সারসংক্ষেপ",
@@ -217,6 +223,10 @@
       "গ্রাহক"
     ],
     "adminAccess": "অ্যাডমিন ডেমো খুলতে লগইন পৃষ্ঠা ব্যবহার করুন।",
-    "adminDemoCta": "অ্যাডমিন ডেমো খুলুন"
+    "adminDemoCta": "অ্যাডমিন ডেমো খুলুন",
+    "design": "নকশা",
+    "attachedDesign": "এই অর্ডারে নকশা যোগ হয়েছে",
+    "removeDesign": "সরিয়ে দিন",
+    "designAttached": "নতুন অর্ডারে আপনার নকশা যোগ করার জন্য প্রস্তুত।"
   }
 }

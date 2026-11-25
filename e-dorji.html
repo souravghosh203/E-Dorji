@@ -47,12 +47,12 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}a{color:inh
 .hint{position:absolute;right:0;bottom:2px;border:0;background:none;color:var(--mute);display:flex;gap:8px;align-items:center;font-size:15px}
 .sec{width:min(1240px,calc(100% - 48px));margin:auto;padding:70px 0}.sec>h2{font-size:clamp(34px,4vw,52px);font-weight:400;margin-bottom:26px}
 body:not(.customer-view) #all,body:not(.customer-view) #product{display:none}
-.how{width:100%;margin:24px 0 0;padding:clamp(54px,7vw,88px) max(24px,calc((100% - 1240px)/2));background:#4b1a2e;color:#f6f1e8;scroll-margin-top:92px}
-.how-head{margin-bottom:38px}.how-kicker{display:flex;align-items:center;gap:12px;color:#e0a065;font:600 12px "JetBrains Mono",monospace;letter-spacing:.16em;text-transform:uppercase}.how-kicker:before{content:"";width:38px;border-top:1px solid currentColor}
-.how h2{font-size:clamp(38px,5vw,58px);font-weight:400;letter-spacing:-.035em;margin:12px 0}.how-intro{color:#d3dfd9;font-size:17px}
-.how-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:24px;margin-top:36px}.how-step{border-top:1px solid #ffffff40;padding:35px 0 38px}
-.how-step .num{display:flex;align-items:center;gap:10px;color:#e0a065;font:400 36px/1 Newsreader,serif}.how-step .num svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.how-step h3{font-size:27px;color:#fff;font-weight:500;margin:23px 0 12px}.how-step p{max-width:31em;color:#d3dfd9;line-height:1.7}
+.how{width:min(1240px,calc(100% - 48px));margin:24px auto 0;padding:34px clamp(24px,4vw,48px);border-radius:28px;background:#4b1a2e;color:#f6f1e8;scroll-margin-top:92px}
+.how-head{margin-bottom:22px}.how-kicker{display:flex;align-items:center;gap:12px;color:#e0a065;font:600 12px "JetBrains Mono",monospace;letter-spacing:.16em;text-transform:uppercase}.how-kicker:before{content:"";width:38px;border-top:1px solid currentColor}
+.how h2{font-size:clamp(34px,4vw,46px);font-weight:400;letter-spacing:-.035em;margin:8px 0}.how-intro{color:#d3dfd9;font-size:15px}
+.how-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:22px;margin-top:20px}.how-step{border-top:1px solid #ffffff40;padding:18px 0 6px}
+.how-step .num{display:flex;align-items:center;gap:8px;color:#e0a065;font:400 29px/1 Newsreader,serif}.how-step .num svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.how-step h3{font-size:21px;color:#fff;font-weight:500;margin:14px 0 7px}.how-step p{max-width:28em;color:#d3dfd9;font-size:14px;line-height:1.55}
 .work-note{width:100%;padding:clamp(54px,7vw,88px) max(24px,calc((100% - 1240px)/2));background:var(--sage);color:var(--ink)}.work-note-head{max-width:760px}.work-note h2{font-size:clamp(38px,5vw,58px);font-weight:400;letter-spacing:-.035em;margin:12px 0}.work-note-head>p:last-child{max-width:44em;color:var(--mute);font-size:17px;line-height:1.75}.work-values{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:42px}.work-values article{border-top:1px solid color-mix(in srgb,var(--ink) 24%,transparent);padding:20px 0}.work-values article>span{color:var(--t2);font:400 30px Newsreader,serif}.work-values h3{font-size:24px;margin:18px 0 9px}.work-values p{max-width:28em;color:var(--mute);line-height:1.65}.work-credit{margin-top:44px;padding-top:18px;border-top:1px solid color-mix(in srgb,var(--ink) 18%,transparent);font:500 12px "JetBrains Mono",monospace;color:var(--mute);letter-spacing:.05em}
 .eg{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
 .ec{display:flex;gap:14px;align-items:center;text-align:left;padding:18px;border-radius:22px;border:1px solid color-mix(in srgb,var(--ink) 8%,transparent);min-height:106px;transition:transform .25s,box-shadow .25s;background:var(--bg0)}
@@ -83,7 +83,7 @@ footer{width:min(1240px,calc(100% - 48px));margin:auto;padding:30px 0 50px;borde
 #toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,90px);background:var(--btn);color:var(--btnt);padding:11px 22px;border-radius:99px;transition:.35s;z-index:30}#toast.on{transform:translate(-50%,0)}
 @media(max-width:960px){.hero{grid-template-columns:1.05fr .95fr;gap:12px}.hero-title{font-size:clamp(48px,5.8vw,64px)}.pg,.pl{grid-template-columns:1fr}.eg{grid-template-columns:repeat(2,1fr)}.side{position:static}.nav{gap:12px;padding-left:14px;padding-right:8px}#pn{padding:22px}}
 @media(max-width:700px){.nav-search input{display:none}.nav-search.open{position:absolute;left:8px;right:8px;top:calc(100% + 8px);background:var(--card);border-color:var(--line);box-shadow:0 12px 28px -18px #000;padding:5px 8px}.nav-search.open input{display:block;flex:1;width:auto;padding:7px}}
-@media(max-width:700px){.hero{grid-template-columns:1fr;min-height:auto;padding:18px 0 42px;gap:8px}.hero>div:first-child{grid-row:2}.hero>div:nth-child(2){grid-row:1}.hero .scene{max-width:400px;margin:0 auto}.hero-title{font-size:clamp(44px,12vw,62px);margin:18px 0 14px}.hero-copy{font-size:16px}.how{padding:48px 24px}.how-grid{grid-template-columns:1fr}.how-step{padding:28px 0}.work-note{padding:48px 24px}.work-values{grid-template-columns:1fr;gap:0}}
+@media(max-width:700px){.hero{grid-template-columns:1fr;min-height:auto;padding:18px 0 42px;gap:8px}.hero>div:first-child{grid-row:2}.hero>div:nth-child(2){grid-row:1}.hero .scene{max-width:400px;margin:0 auto}.hero-title{font-size:clamp(44px,12vw,62px);margin:18px 0 14px}.hero-copy{font-size:16px}.how{width:calc(100% - 24px);padding:28px 20px;border-radius:22px}.how-grid{grid-template-columns:1fr;gap:0}.how-step{padding:16px 0 10px}.work-note{padding:48px 24px}.work-values{grid-template-columns:1fr;gap:0}}
 @media(max-width:520px){.nav{width:calc(100% - 12px);gap:3px;padding:6px 5px}.brand-picture{width:32px}.nav-search{padding:2px}.nav-search button{width:32px;height:32px}.nav-about{font-size:12px}.start-link{gap:3px;padding:8px 7px;font-size:11px}.ib{width:32px;height:32px}.eg{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body id="top">
@@ -92,33 +92,70 @@ footer{width:min(1240px,calc(100% - 48px));margin:auto;padding:30px 0 50px;borde
 <main id="top"><section class="hero"><div>
 <p class="hero-kicker" data-copy="heroKicker">The art of personal tailoring</p>
 <h1 class="hero-title"><span data-copy="heroLine1">Your Style.</span><br><i><span data-copy="heroLine2">Crafted by</span></i><br><span data-copy="heroLine3">Skilled Hands.</span></h1>
-<p class="hero-copy" data-copy="heroCopy">Discover Bangladesh’s finest tailoring artisans. From a timeless Panjabi to your dream outfit, find the hands that bring your style to life.</p>
+<p class="hero-copy" data-copy="heroCopy">Discover Bangladesh’s finest tailoring artisans. From an idea to your dream outfit, find the hands that bring your style to life.</p>
 <div class="pills" id="pills"><button aria-pressed="true" data-l="en">English</button><button aria-pressed="false" data-l="bn">বাংলা</button></div>
 <div class="cta"><a class="pb dk" href="login.html"><span data-copy="studioButton">Try the design studio</span> →</a><a class="pb" href="#how" data-copy="howButton">How it work</a></div></div>
 <div><div class="scene" id="scene"><div class="blob"></div>
-<svg viewBox="0 0 520 560" role="img" aria-label="A Panjabi and a saree hanging from hangers on a rail. Move your cursor over them and they swing.">
-<defs><pattern id="zr" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1.8" fill="#e7c98f"/></pattern></defs>
+<svg viewBox="0 0 520 560" role="img" aria-label="A hand-embroidered green Panjabi, a Bengali Nakshi Kantha inspired saree, and a formal shirt with trousers hanging from wooden hangers.">
+<defs>
+<linearGradient id="panjabiFabric" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#123e35"/><stop offset=".24" stop-color="#236657"/><stop offset=".52" stop-color="#438573"/><stop offset=".76" stop-color="#286b5a"/><stop offset="1" stop-color="#123a32"/></linearGradient>
+<linearGradient id="panjabiSleeve" x1="0" y1="0" x2="1" y2=".2"><stop stop-color="#103b32"/><stop offset=".55" stop-color="#347866"/><stop offset="1" stop-color="#17483d"/></linearGradient>
+<linearGradient id="sareeSilk" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#651b34"/><stop offset=".2" stop-color="#9c3851"/><stop offset=".45" stop-color="#c06a70"/><stop offset=".7" stop-color="#8d2a45"/><stop offset="1" stop-color="#5b1b34"/></linearGradient>
+<linearGradient id="shirtCotton" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#9fb9c4"/><stop offset=".25" stop-color="#d3e0e3"/><stop offset=".52" stop-color="#f0f1e8"/><stop offset=".78" stop-color="#d0dfe1"/><stop offset="1" stop-color="#8eaab8"/></linearGradient>
+<linearGradient id="trouserWool" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#202b3b"/><stop offset=".32" stop-color="#394758"/><stop offset=".56" stop-color="#526072"/><stop offset=".8" stop-color="#354455"/><stop offset="1" stop-color="#202b3a"/></linearGradient>
+<linearGradient id="zari" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#c09050"/><stop offset=".45" stop-color="#f0d69b"/><stop offset="1" stop-color="#b98448"/></linearGradient>
+<pattern id="kanthaMotif" width="38" height="38" patternUnits="userSpaceOnUse">
+<path d="M19 4c2.4 5 4.8 7.4 9.8 9.8-5 2.4-7.4 4.8-9.8 9.8-2.4-5-4.8-7.4-9.8-9.8C14.2 11.4 16.6 9 19 4Zm0 17c2.4 5 4.8 7.4 9.8 9.8-5 2.4-7.4 4.8-9.8 9.8-2.4-5-4.8-7.4-9.8-9.8 5-2.4 7.4-4.8 9.8-9.8Z" fill="none" stroke="#f0d69b" stroke-width=".9"/>
+<circle cx="19" cy="15" r="1.5" fill="#f7e4b7"/><circle cx="19" cy="34" r="1.3" fill="#f7e4b7"/>
+</pattern>
+<pattern id="zariEdge" width="20" height="16" patternUnits="userSpaceOnUse"><path d="M10 1 18 8 10 15 2 8Z" fill="none" stroke="#f2d99e" stroke-width="1.2"/><circle cx="10" cy="8" r="1.6" fill="#fff0c8"/></pattern>
+<pattern id="kanthaFine" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M13 2c2.5 4 4.5 6 8.5 8.5-4 2.5-6 4.5-8.5 8.5-2.5-4-4.5-6-8.5-8.5C8.5 8 10.5 6 13 2Z" fill="none" stroke="#f3d99e" stroke-width=".8"/><circle cx="13" cy="10.5" r="1.1" fill="#f3d99e"/></pattern>
+<clipPath id="panjabiClip"><path d="M-58 72-20 66Q0 84 20 66L58 72 66 130 62 290Q70 300 78 312Q0 330-78 312Q-70 300-62 290L-66 130Z"/></clipPath>
+<clipPath id="sareeClip"><path d="M-66 72H66L92 320Q69 338 46 322Q23 306 0 324Q-23 342-46 324Q-69 308-92 322Z"/></clipPath>
+</defs>
 <g id="sc2"></g>
 <path d="M30 0V58M490 0V58" stroke="#b08a5a" stroke-width="3"/><rect x="18" y="56" width="484" height="9" rx="4.5" fill="#b08a5a"/>
 <ellipse cx="260" cy="528" rx="190" ry="12" fill="rgba(60,40,30,.12)"/>
-<g data-g data-x="165"><g class="gw"><path d="M0 30V6C0-10-15-10-15 0" fill="none" stroke="#6b5a48" stroke-width="3.5" stroke-linecap="round"/>
-<g data-s data-ox="-58" data-oy="72" data-gain="1.7"><path d="M-58 72L-112 240L-86 252L-62 150Z" fill="#1b4133"/><path d="M-112 240L-86 252" stroke="#d8b27a" stroke-width="6"/></g>
-<g data-s data-ox="58" data-oy="72" data-gain="1.7"><path d="M58 72L112 240L86 252L62 150Z" fill="#1b4133"/><path d="M112 240L86 252" stroke="#d8b27a" stroke-width="6"/></g>
-<path d="M-58 72L-20 66Q0 84 20 66L58 72L66 130L62 290Q70 300 78 312Q0 330-78 312Q-70 300-62 290L-66 130Z" fill="#7a263f"/>
-<path d="M-32 100Q-36 200-42 300M34 100Q38 200 44 300" stroke="#2f6a53" stroke-width="3" fill="none" opacity=".6"/>
-<rect x="-6" y="76" width="12" height="112" rx="3" fill="#d8b27a"/><g fill="#f8f3ea"><circle cx="0" cy="96" r="2.6"/><circle cx="0" cy="120" r="2.6"/><circle cx="0" cy="144" r="2.6"/><circle cx="0" cy="168" r="2.6"/></g>
-<path d="M-20 66Q0 86 20 66L18 58Q0 76-18 58Z" fill="#14352a" stroke="#d8b27a" stroke-width="1.5"/>
-<path d="M-70 304Q0 322 70 304" stroke="#d8b27a" stroke-width="2.5" stroke-dasharray="2 5" fill="none" stroke-linecap="round"/>
-<path d="M0 30L-70 66Q-76 70-70 72H70Q76 70 70 66Z" fill="none" stroke="#b08a5a" stroke-width="4" stroke-linejoin="round" transform="translate(0 -2)"/></g></g>
-<g data-g data-x="355"><g class="gw"><path d="M0 30V6C0-10-15-10-15 0" fill="none" stroke="#6b5a48" stroke-width="3.5" stroke-linecap="round"/>
-<path d="M-66 72H66L92 320Q69 338 46 322Q23 306 0 324Q-23 342-46 324Q-69 308-92 322Z" fill="#8B2E3D"/>
-<path d="M-66 72H66L92 320Q69 338 46 322Q23 306 0 324Q-23 342-46 324Q-69 308-92 322Z" fill="url(#zr)" opacity=".55"/>
-<path d="M-40 90L-48 312M-20 90L-22 322M0 90L0 326M20 90L24 322" stroke="#a9455a" stroke-width="3" opacity=".7" fill="none"/>
-<path d="M-92 322Q-69 308-46 324Q-23 342 0 324Q23 306 46 322Q69 338 92 320" stroke="#d8b27a" stroke-width="8" fill="none"/>
-<g data-s data-ox="52" data-oy="74" data-gain="1.9"><path d="M38 72L72 72L100 392Q82 408 62 392Z" fill="#a23a4d"/><path d="M62 392L100 392M60 366L98 366" stroke="#d8b27a" stroke-width="7"/><path d="M38 72L72 72L100 392Q82 408 62 392Z" fill="url(#zr)" opacity=".5"/></g>
-<path d="M0 30L-70 66Q-76 70-70 72H70Q76 70 70 66Z" fill="none" stroke="#b08a5a" stroke-width="4" stroke-linejoin="round" transform="translate(0 -2)"/></g></g>
-</svg><span class="bdg">Illustration</span><button class="hint" id="gust"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V5a1.5 1.5 0 0 1 3 0v6M11 10V3.5a1.5 1.5 0 0 1 3 0V11M14 10V5a1.5 1.5 0 0 1 3 0v7a7 7 0 0 1-7 7c-3 0-4-1.5-6-5l-1-2a1.5 1.5 0 0 1 2.5-1.5L8 13"/></svg><span data-i="ht">Touch the clothes</span></button></div>
-<div class="cap"><span class="mono" id="cn"></span><h3 id="ct"></h3><div class="ds" id="ds"><i></i><i></i><i></i></div></div></div></section>
+<g data-g data-x="90"><g class="gw"><g transform="scale(.72 1)"><path d="M0 30V6C0-10-15-10-15 0" fill="none" stroke="#6b5a48" stroke-width="3.5" stroke-linecap="round"/>
+<g data-s data-ox="-58" data-oy="72" data-gain="1.7"><path d="M-58 72L-112 240L-86 252L-62 150Z" fill="url(#panjabiSleeve)" stroke="#4d1c2e" stroke-width="1.4"/><path d="M-99 220Q-91 227-87 239" fill="none" stroke="#d8b27a" stroke-width="1.5" opacity=".62"/><path d="M-112 240L-86 252" stroke="url(#zari)" stroke-width="7"/><path d="M-108 241  -90 248" stroke="url(#zariEdge)" stroke-width="5"/></g>
+<g data-s data-ox="58" data-oy="72" data-gain="1.7"><path d="M58 72L112 240L86 252L62 150Z" fill="url(#panjabiSleeve)" stroke="#4d1c2e" stroke-width="1.4"/><path d="M99 220Q91 227 87 239" fill="none" stroke="#f1d8a0" stroke-width="1.5" opacity=".62"/><path d="M112 240L86 252" stroke="url(#zari)" stroke-width="7"/><path d="M108 241 90 248" stroke="url(#zariEdge)" stroke-width="5"/></g>
+<path d="M-58 72-20 66Q0 84 20 66L58 72 66 130 62 290Q70 300 78 312Q0 330-78 312Q-70 300-62 290L-66 130Z" fill="url(#panjabiFabric)" stroke="#4b1a2e" stroke-width="1.5"/>
+<path d="M-58 72-20 66Q0 84 20 66L58 72 66 130 62 290Q70 300 78 312Q0 330-78 312Q-70 300-62 290L-66 130Z" fill="url(#kanthaFine)" opacity=".34" clip-path="url(#panjabiClip)"/>
+<path d="M-44 92Q-47 190-49 292M-27 91Q-28 194-30 303M28 92Q29 190 31 302M46 91Q48 195 50 292" stroke="#f4d7a3" stroke-width="2" fill="none" opacity=".16"/>
+<path d="M-9 89Q-12 160-9 193M9 89Q12 160 9 193" fill="none" stroke="#f4d7a3" stroke-width="1.2" opacity=".5"/>
+<rect x="-7" y="77" width="14" height="116" rx="4" fill="url(#zari)"/><rect x="-3.2" y="80" width="6.4" height="110" rx="3" fill="#f7e6bc" opacity=".72"/><g fill="#fff4d7" stroke="#9b7040" stroke-width=".7"><circle cx="0" cy="96" r="2.7"/><circle cx="0" cy="120" r="2.7"/><circle cx="0" cy="144" r="2.7"/><circle cx="0" cy="168" r="2.7"/></g>
+<path d="M-20 66Q0 86 20 66L18 58Q0 76-18 58Z" fill="#592137" stroke="url(#zari)" stroke-width="2"/><path d="M-13 66Q0 77 13 66M-10 69Q0 80 10 69" fill="none" stroke="#f3d99e" stroke-width="1"/>
+<path d="M-15 104Q-10 99-5 104Q0 109 5 104Q10 99 15 104M-15 114Q-10 109-5 114Q0 119 5 114Q10 109 15 114" fill="none" stroke="#f3d99e" stroke-width="1.1" opacity=".8"/>
+<path d="M-73 306Q0 325 73 306" stroke="url(#zari)" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M-73 306Q0 325 73 306" stroke="url(#zariEdge)" stroke-width="4" fill="none"/>
+<path d="M0 30L-70 66Q-76 70-70 72H70Q76 70 70 66Z" fill="none" stroke="#b08a5a" stroke-width="4" stroke-linejoin="round" transform="translate(0 -2)"/></g></g></g>
+<g data-g data-x="260"><g class="gw"><g transform="scale(.72 1)"><path d="M0 30V6C0-10-15-10-15 0" fill="none" stroke="#6b5a48" stroke-width="3.5" stroke-linecap="round"/>
+<path d="M-66 72H66L92 320Q69 338 46 322Q23 306 0 324Q-23 342-46 324Q-69 308-92 322Z" fill="url(#sareeSilk)" stroke="#572038" stroke-width="1.5"/>
+<path d="M-66 72H66L92 320Q69 338 46 322Q23 306 0 324Q-23 342-46 324Q-69 308-92 322Z" fill="url(#kanthaMotif)" opacity=".42" clip-path="url(#sareeClip)"/>
+<path d="M-48 88Q-43 188-62 312M-28 88Q-22 187-34 323M-7 88Q-2 185-8 328M15 88Q15 180 17 326M37 88Q34 182 46 326M55 88Q53 179 70 318" stroke="#f8d8ba" stroke-width="2.4" opacity=".25" fill="none"/>
+<path d="M-62 108Q-25 118 8 98L74 310Q51 300 31 319L-12 330Z" fill="#c17676" opacity=".32" clip-path="url(#sareeClip)"/>
+<path d="M-62 108Q-25 118 8 98L74 310Q51 300 31 319L-12 330Z" fill="url(#kanthaFine)" opacity=".8" clip-path="url(#sareeClip)"/>
+<path d="M-92 315Q-69 301-46 317Q-23 335 0 317Q23 299 46 315Q69 331 92 313" stroke="url(#zari)" stroke-width="12" fill="none"/><path d="M-92 315Q-69 301-46 317Q-23 335 0 317Q23 299 46 315Q69 331 92 313" stroke="url(#zariEdge)" stroke-width="8" fill="none"/>
+<path d="M-63 82H63" stroke="url(#zari)" stroke-width="6"/><path d="M-63 82H63" stroke="url(#zariEdge)" stroke-width="4"/>
+<g data-s data-ox="52" data-oy="74" data-gain="1.9"><path d="M38 72L72 72L100 392Q82 408 62 392Z" fill="url(#sareeSilk)" stroke="#572038" stroke-width="1.5"/><path d="M38 72L72 72L100 392Q82 408 62 392Z" fill="url(#kanthaMotif)" opacity=".45"/><path d="M62 392L100 392M60 366L98 366" stroke="url(#zari)" stroke-width="8"/><path d="M62 392L100 392M60 366L98 366" stroke="url(#zariEdge)" stroke-width="5"/><path d="M45 90 74 374M54 86 83 382" stroke="#f5d8ac" stroke-width="1.6" opacity=".28"/></g>
+<path d="M0 30L-70 66Q-76 70-70 72H70Q76 70 70 66Z" fill="none" stroke="#b08a5a" stroke-width="4" stroke-linejoin="round" transform="translate(0 -2)"/></g></g></g>
+<g data-g data-x="430"><g class="gw"><g transform="scale(.72 1)">
+<path d="M0 30V6C0-10-15-10-15 0" fill="none" stroke="#6b5a48" stroke-width="3.5" stroke-linecap="round"/>
+<!-- Tailored pale-blue formal shirt, with natural sleeve folds and a stitched pocket. -->
+<g data-s data-ox="-40" data-oy="75" data-gain="1.7"><path d="M-40 75L-91 177L-70 190L-30 126Z" fill="url(#shirtCotton)" stroke="#758e9b" stroke-width="1.5"/><path d="M-82 174Q-74 180-70 187" fill="none" stroke="#6c8997" stroke-width="1.5" opacity=".7"/><path d="M-91 177L-70 190" stroke="#f4f1e5" stroke-width="6"/></g>
+<g data-s data-ox="40" data-oy="75" data-gain="1.7"><path d="M40 75L91 177L70 190L30 126Z" fill="url(#shirtCotton)" stroke="#758e9b" stroke-width="1.5"/><path d="M82 174Q74 180 70 187" fill="none" stroke="#6c8997" stroke-width="1.5" opacity=".7"/><path d="M91 177L70 190" stroke="#f4f1e5" stroke-width="6"/></g>
+<path d="M-40 75L-17 67Q0 82 17 67L40 75L48 116L43 265Q0 278-43 265L-48 116Z" fill="url(#shirtCotton)" stroke="#748d99" stroke-width="1.6"/>
+<path d="M-32 91Q-36 165-35 256M-20 90Q-22 169-22 267M30 91Q34 168 35 256" fill="none" stroke="#fff" stroke-width="2" opacity=".34"/>
+<path d="M-17 67L0 86L17 67L11 61L0 73L-11 61Z" fill="#dfe9e7" stroke="#718b97" stroke-width="1.5"/><path d="M0 85V254" stroke="#728b96" stroke-width="1.2" opacity=".7"/><g fill="#f8f4e8" stroke="#607985" stroke-width=".8"><circle cx="0" cy="105" r="2.4"/><circle cx="0" cy="129" r="2.4"/><circle cx="0" cy="153" r="2.4"/><circle cx="0" cy="177" r="2.4"/><circle cx="0" cy="201" r="2.4"/></g>
+<path d="M15 122L33 126L31 157L14 154Z" fill="#d4e0e1" stroke="#718b96" stroke-width="1.1"/><path d="M14 154Q23 158 31 157" fill="none" stroke="#718b96" stroke-width="1"/><path d="M-41 259Q0 271 41 259" fill="none" stroke="#f6f2e8" stroke-width="5" opacity=".9"/>
+<!-- Matching charcoal trousers on a slim wooden clip hanger. -->
+<path d="M47 71H101M53 71V78M95 71V78" fill="none" stroke="#98784f" stroke-width="3" stroke-linecap="round"/>
+<path d="M53 79Q75 73 96 79L103 298Q90 303 77 297L74 179L67 297Q54 303 42 298Z" fill="url(#trouserWool)" stroke="#202b39" stroke-width="1.6"/>
+<path d="M53 83Q75 88 96 83M74 91L74 174M56 99Q63 103 69 100M79 100Q87 103 94 99M58 110L62 284M89 108L94 285" fill="none" stroke="#aab4bc" stroke-width="1.4" opacity=".42"/>
+<path d="M44 294Q54 299 67 294M77 294Q90 299 101 294" fill="none" stroke="#d8d2c6" stroke-width="3" opacity=".7"/>
+<path d="M0 30L-70 66Q-76 70-70 72H70Q76 70 70 66Z" fill="none" stroke="#b08a5a" stroke-width="4" stroke-linejoin="round" transform="translate(0 -2)"/>
+</g></g></g>
+</svg><span class="bdg" data-i="emb">Nakshi Kantha embroidery</span><button class="hint" id="gust"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V5a1.5 1.5 0 0 1 3 0v6M11 10V3.5a1.5 1.5 0 0 1 3 0V11M14 10V5a1.5 1.5 0 0 1 3 0v7a7 7 0 0 1-7 7c-3 0-4-1.5-6-5l-1-2a1.5 1.5 0 0 1 2.5-1.5L8 13"/></svg><span data-i="ht">Touch the clothes</span></button></div>
+<div class="cap"><span class="mono" id="cn"></span><h3 id="ct"></h3><div class="ds" id="ds"><i></i><i></i><i></i><i></i></div></div></div></section>
 
 <section class="how" id="how" aria-labelledby="how-title"><div class="how-head"><p class="how-kicker" data-copy="howKicker">Simple, thoughtful, personal</p><h2 id="how-title" data-copy="howTitle">Custom made, made easy.</h2><p class="how-intro" data-copy="howIntro">From inspiration to your doorstep, every step is clear.</p></div>
 <div class="how-grid">
@@ -143,6 +180,7 @@ const I={s:'<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>',b:'<path 
 /* theme + language */
 const T={bn:{n1:'দর্জি খুঁজুন',n2:'ডিজাইন স্টুডিও',n3:'অর্ডার',n4:'দর্জির ডেস্ক',n5:'কাস্টমার ড্যাশবোর্ড',eb:'ওয়ার্কিং ডেমো · বাংলাদেশের দর্জি · পাঞ্জাবি ও শাড়ি',sub:'প্রতিটি গ্রাহকের ফোনে একজন দর্জি, একটি ডিজাইন স্টুডিও ও অর্ডার ট্র্যাকার, নিজের ভাষায়।',c1:'ডিজাইন স্টুডিও দেখুন →',c2:'সবকিছু দেখুন',ht:'কাপড়গুলো ছুঁয়ে দেখুন',e1:'সবকিছু যা আপনি করতে পারেন'}};
 T.bn.navabout='আমাদের সম্পর্কে';T.bn.getstarted='শুরু করুন';T.bn.search='দর্জি খুঁজুন';
+T.bn.emb='নকশি কাঁথার সূচিকর্ম';
 $$('[data-i]').forEach(e=>(T.en=T.en||{})[e.dataset.i]=e.textContent);T.en.search='Search tailors';
 function setL(l){document.documentElement.lang=l;$$('[data-i]').forEach(e=>e.textContent=T[l][e.dataset.i]||T.en[e.dataset.i]);$$('[data-ph]').forEach(e=>e.placeholder=T[l][e.dataset.ph]||T.en[e.dataset.ph]);$$('#pills [data-l]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.l==l));L=l}window.setLegacyLanguage=setL;let L='en';
 $$('#pills [data-l]').forEach(b=>b.onclick=()=>window.applySiteLanguage?.(b.dataset.l));$$('#pills [data-x]').forEach(b=>b.onclick=()=>toast('This language is a preview and not available yet'));
@@ -157,8 +195,8 @@ let T0=0;(function f(t){requestAnimationFrame(f);const dt=Math.min((t-T0)/1000||
 /* floating fabric scraps */
 $('#sc2').innerHTML=Array.from({length:26},(_,i)=>{const c=['#d8a4b4','#e8b9a6','#e9c3c6','#c9bfe6','#b9d3df'][i%5],x=Math.random()*500+10,y=Math.random()*470+80;return`<path class="sc" d="M0 0C7-9 16-9 20 0C16 9 7 9 0 0Z" fill="${c}" opacity=".75" transform="translate(${x} ${y}) rotate(${Math.random()*180})" style="--t:${5+Math.random()*5}s;--x:${Math.random()*24-12}px;--y:${Math.random()*24-12}px;--r:${Math.random()*50-25}deg"/>`}).join('');
 /* captions */
-const CP=[['Panjabi','Hand-finished by a tailor near you.'],['Saree','Blouse, fall and pico, stitched to measure.'],['Bespoke','Your price and date, in writing first.']];let ci=0;
-function cap(){$('#cn').textContent=`0${ci+1} / 0${CP.length} · ${CP[ci][0]}`;$('#ct').textContent=CP[ci][1];[...$('#ds').children].forEach((d,i)=>d.className=i==ci?'on':'')}cap();if(!rm)setInterval(()=>{ci=(ci+1)%3;cap()},5000);
+const CP=[['Panjabi','Hand-finished by a tailor near you.'],['Saree','Blouse, fall and pico, stitched to measure.'],['Formalwear','A crisp shirt and trousers, tailored to fit.'],['Bespoke','Your price and date, in writing first.']];let ci=0;
+function cap(){$('#cn').textContent=`0${ci+1} / 0${CP.length} · ${CP[ci][0]}`;$('#ct').textContent=CP[ci][1];[...$('#ds').children].forEach((d,i)=>d.className=i==ci?'on':'')}cap();if(!rm)setInterval(()=>{ci=(ci+1)%CP.length;cap()},5000);
 /* feature grid */
 const EG=[['s','Find a tailor','Search by garment, city and rating',0,0],['x','Compare tailors','Rating, delivery time and price',1,0],['b','Design in 3D','Sleeve, collar and buttons, live',2,1],['b','Pick your fabric','Try colours before you order',3,1],['r','Approve a price','An itemised proposal in writing',4,2],['r','Track every stitch','Eight clear order stages',1,2],['c','Tailor calendar','Block busy and festival days',0,3],['c','See earnings','A monthly view for tailors',2,3],['m','Ask the assistant','Suggestions, never made-up prices',4,4],['l','Bangla and English','Switch the whole page',3,-1]];
 $('#eg').innerHTML=EG.map((e,i)=>`<button class="ec c${e[3]}" data-go="${e[4]}"><span class="ico">${ic(I[e[0]])}</span><span><b>${e[1]}</b><span>${e[2]}</span></span></button>`).join('');

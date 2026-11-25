@@ -43,8 +43,14 @@ window.applySiteLanguage = language => {
   try { localStorage.setItem('e-dorji-language', selected); } catch {}
 };
 
+try {
+  if (localStorage.getItem('e-dorji-language') === 'bn') window.applySiteLanguage('bn');
+} catch {}
+
 const mount = document.getElementById('site-nav-root');
-if (mount) createRoot(mount).render(<SiteNav page={mount.dataset.page || 'home'} />);
+if (mount) {
+  createRoot(mount).render(<SiteNav page={mount.dataset.page || 'home'} />);
+}
 
 const footerMount = document.getElementById('site-footer-root');
 if (footerMount) createRoot(footerMount).render(<SiteFooter />);
