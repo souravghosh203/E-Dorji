@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Nusrat Jahan Chowdhury",
+    "nameBn": "নুসরাত জাহান চৌধুরী",
+    "work": { "en": "Bridal and saree blouse", "bn": "ব্রাইডাল ও শাড়ির ব্লাউজ" },
+    "city": { "en": "Dhaka · Gulshan", "bn": "ঢাকা · গুলশান" },
+    "rating": "5.0"
+  },
+  {
+    "name": "Taslima Akter",
+    "nameBn": "তাসলিমা আক্তার",
+    "work": { "en": "Salwar kameez and kurti", "bn": "সালোয়ার কামিজ ও কুর্তি" },
+    "city": { "en": "Dhaka · Dhanmondi", "bn": "ঢাকা · ধানমন্ডি" },
+    "rating": "4.9"
+  },
+  {
+    "name": "Rashida Begum",
+    "nameBn": "রাশিদা বেগম",
+    "work": { "en": "Kurti and salwar kameez", "bn": "কুর্তি ও সালোয়ার কামিজ" },
+    "city": { "en": "Rajshahi", "bn": "রাজশাহী" },
+    "rating": "4.8"
+  },
+  {
+    "name": "Kamal Hossain",
+    "nameBn": "কামাল হোসেন",
+    "work": { "en": "Panjabi and sherwani", "bn": "পাঞ্জাবি ও শেরওয়ানি" },
+    "city": { "en": "Dhaka · Old Dhaka", "bn": "ঢাকা · পুরান ঢাকা" },
+    "rating": "4.9"
+  }
+]
